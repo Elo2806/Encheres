@@ -40,7 +40,7 @@
         
         </form>
         
-        <a href="<%=request.getContextPath()%>/ModifierProfil"><input type="button" value="Modifier"/></a>
+        <a href="<%=request.getContextPath()%>/Compte"><input type="button" value="Modifier"/></a>
         
 </div>
 
