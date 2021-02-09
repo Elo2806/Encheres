@@ -2,17 +2,27 @@
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
   <display-name>Encheres</display-name>
   <welcome-file-list>
-    <welcome-file>index.html</welcome-file>
+    <welcome-file>accueil</welcome-file>
   </welcome-file-list>
-  
-  <servlet>
-  <servlet-name>JSP_PROFIL</servlet-name>
-  <jsp-file>/WEB-INF/jsp/Profil.jsp</jsp-file>
-  </servlet>
-  
-<servlet-mapping>
-<servlet-name>JSP_PROFIL</servlet-name>
-<url-pattern>/profil</url-pattern>
-</servlet-mapping>
+
+	<servlet>
+		<servlet-name>JSP_PROFIL</servlet-name>
+		<jsp-file>/WEB-INF/jsp/Profil.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>JSP_PROFIL</servlet-name>
+		<url-pattern>/profil</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>JSP_ACCUEIL</servlet-name>
+		<jsp-file>/WEB-INF/jsp/Accueil.jsp</jsp-file>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>JSP_ACCUEIL</servlet-name>
+		<url-pattern>/accueil</url-pattern>
+	</servlet-mapping>
   
 </web-app>
