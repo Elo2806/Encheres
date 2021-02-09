@@ -11,7 +11,7 @@
 <!-- image à insérer dynamiquement -->
 	<img alt="photo article" src="">
 	<h1>Nouvelle vente</h1>
-	<form action="">
+	<form method="post" action="/ServletEnchere">
 		<div>
 			<label for="article">Article : </label>
 			<input type="text"
