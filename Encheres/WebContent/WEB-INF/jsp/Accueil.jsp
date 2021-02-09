@@ -35,7 +35,7 @@
 	<!-- Attribut en plus lors de la connection -->
 	<div>
 		<div>
-			<div> 
+			<div>
 				<input type="radio" name="type"><label>Achats</label>
 			</div>
 			<div>
@@ -46,7 +46,8 @@
 					<input type="checkbox"><label>mes enchères en cours</label>
 				</div>
 				<div>
-					<input type="checkbox"><label>mes enchères remportées</label>
+					<input type="checkbox"><label>mes enchères
+						remportées</label>
 				</div>
 			</div>
 		</div>
@@ -73,10 +74,18 @@
 			<img alt="photo objet" src="">
 		</div>
 		<div>
-			<div>PC Gamer pour travailler</div>
-			<div>Prix : 210 points</div>
-			<div>Fin de l'enchère : 10/08/2018</div>
-			<div>Vendeur : jojo44</div>
+			<div>
+				<a href="" id="libelleArticle">PC Gamer pour travailler</a>
+			</div>
+			<div>
+				Prix : <span id="nbPoints">210</span> points
+			</div>
+			<div>
+				Fin de l'enchère : <span id="dateFinEnchere">10/08/2018</span>
+			</div>
+			<div>
+				Vendeur : <span id="pseudoVendeur">jojo44</span>
+			</div>
 		</div>
 
 	</div>
