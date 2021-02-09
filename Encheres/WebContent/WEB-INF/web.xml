@@ -3,10 +3,16 @@
   <display-name>Encheres</display-name>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
-    <welcome-file>default.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
+  <servlet>
+  <servlet-name>JSP_PROFIL</servlet-name>
+  <jsp-file>/WEB-INF/jsp/Profil.jsp</jsp-file>
+  </servlet>
+  
+<servlet-mapping>
+<servlet-name>JSP_PROFIL</servlet-name>
+<url-pattern>/profil</url-pattern>
+</servlet-mapping>
+  
 </web-app>
