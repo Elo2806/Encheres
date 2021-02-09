@@ -17,46 +17,48 @@
 	<div class="descriptionVente">
 		<div>
 
-			<p name="libelleArticle" id="libelleArticle">PC Gamer pour
-				travailler</p>
+			<p id="libelleArticle">PC Gamer pour travailler</p>
 		</div>
 		<div>
-			<label for="descriptionArticle :">Description :</label>
-			<p name="descriptionArticle" id="descriptionArticle">BLA BLA BLA
-				BLA BLA</p>
+			<p>Description :</p>
+			<span id="descriptionArticle">BLA BLA BLA BLA BLA</span>
 		</div>
 		<div>
-			<label for="CategorieArticle">Categorie :</label> <span
-				name="CategorieArticle" id="CategorieArticle">Informatique</span>
+			<p>
+				Categorie : <span id="CategorieArticle">Informatique</span>
+			</p>
 		</div>
 		<div>
-			<label for="MeilleureOffre">Meilleur offre :</label> <span
-				name="MeilleureOffre"><span id="nbPointsMeilleur">210</span>
-				pts par <span id="pseudoMeilleur">Bob</span></span>
+			<p>
+				Meilleur offre : <span id="nbPointsMeilleur">210</span> pts par <span
+					id="pseudoMeilleur">Bob</span>
+			</p>
 		</div>
 		<div>
-			<label for="MiseAprix">Mise à prix :</label> <span name="MiseAprix"
-				id="prix">185</span> points
+			<p>
+				Mise à prix : <span id="prix">185</span> points
+			</p>
 		</div>
 		<div>
-			<label for="dateFin">Fin de l'enchere</label> <span name="dateFin"
-				id="dateFin">09/10/2018</span>
+			<p>
+				Fin de l'enchere <span id="dateFin">09/10/2018</span>
+			</p>
 		</div>
 		<div>
-			<label for="Adresse">Retrait : </label> <span name="Adresse"
-				id="Adresse">10 allée des Alouettes</span><br> <span
-				id="codePostal">44800</span> <span id="ville">Saint Herblain</span>
+			<span>Retrait : </span>
+			<div id="Adresse">
+				<span>10 allée des Alouettes</span><br> <span id="codePostal">44800</span>
+				<span id="ville">Saint Herblain</span>
+			</div>
 		</div>
 		<div>
-			<label for="vendeur">Vendeur : </label> <span name="vendeur"
-				id="vendeur">jojo44</span>
+			<p>Vendeur : <span name="vendeur" id="vendeur">jojo44</span></p>
 		</div>
 		<form action="">
 			<div>
-				<label for="proposition">Ma proposition : </label> 
-				<input
-					type="number" name="proposition" id="proposition" value=220 style="width: 43px; ">
-				<input type="submit" value="Enchérir">
+				<label for="proposition">Ma proposition : </label> <input
+					type="number" name="proposition" id="proposition" value=220
+					style="width: 43px;"> <input type="submit" value="Enchérir">
 			</div>
 		</form>
 	</div>
