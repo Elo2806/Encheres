@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+
+<Context>
+
+	<Resource
+		name="jdbc/poolEncheres"
+		type="javax.sql.DataSource"
+		
+		driverClassName="com.microsoft.sqlserver.jdbc.SQLServerDriver"
+		url="jdbc:sqlserver://10.24.200.11;databasename=ENCHERES"
+		username="ApplicationEncheres"
+		password="encheres"
+		
+		initialSize="5"
+		maxTotal="20"
+		minIdle="4"
+		maxIdle="5"
+		
+		maxWaitMillis="10000"
+		
+	
+	/>   <!-- attention au "removeAbandonnedTimeOut" (pour déconnecter si 
+			'cnx.close();' oublié dans le code, mais ça a des désavantages! 5 min par défaut (300 sec)) -->
+
+</Context>

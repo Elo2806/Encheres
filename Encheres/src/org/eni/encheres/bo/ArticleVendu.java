@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package org.eni.encheres.bo;
 
 import java.time.LocalDate;
