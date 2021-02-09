@@ -30,7 +30,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>JSP_COMPTE</servlet-name>
-    <jsp-file>/WEB-INF/jsp/CreerCompte.jsp</jsp-file>
+    <jsp-file>/WEB-INF/jsp/Compte.jsp</jsp-file>
   </servlet>
   <servlet-mapping>
     <servlet-name>JSP_COMPTE</servlet-name>

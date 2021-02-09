@@ -16,7 +16,7 @@
 
 	<h1>Mon Profil</h1>
 
-	<form method="post" action="<%=request.getContextPath()%>/Compte">
+	<form method="post" action="<%=request.getContextPath()%>/ServletCompte">
 
 		<table>
 			<tr>
