@@ -9,7 +9,7 @@
 <body>
 	<%@include file="EnTeteEni.jspf"%>
 	<div>
-		<span><a href="">S'inscrire - Se connecter</a></span>
+		<span><a href="/ServletConnexion">S'inscrire - Se connecter</a></span>
 	</div>
 	<div>
 		<h1>Liste des enchères</h1>
