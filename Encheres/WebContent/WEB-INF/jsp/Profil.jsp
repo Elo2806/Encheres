@@ -13,11 +13,20 @@
 
 <body>
 
-  <form action="">
-            <label for="nom">Nom:</label>
-            <input type="text" name="nom" id="nom" placeholder="Veuillez entrer votre nom">
-        </form>
 
+  <form action=>
+        <div>    <label for="nom">Pseudo:</label>
+        <input type="text" name="nom" id="nom" placeholder="Veuillez entrer votre pseudo"></div>
+        
+        <div>    <label for="nom">Nom:</label>
+        <input type="text" name="nom" id="nom" placeholder="Veuillez entrer votre nom"></div>
+        
+        
+        
+        
+        </form>
+        
+</div>
 
 </body>
 </html>
