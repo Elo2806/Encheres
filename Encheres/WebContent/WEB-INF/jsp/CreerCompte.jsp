@@ -8,7 +8,7 @@
 <title>Creer Compte</title>
 </head>
 
-<body style="height: 301px;">
+<body>
 	<%@include file="EnTeteEni.jspf"%>
 	<br>
 	<br>
@@ -98,14 +98,28 @@
 					</div>
 				</th>
 			</tr>
+			<tr>
+				<th>
+					<div>
+						<input type="submit" value="Créer" />
+					</div>
+				</th>
+				<th>
+					<div>
+
+						<a href="<%=request.getContextPath()%>"> <input type="button"
+							value="Annuler" /></a>
+					</div>
+				</th>
+			</tr>
 
 			<!-- Partie spéciale "Modifier mon profil" -->
 
 			<tr>
 				<th>
 					<div>
-						<label for="oldMdp">Mot de passe actuel:</label> <input type="password"
-							name="oldMdp" id="oldMdp"
+						<label for="oldMdp">Mot de passe actuel:</label> <input
+							type="password" name="oldMdp" id="oldMdp"
 							placeholder="Veuillez entrer votre mot de passe actuel">
 					</div>
 				</th>
@@ -113,8 +127,8 @@
 			<tr>
 				<th>
 					<div>
-						<label for="newMdp">Nouveau mot de passe:</label> <input type="password"
-							name="newMdp" id="newMdp"
+						<label for="newMdp">Nouveau mot de passe:</label> <input
+							type="password" name="newMdp" id="newMdp"
 							placeholder="Veuillez entrer votre nouveau mot de passe">
 					</div>
 				</th>
@@ -126,19 +140,29 @@
 					</div>
 				</th>
 			</tr>
+			<tr>
+				<th>
+					<div>
+						<label for="credit">Crédit:</label> <input type="text"
+							name="credit" id="credit">
+					</div>
+				</th>
+			</tr>
 
+			<tr>
+				<th>
+					<div>
+						<input type="submit" value="Enregistrer" />
+					</div>
+				</th>
+				<th>
+					<div>
 
-
-
-			<div>
-				<input type="submit" value="Enregistrer" />
-			</div>
-
-			<div>
-
-				<a href="<%=request.getContextPath()%>"> <input type="button"
-					value="Supprimer mon compte" /></a>
-			</div>
+						<a href="<%=request.getContextPath()%>"> <input type="button"
+							value="Supprimer mon compte" /></a>
+					</div>
+				</th>
+			</tr>
 
 
 		</table>
