@@ -42,5 +42,14 @@
 		<servlet-name>JSP_COMPTE</servlet-name>
 		<url-pattern>/compte</url-pattern>
 	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>JSP_CONNEXION</servlet-name>
+		<jsp-file>/WEB-INF/jsp/Connexion.jsp</jsp-file>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>JSP_CONNEXION</servlet-name>
+		<url-pattern>/connexion</url-pattern>
+	</servlet-mapping>
   
 </web-app>
