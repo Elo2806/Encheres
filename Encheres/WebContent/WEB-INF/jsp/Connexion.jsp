@@ -9,7 +9,7 @@
 <body>
 	<%@include file="EnTeteEni.jspf"%>
 	
-	<form action="">
+	<form action="<%=request.getContextPath()%>/ServletAccueil">
 		<div>
 			<label for="identifiant">Identifiant : </label>
 			<input type="text" name="identifiant" id="identifiant">
