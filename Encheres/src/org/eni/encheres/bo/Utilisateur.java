@@ -71,7 +71,7 @@ public class Utilisateur {
 	 * Méthode permettant de modifier noUtilisateur
 	 * @param noUtilisateur le new noUtilisateur
 	 */
-	private void setNoUtilisateur(Integer noUtilisateur) {
+	public void setNoUtilisateur(Integer noUtilisateur) {
 		this.noUtilisateur = noUtilisateur;
 	}
 	/**

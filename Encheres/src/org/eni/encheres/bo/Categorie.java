@@ -47,7 +47,7 @@ public class Categorie {
 	 * Méthode permettant de modifier noCategorie
 	 * @param noCategorie le new noCategorie
 	 */
-	private void setNoCategorie(Integer noCategorie) {
+	public void setNoCategorie(Integer noCategorie) {
 		this.noCategorie = noCategorie;
 	}
 	/**
