@@ -20,6 +20,7 @@ public class ServletEnchere extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// renvoi vers liste des enchères
 		getServletContext().getRequestDispatcher("/enchere").forward(request, response);
+		
 	}
 
 	/**
