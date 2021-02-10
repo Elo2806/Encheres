@@ -52,14 +52,4 @@
     <servlet-name>JSP_VENTE</servlet-name>
     <url-pattern>/vente</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>ServletVente</display-name>
-    <servlet-name>ServletVente</servlet-name>
-    <servlet-class>org.eni.encheres.servlets.ServletProfil</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>ServletVente</servlet-name>
-    <url-pattern>/ServletVente</url-pattern>
-  </servlet-mapping>
 </web-app>
