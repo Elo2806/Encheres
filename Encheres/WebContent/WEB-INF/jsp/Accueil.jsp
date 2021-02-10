@@ -30,7 +30,7 @@
 		</select>
 	</div>
 	<div>
-		<input type="button" value="Rechercher" />
+		<a href="<%=request.getContextPath()%>/ServletAccueil"><input type="button" value="Rechercher"/></a>
 	</div>
 	<!-- Attribut en plus lors de la connection -->
 	<div>
