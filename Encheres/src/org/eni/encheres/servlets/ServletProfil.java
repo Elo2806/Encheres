@@ -18,7 +18,7 @@ public class ServletProfil extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		getServletContext().getRequestDispatcher("/profil").forward(request, response);
 	}
 
 	/**
@@ -26,6 +26,7 @@ public class ServletProfil extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		getServletContext().getRequestDispatcher("/profil").forward(request, response);
+		//getServletContext().getRequestDispatcher("/compte").forward(request, response);
 	}
 
 }
