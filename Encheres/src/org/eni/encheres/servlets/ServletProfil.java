@@ -25,6 +25,7 @@ public class ServletProfil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		getServletContext().getRequestDispatcher("/profil").forward(request, response);
 		//getServletContext().getRequestDispatcher("/compte").forward(request, response);
 	}

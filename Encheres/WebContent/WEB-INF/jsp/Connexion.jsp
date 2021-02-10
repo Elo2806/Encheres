@@ -27,7 +27,7 @@
 		</div>
 	</form>
 	
-	<a href="<%=request.getContextPath()%>/ServletCompte"><button name="creer">Créer un compte</button></a>
+	<a href="<%=request.getContextPath()%>/ServletCompte?creation=true&modification=true"><button name="creer">Créer un compte</button></a>
 
 
 </body>
