@@ -9,7 +9,15 @@
 <body>
 	<%@include file="EnTeteEni.jspf"%>
 	<div>
-		<span><a href="<%=request.getContextPath() %>/ServletConnexion">S'inscrire - Se connecter</a></span>
+		<span><a href="<%=request.getContextPath()%>/ServletConnexion">S'inscrire
+				- Se connecter</a></span>
+	</div>
+	<div>
+		<span><a href="<%=request.getContextPath()%>/ServletConnexion">Enchères</a></span>
+		<span><a href="<%=request.getContextPath()%>/ServletVente">Vendre
+				un article</a></span> <span><a
+			href="<%=request.getContextPath()%>/ServletProfil">Mon profil</a></span> <span><a
+			href="<%=request.getContextPath()%>/ServletConnexion">Déconnexion</a></span>
 	</div>
 	<div>
 		<h1>Liste des enchères</h1>
@@ -17,57 +25,61 @@
 	<div>
 		<h3>Filtres :</h3>
 	</div>
-	<div>
-		<input type="button" /><input type="text">
-	</div>
-	<div>
-		<Label for="Categories">Catégories :</Label> <select name="Categories">
-			<!-- Coder en dur en attendant d'être mis en dynamique -->
-			<option value=1>Informatique</option>
-			<option value=2>Ameublement</option>
-			<option value=3>Vêtement</option>
-			<option value=4>Sport&amp;Loisirs</option>
-		</select>
-	</div>
-	<div>
-		<a href="<%=request.getContextPath()%>/ServletAccueil"><input type="button" value="Rechercher"/></a>
-	</div>
-	<!-- Attribut en plus lors de la connection -->
-	<div>
+	<form action="<%=request.getContextPath()%>/ServletAccueil">
+		<div>
+			<input type="button" /><input type="text">
+		</div>
+		<div>
+			<Label for="Categories">Catégories :</Label> <select
+				name="Categories">
+				<!-- Coder en dur en attendant d'être mis en dynamique -->
+				<option value=1>Informatique</option>
+				<option value=2>Ameublement</option>
+				<option value=3>Vêtement</option>
+				<option value=4>Sport&amp;Loisirs</option>
+			</select>
+		</div>
+		<div>
+			<input	type="submit" value="Rechercher" />
+		</div>
+		<!-- Attribut en plus lors de la connection -->
 		<div>
 			<div>
-				<input type="radio" name="type"><label>Achats</label>
+				<div>
+					<input type="radio" name="type"><label>Achats</label>
+				</div>
+				<div>
+					<div>
+						<input type="checkbox" name="chkEncheresOuvertes"><label>enchères ouvertes</label>
+					</div>
+					<div>
+						<input type="checkbox" name="chkMesEnchereEnCours"><label>mes enchères en
+							cours</label>
+					</div>
+					<div>
+						<input type="checkbox" name="chkMesEncheresRemportes"><label>mes enchères
+							remportées</label>
+					</div>
+				</div>
 			</div>
 			<div>
 				<div>
-					<input type="checkbox"><label>enchères ouvertes</label>
+					<input type="radio" name="type"><label>Ventes</label>
 				</div>
 				<div>
-					<input type="checkbox"><label>mes enchères en cours</label>
-				</div>
-				<div>
-					<input type="checkbox"><label>mes enchères
-						remportées</label>
+					<div>
+						<input type="checkbox" name="chkVentesEnCours"><label>mes ventes en cours</label>
+					</div>
+					<div>
+						<input type="checkbox"  name="chkVentesNonDebutes"><label>ventes non débutées</label>
+					</div>
+					<div>
+						<input type="checkbox" name="chkVentesTerminees"><label>ventes terminées</label>
+					</div>
 				</div>
 			</div>
 		</div>
-		<div>
-			<div>
-				<input type="radio" name="type"><label>Ventes</label>
-			</div>
-			<div>
-				<div>
-					<input type="checkbox"><label>mes ventes en cours</label>
-				</div>
-				<div>
-					<input type="checkbox"><label>ventes non débutées</label>
-				</div>
-				<div>
-					<input type="checkbox"><label>ventes terminées</label>
-				</div>
-			</div>
-		</div>
-	</div>
+	</form>
 	<!-- Liste des enchères à mettre dynamiquement -->
 	<div class="Enchere">
 		<div>
