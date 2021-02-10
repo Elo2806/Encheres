@@ -22,11 +22,11 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>JSP_ENCHERES</servlet-name>
-    <jsp-file>/WEB-INF/jsp/Enchere.jsp</jsp-file>
+    <jsp-file>/WEB-INF/jsp/Encheres.jsp</jsp-file>
   </servlet>
   <servlet-mapping>
     <servlet-name>JSP_ENCHERES</servlet-name>
-    <url-pattern>/encheres</url-pattern>
+    <url-pattern>/enchere</url-pattern>
   </servlet-mapping>
   <servlet>
     <servlet-name>JSP_COMPTE</servlet-name>
