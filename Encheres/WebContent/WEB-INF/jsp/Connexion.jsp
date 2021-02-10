@@ -9,7 +9,7 @@
 <body>
 	<%@include file="EnTeteEni.jspf"%>
 	
-	<form action="<%=request.getContextPath()%>/ServletAccueil">
+	<form method="post" action="<%=request.getContextPath()%>/ServletConnexion">
 		<div>
 			<label for="identifiant">Identifiant : </label>
 			<input type="text" name="identifiant" id="identifiant">
@@ -27,7 +27,7 @@
 		</div>
 	</form>
 	
-	<a href=""><button name="creer">Créer un compte</button></a>
+	<a href="<%=request.getContextPath()%>/ServletCompte"><button name="creer">Créer un compte</button></a>
 
 
 </body>

@@ -25,7 +25,12 @@ public class ServletConnexion extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		//Si les identifiants/mot de passe ok :
+		getServletContext().getRequestDispatcher("/ServletAccueil").forward(request, response);
+		
+		//Si les identifiants/mot de passe pas existants :
+//		getServletContext().getRequestDispatcher("/connexion").forward(request, response);
+	
 	}
 
 }
