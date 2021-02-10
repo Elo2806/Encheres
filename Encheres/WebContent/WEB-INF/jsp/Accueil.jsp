@@ -87,7 +87,7 @@
 		</div>
 		<div>
 			<div>
-				<a href="" id="libelleArticle">PC Gamer pour travailler</a>
+				<a href="<%=request.getContextPath()%>/ServletEnchere" id="libelleArticle">PC Gamer pour travailler</a>
 			</div>
 			<div>
 				Prix : <span id="nbPoints">210</span> points
@@ -96,7 +96,7 @@
 				Fin de l'enchère : <span id="dateFinEnchere">10/08/2018</span>
 			</div>
 			<div>
-				Vendeur : <span id="pseudoVendeur">jojo44</span>
+				Vendeur : <span><a href="<%=request.getContextPath()%>/ServletProfil" id="pseudoVendeur" name=id="pseudoVendeur">jojo44</a></span>
 			</div>
 		</div>
 
