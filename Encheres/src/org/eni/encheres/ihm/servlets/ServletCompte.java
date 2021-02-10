@@ -1,22 +1,25 @@
 package org.eni.encheres.ihm.servlets;
 
 import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.eni.encheres.ihm.exceptions.IHMException;
+import org.eni.encheres.bll.UtilisateurManager;
+import org.eni.encheres.bll.exceptions.BLLException;
 
 /**
  * Servlet implementation class ServletCreationCompte
  */
 @WebServlet("/ServletCompte")
 public class ServletCompte extends HttpServlet {
+	private static final String SERVLET_CONNEXION = "/ServletConnexion";
 	private static final String PARAM_CREATION = "creation";
 	private static final String PARAM_VILLE = "ville";
-	private static final String PARAM_CODE_POSTALE = "codePostale";
+	private static final String PARAM_CODE_POSTAL = "codePostal";
 	private static final String PARAM_RUE = "rue";
 	private static final String PARAM_TELEPHONE = "telephone";
 	private static final String PARAM_EMAIL = "email";
@@ -30,6 +33,8 @@ public class ServletCompte extends HttpServlet {
 	private static final String PARAM_MODIFICATION = "modification";
 	private static final long serialVersionUID = 1L;
 
+	
+	
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
@@ -69,7 +74,7 @@ public class ServletCompte extends HttpServlet {
 		String email = request.getParameter(PARAM_EMAIL);
 		String telephone = request.getParameter(PARAM_TELEPHONE);
 		String rue = request.getParameter(PARAM_RUE);
-		String codePostale = request.getParameter(PARAM_CODE_POSTALE);
+		String codePostal = request.getParameter(PARAM_CODE_POSTAL);
 		String ville = request.getParameter(PARAM_VILLE);
 		String mdp = request.getParameter(PARAM_MDP) ;
 		String confirmation = request.getParameter(PARAM_CONFIRMATION);
@@ -80,19 +85,26 @@ public class ServletCompte extends HttpServlet {
 			getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);
 		}
 		
+		try {
+			UtilisateurManager.creerUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, mdp);
+		}catch(BLLException blle) {
+			//TODO revoir la gestion exception
+			getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);
+		}
+		
+		
+		getServletContext().getRequestDispatcher(SERVLET_CONNEXION).forward(request, response);
 		
 /*	Contrôle 
-mdp + confirm = identique
- * 
- * Contrôle base de donnée
+	mdp + confirm = identique
+
+ 	Contrôle base de donnée
  	pseudo  et email unique
 	
 	Controle formulaire
 	code postal entre 1000 et 99999
 	numéro tel nom: 2 lettres
-	
-	
-	*/
+*/
 
 	}
 
