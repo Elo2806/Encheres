@@ -1,4 +1,4 @@
-package org.eni.encheres.servlets;
+package org.eni.encheres.ihm.servlets;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -8,17 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class ServletAccueil
+ * Servlet implementation class ServletVente
  */
-@WebServlet("/ServletAccueil")
-public class ServletAccueil extends HttpServlet {
+@WebServlet("/ServletVente")
+public class ServletVente extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		getServletContext().getRequestDispatcher("/accueil").forward(request, response);
+		getServletContext().getRequestDispatcher("/vente").forward(request, response);
 	}
 
 	/**
