@@ -44,4 +44,12 @@
     <servlet-name>JSP_CONNEXION</servlet-name>
     <url-pattern>/connexion</url-pattern>
   </servlet-mapping>
+   <servlet>
+  <servlet-name>JSP_VENTE</servlet-name>
+    <jsp-file>/WEB-INF/jsp/Ventes.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>JSP_VENTE</servlet-name>
+    <url-pattern>/vente</url-pattern>
+  </servlet-mapping>
 </web-app>
