@@ -33,7 +33,7 @@
 				<th>
 					<div>
 						<label for="nom">Nom:</label> <input type="text" name="nom"
-							id="nom" placeholder="Veuillez entrer votre nom">
+							id="nom" placeholder="Veuillez entrer votre nom" required pattern="[A-Za-z]{2,30}">
 					</div>
 				</th>
 			</tr>
@@ -43,13 +43,13 @@
 					<div>
 						<label for="prenom">Prénom:</label> <input type="text"
 							name="prenom" id="prenom"
-							placeholder="Veuillez entrer votre prénom" >
+							placeholder="Veuillez entrer votre prénom" required pattern="[A-Za-z]{2,30}" >
 					</div>
 				</th>
 				<th>
 					<div>
 						<label for="email">Email:</label> <input type="email" name="email"
-							id="email" placeholder="Veuillez entrer votre email">
+							id="email" placeholder="Veuillez entrer votre email" required>
 					</div>
 				</th>
 			</tr>
@@ -58,13 +58,13 @@
 					<div>
 						<label for="telephone">Téléphone:</label> <input type="text"
 							name="telephone" id="telephone"
-							placeholder="Veuillez entrer votre téléphone">
+							placeholder="Veuillez entrer votre téléphone" required pattern="[0-9]{10}">
 					</div>
 				</th>
 				<th>
 					<div>
 						<label for="rue">Rue:</label> <input type="text" name="rue"
-							id="rue" placeholder="Veuillez entrer votre rue">
+							id="rue" placeholder="Veuillez entrer votre rue" required>
 					</div>
 				</th>
 			</tr>
@@ -79,7 +79,7 @@
 				<th>
 					<div>
 						<label for="ville">Ville:</label> <input type="text" name="ville"
-							id="ville" placeholder="Veuillez entrer votre ville">
+							id="ville" placeholder="Veuillez entrer votre ville" required>
 					</div>
 				</th>
 			</tr>
