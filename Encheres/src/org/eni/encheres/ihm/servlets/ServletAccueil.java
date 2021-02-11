@@ -1,12 +1,16 @@
 package org.eni.encheres.ihm.servlets;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.eni.encheres.bo.Categorie;
 
 /**
  * Servlet implementation class ServletAccueil
@@ -28,6 +32,21 @@ public class ServletAccueil extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
+	}
+
+	/* (non-Javadoc)
+	 * @see javax.servlet.GenericServlet#init()
+	 */
+	@Override
+	public void init() throws ServletException {
+		super.init();
+		updateCategories();
+	}
+
+	private void updateCategories() {
+		List<Categorie> categories;	
+		CategorieManager manager = CategorieManager.getInstance();
+		categories = getCategories();
 	}
 
 }
