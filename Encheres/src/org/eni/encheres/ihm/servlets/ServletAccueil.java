@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.eni.encheres.bll.CategorieManager;
 import org.eni.encheres.bo.Categorie;
 
 /**
@@ -46,7 +47,8 @@ public class ServletAccueil extends HttpServlet {
 	private void updateCategories() {
 		List<Categorie> categories;	
 		CategorieManager manager = CategorieManager.getInstance();
-		categories = getCategories();
+		categories = manager.getCategories();
+		getServletContext().setAttribute("Categories", categories);
 	}
 
 }
