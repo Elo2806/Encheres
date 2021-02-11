@@ -10,6 +10,7 @@ import org.eni.encheres.dal.exceptions.ConnectionException;
 import org.eni.encheres.dal.exceptions.DALException;
 import org.eni.encheres.dal.exceptions.RequeteSQLException;
 import org.eni.encheres.dal.exceptions.UtilisateurExistantException;
+import org.eni.encheres.dal.exceptions.UtilisateurInexistantException;
 import org.eni.encheres.dal.jdbc.ConnectionProvider;
 /**
  * 
@@ -121,19 +122,23 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 			ResultSet rs = pstmt.executeQuery();
 			
 			// Récupération de l'ID
-			rs.next();
-			idUtilisateur = rs.getInt("no_utilisateur");
-			
+			if (rs.next()) {
+				idUtilisateur = rs.getInt("no_utilisateur");
+			}
 			
 			rs.close();
 			pstmt.close();
 			
 			} catch (SQLException sqle) {
-				sqle.printStackTrace();
+				throw new RequeteSQLException("Erreur lors des selections en base", sqle);
 			}
 			
 		} catch (SQLException sqle) {
 			throw new ConnectionException("Problème à la connection", sqle);
+		}
+		
+		if (idUtilisateur == 0) {
+			throw new UtilisateurInexistantException("L'utilisateur n'existe pas");
 		}
 		
 		return idUtilisateur;

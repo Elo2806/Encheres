@@ -8,25 +8,33 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Creer Compte</title>
 
+<!-- Déclaration des variables -->
 <c:set var="colorIdentifiant" value="black" scope="page" />
 <c:set var="colorMdp" value="black" scope="page" />
-
-<c:set var="textErreur" value="" scope="page" />
+<c:set var="textErreur" value="L insertion a échoué car :\n" scope="page" />
 <c:set var="erreur" value= "false" scope="page" />
 
-<!--  -->
+<!-- Tests des attributs d'erreur pour changer la couleur de champs en erreur  -->
 <c:if test="${param.erreurIdentifiant == true }">
 	<c:set var="ColorIdentifiant" value="red" scope="page" />
-	<script type="text/javascript">
-		alert('Identifiant déjà existant');
-	</script>
+	<c:set var="textErreur" value="${textErreur} identifiant existe déjà\n" scope="page" />
+	<c:set var="erreur" value= "true" scope="page" />
 </c:if>
 
 <c:if test="${param.erreurMdp == true }">
 	<c:set var="ColorMdp" value="red" scope="page" />
+	<c:set var="textErreur" value="${textErreur} confirmation différente du mot de passe\n" scope="page" />
+	<c:set var="erreur" value= "true" scope="page" />
 </c:if>
 
+<c:if test="${erreur == 'true' }">
+    <script type="text/javascript">
+		var txt = '${textErreur}';
+		alert(txt);
+	</script>
+</c:if>
 
+<!-- Mise en forme -->
 <style type="text/css">
 	.ProblemeIdentifiant {
 		color: ${ColorIdentifiant}
@@ -35,9 +43,9 @@
 		color: ${ColorMdp}
 	}
 </style>
-
 </head>
 
+<!-- Corp de la JSP -->
 <body>
 	<%@include file="EnTeteEni.jspf"%>
 	<br>

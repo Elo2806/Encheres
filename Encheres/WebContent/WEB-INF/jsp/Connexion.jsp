@@ -1,24 +1,42 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Connexion</title>
+
+<c:set var="ColorIdentifiant" value="black" scope="page" />
+<c:if test="${requestScope.erreurIdentifiant == true }">
+	<c:set var="ColorIdentifiant" value="red" scope="page" />
+	<script type="text/javascript">
+		alert('Identifiant non existant');
+	</script>
+</c:if>
+
 <style type="text/css">
-	section{
-	text-align: center;
+	
+	.intitule{
+	display:flex;
+	flex-direction:column;
+	justify-content: flex-start;
+	border: black solid;
 	}
 	.intitule{
-	display:flex
-	flex-direction:column
+	color:${ColorIdentifiant}
 	}
 	.champ{
-	display:flex
+	display:flex;
+	flex-direction:column;
+	justify-content: flex-start;
+	border: black solid;
 	}
 	#identifiants{
-	display:flex
+	display:flex;
+	justify-content: center;
 	}
+	
 </style>
 </head>
 <body>
@@ -26,12 +44,14 @@
 	<section>
 		<form method="post" action="<%=request.getContextPath()%>/ServletConnexion">
 			<div id="identifiants">
-				<label class="intitule" for="identifiant">Identifiant : </label>
-				<label class="intitule" for="motdepasse">Mot de passe : </label>
-				
-			
-				<input class="champ"t type="text" name="identifiant" id="identifiant">
-				<input class="champ" type="password" name="motdepasse" id="motdepasse">
+				<div class="intitule">
+					<label for="identifiant">Identifiant : </label>
+					<label for="motdepasse">Mot de passe : </label>
+				</div>
+				<div class="champ">
+					<input type="text" name="identifiant" id="identifiant" value="${param.identifiant }">
+					<input type="password" name="motdepasse" id="motdepasse" value="${param.motdepasse }">
+				</div>
 			</div>
 			
 			<div>
