@@ -10,6 +10,7 @@ import java.sql.SQLException;
 
 import org.eni.encheres.bo.ArticleVendu;
 import org.eni.encheres.dal.exceptions.ConnectionException;
+import org.eni.encheres.dal.exceptions.DALException;
 import org.eni.encheres.dal.jdbc.ConnectionProvider;
 
 /**
@@ -25,11 +26,14 @@ public class ArticleDAOImpl implements ArticleDAO {
 	 * 
 	 */
 	@Override
-	public void insert(ArticleVendu newArticle) throws ConnectionException {
+	public void insert(ArticleVendu newArticle) throws DALException {
 		
 		// Connection en base
 		try(Connection cnx = ConnectionProvider.getConnection()){
 			
+			try {
+				
+			cnx.setAutoCommit(false);	
 			PreparedStatement pstmt = cnx.prepareStatement(INSERT_ARTICLE, PreparedStatement.RETURN_GENERATED_KEYS);
 			
 			// Valorisation des parametres du PreparedStatement
@@ -54,6 +58,14 @@ public class ArticleDAOImpl implements ArticleDAO {
 			rs.close();
 			pstmt.close();
 			
+			// Tout s'est bien passé => transaction validée
+			cnx.commit();
+			
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+				// Il y a eu une probleme => transaction annulée
+				cnx.rollback();
+			}
 		} catch (SQLException sqle){
 			sqle.printStackTrace();
 			throw new ConnectionException("Problème de connection", sqle);
