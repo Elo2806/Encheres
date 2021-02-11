@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.eni.encheres.dal;
+package org.eni.encheres.dal.encheres;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +10,6 @@ import java.sql.SQLException;
 
 import org.apache.tomcat.dbcp.dbcp2.PStmtKey;
 import org.eni.encheres.bo.Enchere;
-import org.eni.encheres.dal.encheres.EnchereDAO;
 import org.eni.encheres.dal.exceptions.ConnectionException;
 import org.eni.encheres.dal.exceptions.DALException;
 import org.eni.encheres.dal.jdbc.ConnectionProvider;

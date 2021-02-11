@@ -31,7 +31,7 @@
 		<div>
 			<p>
 				Meilleur offre : <span id="nbPointsMeilleur">210</span> pts par <span
-					id="pseudoMeilleur">Bob</span>
+					id="pseudoMeilleur" name="nbPointsMeilleur">Bob</span>
 			</p>
 		</div>
 		<div>

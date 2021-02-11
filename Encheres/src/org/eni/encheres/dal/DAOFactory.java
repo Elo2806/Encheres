@@ -7,6 +7,7 @@ import org.eni.encheres.dal.articles.ArticleDAO;
 import org.eni.encheres.dal.articles.ArticleDAOImpl;
 import org.eni.encheres.dal.categories.CategorieDao;
 import org.eni.encheres.dal.encheres.EnchereDAO;
+import org.eni.encheres.dal.encheres.EnchereDAOimpl;
 import org.eni.encheres.dal.utilisateurs.UtilisateurDAO;
 import org.eni.encheres.dal.utilisateurs.UtilisateurDAOimpl;
 

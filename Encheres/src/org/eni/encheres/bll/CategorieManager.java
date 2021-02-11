@@ -26,7 +26,7 @@ public class CategorieManager {
 
 	
 	public List<Categorie> getCategories() {
-		List<Categorie> categories;
+		List<Categorie> categories = null;
 		
 		try {
 			categories = categorieDao.findAll();
