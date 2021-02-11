@@ -25,11 +25,22 @@ public class ServletConnexion extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//Si les identifiants/mot de passe ok :
-		getServletContext().getRequestDispatcher("/ServletAccueil").forward(request, response);
 		
-		//Si les identifiants/mot de passe pas existants :
-//		getServletContext().getRequestDispatcher("/connexion").forward(request, response);
+		String identifiants = request.getParameter("identifiant");
+		String motDePasse = request.getParameter("motdepasse");
+		// Vérifier identifiant et mots de passe
+		Boolean trouve = UtilisateurManager.verifierIdMdP();
+		
+		//Si les identifiant/mot de passe ok :
+		if (trouve) {
+			getServletContext().getRequestDispatcher("/ServletAccueil").forward(request, response);
+		} else {
+			//Si les identifiant/mot de passe pas existants :
+			getServletContext().getRequestDispatcher("/connexion").forward(request, response);
+		}
+		
+		
+		
 	
 	}
 
