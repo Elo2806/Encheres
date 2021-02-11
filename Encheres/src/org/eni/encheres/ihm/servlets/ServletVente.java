@@ -12,8 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.eni.encheres.bll.ArticleManager;
-import org.eni.encheres.bll.EnchereManager;
 import org.eni.encheres.bo.ArticleVendu;
+import org.eni.encheres.bo.Categorie;
+import org.eni.encheres.bo.Utilisateur;
 
 /**
  * Servlet implementation class ServletVente
@@ -36,9 +37,9 @@ public class ServletVente extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Utilisateur vendeur = (Utilisateur) request.getSession().getAttribute("utilisateur");
 		//Si l'utilisateur est autorisé (compte actif ou non)
-		if (vendeur.isActif) {
-		
+		if (vendeur.isActif()) {
 			// Entrez l'adresse du vendeur par défaut
 				// Récupérer l'adresse
 			String rue = vendeur.getRue();
@@ -58,11 +59,11 @@ public class ServletVente extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		
+		Utilisateur vendeur = (Utilisateur) request.getSession().getAttribute("utilisateur");
 		// récupérer les paramètres
 		String article = request.getParameter(PARAM_ARTICLE);
 		String description = request.getParameter(PARAM_DESCRIPTION);
-		String categorie = request.getParameter(PARAM_CATEGORIE);
+		Categorie categorie = request.getParameter(PARAM_CATEGORIE); //TODO
 		Integer prixdepart = Integer.parseInt(request.getParameter(PARAM_PRIXDEPART));
 		LocalDate dateDebut = LocalDate.parse(request.getParameter(PARAM_DATEDEBUT), DateTimeFormatter.ofPattern(FORMAT_DATE)); 
 		LocalDate dateFin = LocalDate.parse(request.getParameter(PARAM_DATEFIN), DateTimeFormatter.ofPattern(FORMAT_DATE)); 
