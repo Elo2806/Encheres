@@ -28,7 +28,7 @@ public class ServletCompte extends HttpServlet {
 
 	private static final String ATTR_ERREUR_MESSAGE = "ErreurMessage";
 
-	private static final String SERVLET_CONNEXION = "/ServletConnexion"
+	private static final String SERVLET_CONNEXION = "/ServletConnexion";
 	
 	private static final String JSP_COMPTE = "/compte";
 	

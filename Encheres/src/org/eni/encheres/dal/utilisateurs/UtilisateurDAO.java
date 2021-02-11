@@ -30,5 +30,7 @@ public interface UtilisateurDAO {
 	 * @throws DALException si le pseudo ou l'email existe déjà
 	 */
 	public void controleUtilisateurExistence(String pseudo, String email) throws DALException;
+
+	public int controleIdentifiantsExistants(String identifiant, String motDePasse) throws DALException;
 	
 }

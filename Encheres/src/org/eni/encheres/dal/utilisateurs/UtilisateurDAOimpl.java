@@ -103,4 +103,41 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 		
 	}
 
+	@Override
+	public int controleIdentifiantsExistants(String identifiant, String motDePasse) throws DALException {
+		int idUtilisateur = 0;
+		//Connection en base
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			
+			try {
+				
+			PreparedStatement pstmt = cnx.prepareStatement("SELECT no_utilisateur FROM UTILISATEURS WHERE pseudo=? AND mot_de_passe=?");
+			
+			// Valorisation des paramètres du PreparedStatement
+			pstmt.setString(1, identifiant);
+			pstmt.setString(2, motDePasse);
+			
+			// Execution de la requete
+			ResultSet rs = pstmt.executeQuery();
+			
+			// Récupération de l'ID
+			rs.next();
+			idUtilisateur = rs.getInt("no_utilisateur");
+			
+			
+			rs.close();
+			pstmt.close();
+			
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+			}
+			
+		} catch (SQLException sqle) {
+			throw new ConnectionException("Problème à la connection", sqle);
+		}
+		
+		return idUtilisateur;
+		
+	}
+
 }

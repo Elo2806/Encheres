@@ -9,19 +9,28 @@
 	section{
 	text-align: center;
 	}
-	
+	.intitule{
+	display:flex
+	flex-direction:column
+	}
+	.champ{
+	display:flex
+	}
+	#identifiants{
+	display:flex
+	}
 </style>
 </head>
 <body>
 	<%@include file="EnTeteEni.jspf"%>
 	<section>
 		<form method="post" action="<%=request.getContextPath()%>/ServletConnexion">
-			<div>
+			<div id="identifiants">
 				<label class="intitule" for="identifiant">Identifiant : </label>
-				<inpu class="champ"t type="text" name="identifiant" id="identifiant">
-			</div>
-			<div>
 				<label class="intitule" for="motdepasse">Mot de passe : </label>
+				
+			
+				<input class="champ"t type="text" name="identifiant" id="identifiant">
 				<input class="champ" type="password" name="motdepasse" id="motdepasse">
 			</div>
 			
