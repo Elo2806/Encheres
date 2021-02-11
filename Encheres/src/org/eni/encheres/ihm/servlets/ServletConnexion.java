@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -53,6 +54,8 @@ public class ServletConnexion extends HttpServlet {
 				//Connection en base
 				try (Connection cnx = ConnectionProvider.getConnection()) {
 					
+					try {
+						
 					PreparedStatement pstmt = cnx.prepareStatement("SELECT no_utilisateur FROM UTILISATEURS WHERE pseudo=? AND mot_de_passe=?");
 					
 					// Valorisation des paramètres du PreparedStatement
@@ -69,6 +72,10 @@ public class ServletConnexion extends HttpServlet {
 					
 					rs.close();
 					pstmt.close();
+					
+					} catch (SQLException sqle) {
+						sqle.printStackTrace();
+					}
 					
 				} catch (SQLException sqle) {
 					throw new ConnectionException("Problème à la connection", sqle);
