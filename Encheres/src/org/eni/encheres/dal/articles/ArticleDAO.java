@@ -4,6 +4,7 @@
 package org.eni.encheres.dal.articles;
 
 import org.eni.encheres.bo.ArticleVendu;
+import org.eni.encheres.dal.exceptions.ConnectionException;
 
 /**
  * @author Elodie
@@ -16,8 +17,9 @@ public interface ArticleDAO {
 	 * 
 	 * Méthode permettant de 
 	 * @param newArticle
+	 * @throws ConnectionException 
 	 */
-	void insert(ArticleVendu newArticle);
+	void insert(ArticleVendu newArticle) throws ConnectionException;
 
 	
 	

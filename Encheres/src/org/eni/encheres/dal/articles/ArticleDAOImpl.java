@@ -6,8 +6,10 @@ package org.eni.encheres.dal.articles;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import org.eni.encheres.bo.ArticleVendu;
+import org.eni.encheres.dal.exceptions.ConnectionException;
 import org.eni.encheres.dal.jdbc.ConnectionProvider;
 
 /**
@@ -23,8 +25,9 @@ public class ArticleDAOImpl implements ArticleDAO {
 	 * 
 	 */
 	@Override
-	public void insert(ArticleVendu newArticle) {
+	public void insert(ArticleVendu newArticle) throws ConnectionException {
 		
+		// Connection en base
 		try(Connection cnx = ConnectionProvider.getConnection()){
 			
 			PreparedStatement pstmt = cnx.prepareStatement(INSERT_ARTICLE, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -51,8 +54,9 @@ public class ArticleDAOImpl implements ArticleDAO {
 			rs.close();
 			pstmt.close();
 			
-		} catch (Exception e){
-			e.printStackTrace();
+		} catch (SQLException sqle){
+			sqle.printStackTrace();
+			throw new ConnectionException("Problème de connection", sqle);
 		}
 		
 	}
