@@ -79,7 +79,7 @@
 				<th>
 					<div>
 						<label for="ville">Ville:</label> <input type="text" name="ville"
-							id="ville" placeholder="Veuillez entrer votre ville" required>
+							id="ville" placeholder="Veuillez entrer votre ville" required pattern="{5}">
 					</div>
 				</th>
 			</tr>
