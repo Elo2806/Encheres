@@ -5,6 +5,7 @@ package org.eni.encheres.dal;
 
 import org.eni.encheres.dal.articles.ArticleDAO;
 import org.eni.encheres.dal.articles.ArticleDAOImpl;
+import org.eni.encheres.dal.encheres.EnchereDAO;
 import org.eni.encheres.dal.utilisateurs.UtilisateurDAO;
 import org.eni.encheres.dal.utilisateurs.UtilisateurDAOimpl;
 
@@ -31,6 +32,15 @@ public abstract class DAOFactory {
 	 */
 	public static UtilisateurDAO getUtilisateurDAO() {
 		return new UtilisateurDAOimpl();
+	}
+	
+	/**
+	 * 
+	 * Méthode permettant de créer une instance concrète d'EnchereDAO
+	 * @return EnchereDAO
+	 */
+	public static EnchereDAO getEnchereDAO() {
+		return new EnchereDAOimpl();
 	}
 	
 }

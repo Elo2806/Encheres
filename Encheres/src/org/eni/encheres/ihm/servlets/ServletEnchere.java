@@ -18,7 +18,7 @@ public class ServletEnchere extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// renvoi vers liste des enchères
+		//permet d'enchérir sur un article
 		getServletContext().getRequestDispatcher("/enchere").forward(request, response);
 		
 	}
@@ -28,7 +28,7 @@ public class ServletEnchere extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// renvoi vers liste des enchères
+		//permet d'enchérir sur un article
 		getServletContext().getRequestDispatcher("/enchere").forward(request, response);
 	}
 

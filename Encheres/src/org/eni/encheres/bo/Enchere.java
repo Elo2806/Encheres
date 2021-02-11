@@ -11,7 +11,7 @@ public class Enchere {
 
 	private LocalDate dateEnchere;
 	private Integer montantEnchere;
-	private Utilisateur utilsateur;
+	private Utilisateur utilisateur;
 	private ArticleVendu article;
 	
 	
@@ -26,14 +26,14 @@ public class Enchere {
 	 * Constructeur
 	 * @param dateEnchere
 	 * @param montantEnchere
-	 * @param utilsateur
+	 * @param utilisateur
 	 * @param article
 	 */
-	public Enchere(LocalDate dateEnchere, Integer montantEnchere, Utilisateur utilsateur, ArticleVendu article) {
+	public Enchere(LocalDate dateEnchere, Integer montantEnchere, Utilisateur utilisateur, ArticleVendu article) {
 		this();
 		setDateEnchere(dateEnchere);
 		setMontantEnchere(montantEnchere);
-		setUtilsateur(utilsateur);
+		setUtilsateur(utilisateur);
 		setArticle(article);
 	}
 	// Getters et Setters
@@ -52,11 +52,11 @@ public class Enchere {
 		this.montantEnchere = montantEnchere;
 	}
 	/**
-	 * Méthode permettant de modifier utilsateur
-	 * @param utilsateur le new utilsateur
+	 * Méthode permettant de modifier utilisateur
+	 * @param utilisateur le new utilisateur
 	 */
-	private void setUtilsateur(Utilisateur utilsateur) {
-		this.utilsateur = utilsateur;
+	private void setUtilsateur(Utilisateur utilisateur) {
+		this.utilisateur = utilisateur;
 	}
 	/**
 	 * Méthode permettant de modifier article
@@ -80,11 +80,11 @@ public class Enchere {
 		return montantEnchere;
 	}
 	/**
-	 * Méthode permettant de récupérer utilsateur
-	 * @return le utilsateur
+	 * Méthode permettant de récupérer utilisateur
+	 * @return le utilisateur
 	 */
-	public Utilisateur getUtilsateur() {
-		return utilsateur;
+	public Utilisateur getUtilisateur() {
+		return utilisateur;
 	}
 	/**
 	 * Méthode permettant de récupérer article
