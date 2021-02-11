@@ -58,6 +58,17 @@ public class UtilisateurManager {
 			throw new BLLException("Erreur lors des opérations en DAL",dale);
 		}
 	}
+
+	public int verifierIdMdP(String identifiant, String motDePasse) throws BLLException {
+		int noUtilisateur;
+		try {
+			noUtilisateur = utilisateurdao.controleIdentifiantsExistants (identifiant, motDePasse);
+		} catch (DALException dale) {
+			throw new BLLException("Erreur lors des opérations en DAL",dale);
+		}
+		
+		return 0;
+	}
 		
 	
 	
