@@ -78,6 +78,7 @@ public class ServletCompte extends HttpServlet {
 		String ville = request.getParameter(PARAM_VILLE);
 		String mdp = request.getParameter(PARAM_MDP) ;
 		String confirmation = request.getParameter(PARAM_CONFIRMATION);
+		UtilisateurManager manager = UtilisateurManager.getInstance();
 		
 		try {
 			controlerMdp(mdp,confirmation);
@@ -86,7 +87,7 @@ public class ServletCompte extends HttpServlet {
 		}
 		
 		try {
-			UtilisateurManager.creerUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, mdp);
+			manager.creerUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, mdp);
 		}catch(BLLException blle) {
 			//TODO revoir la gestion exception
 			getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);

@@ -1,10 +1,13 @@
 package org.eni.encheres.bll;
 
 import org.eni.encheres.bo.Utilisateur;
+import org.eni.encheres.dal.interfaces.UtilisateurDAO;
 
 public class UtilisateurManager {
 
 	private static UtilisateurManager instance;
+	private UtilisateurDAO utilisateurdao;
+	
 	
 	/**
 	 * 
@@ -27,8 +30,11 @@ public class UtilisateurManager {
 	public Utilisateur creerUtilisateur(String pseudo,String nom,String prenom,String email,String telephone,String rue,String codePostal,String ville,String motDePasse) {
 		Utilisateur user = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, 0, false);
 		
+		
 	
 		return null;
 	}
 
+	
+	
 }
