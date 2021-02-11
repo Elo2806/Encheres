@@ -10,7 +10,14 @@ import org.eni.encheres.dal.exceptions.ConnectionException;
 import org.eni.encheres.dal.exceptions.DALException;
 import org.eni.encheres.dal.exceptions.RequeteSQLException;
 import org.eni.encheres.dal.jdbc.ConnectionProvider;
-
+/**
+ * 
+ * Cette classe permet de centraliser les méthodes d'intéraction avec le système de persistance
+ * 
+ * @author Taharqa
+ * Créé le: 11 févr. 2021
+ * Mofifié le: 11 févr. 2021
+ */
 public class UtilisateurDAOimpl implements UtilisateurDAO {
 
 	private static final String SQL_CREATE = "INSERT INTO Utilisateurs (no_utilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif) VALUES (default,?,?,?,?,?,?,?,?,?,?,FALSE,TRUE)";
