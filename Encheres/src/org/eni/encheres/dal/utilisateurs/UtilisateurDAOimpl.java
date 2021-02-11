@@ -105,26 +105,45 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 	}
 
 	@Override
-	public int controleIdentifiantsExistants(String identifiant, String motDePasse) throws DALException {
-		int idUtilisateur = 0;
+	public Utilisateur controleIdentifiantsExistants(String pIdentifiant, String pMotDePasse) throws DALException {
+		Utilisateur utilisateur = null;
 		//Connection en base
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			
 			try {
 				
-			PreparedStatement pstmt = cnx.prepareStatement("SELECT no_utilisateur FROM UTILISATEURS WHERE pseudo=? AND mot_de_passe=?");
+			PreparedStatement pstmt = cnx.prepareStatement("SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif FROM UTILISATEURS WHERE pseudo=? AND mot_de_passe=?");
 			
 			// Valorisation des paramètres du PreparedStatement
-			pstmt.setString(1, identifiant);
-			pstmt.setString(2, motDePasse);
+			pstmt.setString(1, pIdentifiant);
+			pstmt.setString(2, pMotDePasse);
 			
 			// Execution de la requete
 			ResultSet rs = pstmt.executeQuery();
 			
 			// Récupération de l'ID
 			if (rs.next()) {
-				idUtilisateur = rs.getInt("no_utilisateur");
+				int noUtilisateur = rs.getInt("no_utilisateur");
+				String pseudo = rs.getString("pseudo");
+				String nom = rs.getString("nom");
+				String prenom = rs.getString("prenom");
+				String email = rs.getString("email");
+				String telephone = rs.getString("telephone");
+				String rue = rs.getString("rue");
+				String codePostal = rs.getString("code_postal");
+				String ville = rs.getString("ville");
+				String motDePasse = rs.getString("mot_de_passe");
+				int credit = rs.getInt("credit");
+				boolean administrateur = rs.getBoolean("administrateur");
+				boolean actif = rs.getBoolean("actif");
+				
+				utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
+				
+				utilisateur.setNoUtilisateur(noUtilisateur);
+				utilisateur.setActif(actif);
+				
 			}
+			
 			
 			rs.close();
 			pstmt.close();
@@ -137,11 +156,11 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 			throw new ConnectionException("Problème à la connection", sqle);
 		}
 		
-		if (idUtilisateur == 0) {
+		if (utilisateur == null) {
 			throw new UtilisateurInexistantException("L'utilisateur n'existe pas");
 		}
 		
-		return idUtilisateur;
+		return utilisateur;
 		
 	}
 

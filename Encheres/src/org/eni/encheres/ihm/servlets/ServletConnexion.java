@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 import org.eni.encheres.bll.UtilisateurManager;
 import org.eni.encheres.bll.exceptions.BLLException;
+import org.eni.encheres.bo.Utilisateur;
 import org.eni.encheres.dal.exceptions.ConnectionException;
 import org.eni.encheres.dal.jdbc.ConnectionProvider;
 
@@ -51,9 +52,9 @@ public class ServletConnexion extends HttpServlet {
 		
 		// Vérifier identifiant et mots de passe
 		UtilisateurManager manager = UtilisateurManager.getInstance();
-		int noUtilisateur = 0;
+		Utilisateur utilisateur = null;
 		try {
-			noUtilisateur = manager.verifierIdMdP(identifiants, motDePasse);
+			utilisateur = manager.rechercherUtilisateur(identifiants, motDePasse);
 		} catch (BLLException blle) {
 			blle.printStackTrace();
 			//Si les identifiant/mot de passe pas existants :
@@ -62,7 +63,7 @@ public class ServletConnexion extends HttpServlet {
 		}
 		
 		HttpSession session = request.getSession();
-		session.setAttribute("idUtilisateur", noUtilisateur);
+		session.setAttribute("utilisateur", utilisateur);
 		
 		//Si les identifiant/mot de passe ok :
 		getServletContext().getRequestDispatcher("/ServletAccueil").forward(request, response);

@@ -40,6 +40,6 @@ public interface UtilisateurDAO {
 	 * @return le n° utilisateur qui est égale à 0 si non trouvé
 	 * @throws DALException
 	 */
-	public int controleIdentifiantsExistants(String identifiant, String motDePasse) throws DALException;
+	public Utilisateur controleIdentifiantsExistants(String identifiant, String motDePasse) throws DALException;
 	
 }

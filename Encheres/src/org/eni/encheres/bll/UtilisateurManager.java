@@ -58,15 +58,23 @@ public class UtilisateurManager {
 		}
 	}
 
-	public int verifierIdMdP(String identifiant, String motDePasse) throws BLLException {
-		int noUtilisateur;
+	/**
+	 * 
+	 * Méthode permettant de vérifier et récuperer un utilisateur existant selon son pseudo et son mot de pass
+	 * @param identifiant
+	 * @param pseudo
+	 * @return
+	 * @throws BLLException
+	 */
+	public Utilisateur rechercherUtilisateur(String pseudo, String motDePasse) throws BLLException {
+		Utilisateur utilisateur = null;
 		try {
-			noUtilisateur = utilisateurdao.controleIdentifiantsExistants (identifiant, motDePasse);
+			utilisateur = utilisateurdao.controleIdentifiantsExistants (pseudo, motDePasse);
 		} catch (DALException dale) {
 			throw new BLLException("Erreur lors des opérations en DAL",dale);
 		}
 		
-		return noUtilisateur;
+		return utilisateur;
 	}
 		
 	

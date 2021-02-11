@@ -59,6 +59,7 @@ public class Utilisateur {
 		setAdministrateur(administrateur);
 	}
 	
+	
 	// Getters et Setters
 	/**
 	 * Méthode permettant de récupérer noUtilisateur
