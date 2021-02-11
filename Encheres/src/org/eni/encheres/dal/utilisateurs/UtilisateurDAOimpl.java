@@ -9,6 +9,7 @@ import org.eni.encheres.bo.Utilisateur;
 import org.eni.encheres.dal.exceptions.ConnectionException;
 import org.eni.encheres.dal.exceptions.DALException;
 import org.eni.encheres.dal.exceptions.RequeteSQLException;
+import org.eni.encheres.dal.exceptions.UtilisateurExistantException;
 import org.eni.encheres.dal.jdbc.ConnectionProvider;
 /**
  * 
@@ -26,7 +27,6 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 	public Utilisateur create(Utilisateur newUtilisateur) throws DALException {
 		Utilisateur updatedUtilisateur;
 		PreparedStatement prepare;
-		// Connection cnx;
 
 		// Connection en base
 		try (Connection cnx = ConnectionProvider.getConnection()) {
@@ -64,6 +64,43 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 		updatedUtilisateur = newUtilisateur;
 
 		return updatedUtilisateur;
+	}
+
+	@Override
+	public void controleUtilisateurExistence(String pseudo, String email) throws DALException {
+		PreparedStatement prepare;
+		ResultSet rs;
+		
+		// Connection en base
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			// Traitement de la requete SQL
+			try {
+				//Test existence du pseudo
+				prepare = cnx.prepareStatement("SELECT no_utilisateur FROM Utilisateurs WHERE pseudo=?");
+				prepare.setString(1, pseudo);
+				rs = prepare.executeQuery();
+				if (rs.next()) {
+					throw new UtilisateurExistantException() ;
+				}
+
+				//Test existence de l'adresse email
+				prepare = cnx.prepareStatement("SELECT no_utilisateur FROM Utilisateurs WHERE email=?");
+				prepare.setString(1,email);
+				rs = prepare.executeQuery();
+				if (rs.next()) {
+					throw new UtilisateurExistantException() ;
+				}
+				
+				rs.close();
+				prepare.close();
+			} catch (SQLException sqle) {
+				throw new RequeteSQLException("Erreur lors des selections en base", sqle);
+			}
+
+		} catch (SQLException sqle) {
+			throw new ConnectionException("Erreur connection", sqle);
+		}
+		
 	}
 
 }

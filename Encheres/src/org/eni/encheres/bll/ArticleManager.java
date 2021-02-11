@@ -18,6 +18,7 @@ import org.eni.encheres.dal.articles.ArticleDAO;
  */
 public class ArticleManager {
 
+	private static ArticleManager instance;
 	private ArticleDAO articleDao;
 
 	/**
@@ -27,12 +28,23 @@ public class ArticleManager {
 		this.articleDao = DAOFactory.getArticleDAO();
 	}
 	
-	public ArticleVendu ajouterArticle(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
-			Utilisateur vendeur, Categorie categorie) {
+	public static ArticleManager getInstance() {
+		if(instance==null) {
+			instance = new ArticleManager();
+		}
+		return instance;
+	}
+	public void ajouterArticle(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, Utilisateur vendeur, Categorie categorie) {
+		
+		ArticleVendu nouvelArticle = creerArticle(nomArticle, description, dateDebutEncheres, dateFinEncheres,
+				vendeur, categorie);
+		this.articleDao.insert(nouvelArticle);
+	}
+	
+	public ArticleVendu creerArticle(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres, Utilisateur vendeur, Categorie categorie) {
+		
 		ArticleVendu newArticle = new ArticleVendu(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur, categorie);
 		
-		this.articleDao.insert(newArticle);
-				
 		return newArticle;
 	}
 	
