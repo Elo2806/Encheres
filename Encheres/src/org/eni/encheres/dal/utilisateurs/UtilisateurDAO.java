@@ -31,6 +31,15 @@ public interface UtilisateurDAO {
 	 */
 	public void controleUtilisateurExistence(String pseudo, String email) throws DALException;
 
+	
+	/**
+	 * 
+	 * Méthode permettant de contrôler l'existence de l'utilisateur dans le systeme de persistance
+	 * @param identifiant à tester
+	 * @param motDePasse à tester
+	 * @return le n° utilisateur qui est égale à 0 si non trouvé
+	 * @throws DALException
+	 */
 	public int controleIdentifiantsExistants(String identifiant, String motDePasse) throws DALException;
 	
 }

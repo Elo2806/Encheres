@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.eni.encheres.bll.UtilisateurManager;
 import org.eni.encheres.bll.exceptions.BLLException;
@@ -43,6 +44,7 @@ public class ServletConnexion extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setCharacterEncoding("UTF-8");
 		
 		String identifiants = request.getParameter("identifiant");
 		String motDePasse = request.getParameter("motdepasse");
@@ -54,18 +56,16 @@ public class ServletConnexion extends HttpServlet {
 			noUtilisateur = manager.verifierIdMdP(identifiants, motDePasse);
 		} catch (BLLException blle) {
 			blle.printStackTrace();
-		}
-		
-		//Si les identifiant/mot de passe ok :
-		if (noUtilisateur != 0) {
-			getServletContext().getRequestDispatcher("/ServletAccueil").forward(request, response);
-		} else {
 			//Si les identifiant/mot de passe pas existants :
+			request.setAttribute("erreurIdentifiant", true);
 			getServletContext().getRequestDispatcher("/connexion").forward(request, response);
 		}
 		
+		HttpSession session = request.getSession();
+		session.setAttribute("idUtilisateur", noUtilisateur);
 		
-		
+		//Si les identifiant/mot de passe ok :
+		getServletContext().getRequestDispatcher("/ServletAccueil").forward(request, response);
 	
 	}
 

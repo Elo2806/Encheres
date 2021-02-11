@@ -4,7 +4,6 @@ import org.eni.encheres.bll.exceptions.BLLException;
 import org.eni.encheres.bo.Utilisateur;
 import org.eni.encheres.dal.DAOFactory;
 import org.eni.encheres.dal.exceptions.DALException;
-import org.eni.encheres.dal.exceptions.RequeteSQLException;
 import org.eni.encheres.dal.utilisateurs.UtilisateurDAO;
 
 public class UtilisateurManager {
@@ -67,7 +66,7 @@ public class UtilisateurManager {
 			throw new BLLException("Erreur lors des opérations en DAL",dale);
 		}
 		
-		return 0;
+		return noUtilisateur;
 	}
 		
 	
