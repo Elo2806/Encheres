@@ -1,14 +1,14 @@
 /**
  * 
  */
-package org.eni.encheres.dal.jdbc;
+package org.eni.encheres.dal.articles;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 import org.eni.encheres.bo.ArticleVendu;
-import org.eni.encheres.dal.ArticleDAO;
+import org.eni.encheres.dal.jdbc.ConnectionProvider;
 
 /**
  * @author Elodie

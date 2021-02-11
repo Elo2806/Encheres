@@ -8,8 +8,8 @@ import java.time.LocalDate;
 import org.eni.encheres.bo.ArticleVendu;
 import org.eni.encheres.bo.Categorie;
 import org.eni.encheres.bo.Utilisateur;
-import org.eni.encheres.dal.ArticleDAO;
 import org.eni.encheres.dal.DAOFactory;
+import org.eni.encheres.dal.articles.ArticleDAO;
 
 /**
  * @author Elodie

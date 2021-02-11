@@ -1,4 +1,4 @@
-package org.eni.encheres.dal.interfaces;
+package org.eni.encheres.dal.utilisateurs;
 
 import org.eni.encheres.bo.Utilisateur;
 import org.eni.encheres.dal.exceptions.DALException;

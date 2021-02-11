@@ -1,7 +1,7 @@
 package org.eni.encheres.bll;
 
 import org.eni.encheres.bo.Utilisateur;
-import org.eni.encheres.dal.interfaces.UtilisateurDAO;
+import org.eni.encheres.dal.utilisateurs.UtilisateurDAO;
 
 public class UtilisateurManager {
 
