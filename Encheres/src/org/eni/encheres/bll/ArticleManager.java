@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import org.eni.encheres.bo.ArticleVendu;
 import org.eni.encheres.bo.Categorie;
 import org.eni.encheres.bo.Utilisateur;
+import org.eni.encheres.dal.ArticleDAO;
+import org.eni.encheres.dal.DAOFactory;
 
 /**
  * @author Elodie
@@ -27,7 +29,7 @@ public class ArticleManager {
 	
 	public ArticleVendu ajouterArticle(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
 			Utilisateur vendeur, Categorie categorie) {
-		ArticleVendu newArticle = new ArticleVendu(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur, categorie)
+		ArticleVendu newArticle = new ArticleVendu(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur, categorie);
 		
 		this.articleDao.insert(newArticle);
 				
