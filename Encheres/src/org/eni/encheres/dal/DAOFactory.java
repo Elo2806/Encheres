@@ -3,7 +3,8 @@
  */
 package org.eni.encheres.dal;
 
-import org.eni.encheres.dal.jdbc.ArticleDAOImpl;
+import org.eni.encheres.dal.articles.ArticleDAO;
+import org.eni.encheres.dal.articles.ArticleDAOImpl;
 
 /**
  * @author Elodie

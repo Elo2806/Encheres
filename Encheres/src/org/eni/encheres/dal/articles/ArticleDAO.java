@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.eni.encheres.dal;
+package org.eni.encheres.dal.articles;
 
 import org.eni.encheres.bo.ArticleVendu;
 

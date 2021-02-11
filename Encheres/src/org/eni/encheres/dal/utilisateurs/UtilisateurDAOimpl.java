@@ -1,4 +1,4 @@
-package org.eni.encheres.dal.implementations;
+package org.eni.encheres.dal.utilisateurs;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,7 +9,6 @@ import org.eni.encheres.bo.Utilisateur;
 import org.eni.encheres.dal.exceptions.ConnectionException;
 import org.eni.encheres.dal.exceptions.DALException;
 import org.eni.encheres.dal.exceptions.RequeteSQLException;
-import org.eni.encheres.dal.interfaces.UtilisateurDAO;
 import org.eni.encheres.dal.jdbc.ConnectionProvider;
 
 public class UtilisateurDAOimpl implements UtilisateurDAO {
