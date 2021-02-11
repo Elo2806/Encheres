@@ -10,12 +10,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.eni.encheres.bll.UtilisateurManager;
 import org.eni.encheres.bll.exceptions.BLLException;
+import org.eni.encheres.ihm.exceptions.MotDePasseException;
 
 /**
  * Servlet implementation class ServletCreationCompte
  */
 @WebServlet("/ServletCompte")
 public class ServletCompte extends HttpServlet {
+	private static final String ERREUR_GENERIQUE = "generique";
+	private static final String ERREUR_IDENTIFIANT = "identifiant";
+	private static final String ERREUR_MDP = "mdp";
+	private static final String ATTR_ERREUR_MESSAGE = "ErreurMessage";
 	private static final String SERVLET_CONNEXION = "/ServletConnexion";
 	private static final String PARAM_CREATION = "creation";
 	private static final String PARAM_VILLE = "ville";
@@ -28,7 +33,7 @@ public class ServletCompte extends HttpServlet {
 	private static final String PARAM_PSEUDO = "pseudo";
 	private static final String JSP_COMPTE = "/compte";
 	private static final String PARAM_CONFIRMATION = "confirmation";
-	private static final String PARAM_MDP = "mdp";
+	private static final String PARAM_MDP = ERREUR_MDP;
 	private static final String PARAM_SUPPRESSION = "suppression";
 	private static final String PARAM_MODIFICATION = "modification";
 	private static final long serialVersionUID = 1L;
@@ -83,29 +88,26 @@ public class ServletCompte extends HttpServlet {
 		try {
 			controlerMdp(mdp,confirmation);
 		} catch (MotDePasseException mdpe) {
+			request.setAttribute(ATTR_ERREUR_MESSAGE, ERREUR_MDP);
 			getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);
 		}
 		
 		try {
-			manager.creerUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, mdp);
-		}catch(BLLException blle) {
-			//TODO revoir la gestion exception
+			manager.controleIdentifiantNewUtilisateur(pseudo,email);
+		} catch (BLLException e) {
+			request.setAttribute(ATTR_ERREUR_MESSAGE, ERREUR_IDENTIFIANT);
 			getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);
 		}
 		
+		try {
+			manager.ajouterUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, mdp);
+		}catch(BLLException blle) {
+			request.setAttribute(ATTR_ERREUR_MESSAGE, ERREUR_GENERIQUE);
+			blle.printStackTrace();
+			getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);
+		}
 		
 		getServletContext().getRequestDispatcher(SERVLET_CONNEXION).forward(request, response);
-		
-/*	Contrôle 
-	mdp + confirm = identique
-
- 	Contrôle base de donnée
- 	pseudo  et email unique
-	
-	Controle formulaire
-	code postal entre 1000 et 99999
-	numéro tel nom: 2 lettres
-*/
 
 	}
 

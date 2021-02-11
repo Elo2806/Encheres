@@ -21,5 +21,14 @@ public interface UtilisateurDAO {
 	 * @throws DALException si un problème survient lors de l'insertion en base
 	 */
 	public Utilisateur create(Utilisateur nouvelUtilisateur) throws DALException;
+
+	/**
+	 * 
+	 * Méthode permettant de contrôler la non existence d'un pseudo ou d'un email dans le systeme de persistance
+	 * @param pseudo pseudo à tester
+	 * @param email email à tester
+	 * @throws DALException si le pseudo ou l'email existe déjà
+	 */
+	public void controleUtilisateurExistence(String pseudo, String email) throws DALException;
 	
 }

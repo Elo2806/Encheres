@@ -1,6 +1,4 @@
-package org.eni.encheres.ihm.servlets;
-
-import org.eni.encheres.ihm.exceptions.IHMException;
+package org.eni.encheres.ihm.exceptions;
 
 public class MotDePasseException extends IHMException {
 
