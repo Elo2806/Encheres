@@ -38,7 +38,7 @@ public class ServletVente extends HttpServlet {
 	private static final String PARAM_ARTICLE = "article";
 	private static final long serialVersionUID = 1L;
 	private static final String FORMAT_DATE = "yyyy-MM-dd";
-	private static final String FORMAT_HEURE = "HH-mm";
+	private static final String FORMAT_HEURE = "hh:mm";
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -87,12 +87,15 @@ public class ServletVente extends HttpServlet {
 			}
 		}
 System.out.println(request.getParameter(PARAM_DATEDEBUT));
+System.out.println(request.getParameter(PARAM_HEUREDEBUT));
 
 		Integer prixdepart = Integer.parseInt(request.getParameter(PARAM_PRIXDEPART));
 		LocalDate pDateDebut = LocalDate.parse(request.getParameter(PARAM_DATEDEBUT),
 				DateTimeFormatter.ofPattern(FORMAT_DATE));
+		
 		LocalTime pHeureDebut = LocalTime.parse(request.getParameter(PARAM_HEUREDEBUT),
 				DateTimeFormatter.ofPattern(FORMAT_HEURE));
+		
 		LocalDate pDateFin = LocalDate.parse(request.getParameter(PARAM_DATEFIN),
 				DateTimeFormatter.ofPattern(FORMAT_DATE));
 		LocalTime pHeureFin = LocalTime.parse(request.getParameter(PARAM_HEUREFIN),
