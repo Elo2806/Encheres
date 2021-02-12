@@ -170,7 +170,7 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 			}
 			
 		} catch (SQLException sqle) {
-			throw new ConnectionException("Problème à la connection", sqle);
+			throw new ConnectionException("Problème de connection", sqle);
 		}
 		
 		if (utilisateur == null) {

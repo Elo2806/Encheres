@@ -41,7 +41,7 @@ public class ArticleManager {
 		ArticleVendu nouvelArticle = creerArticle(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur,
 				categorie);
 		try {
-			this.articleDao.insert(nouvelArticle);
+			this.articleDao.create(nouvelArticle);
 		} catch (DALException dale) {
 			throw new BLLException("Erreur lors de l'acces à la DAL", dale);
 		}

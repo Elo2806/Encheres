@@ -22,6 +22,6 @@ public interface EnchereDAO {
 	 * @param nouvelleEnchere Enchere à ajouter en base
 	 * @throws DALException si un problème survient lors de l'insertion en base
 	 */
-	void encherir(Enchere nouvelleEnchere) throws DALException;
+	void create(Enchere nouvelleEnchere) throws DALException;
 	
 }
