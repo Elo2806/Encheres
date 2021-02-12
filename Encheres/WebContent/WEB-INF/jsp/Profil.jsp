@@ -40,8 +40,8 @@
         
         </form>
         
-        <a href="<%=request.getContextPath()%>/ServletCompte"><input type="button" value="Modifier"/></a>
-         <a href="<%=request.getContextPath()%>/ServletAccueil"><input type="button" value="Accueil"/></a>
+        <a href="${pageContext.request.contextPath}/ServletCompte?modification=true"><input type="button" value="Modifier"/></a>
+         <a href="${pageContext.request.contextPath}/ServletAccueil"><input type="button" value="Accueil"/></a>
         
 </div>
 

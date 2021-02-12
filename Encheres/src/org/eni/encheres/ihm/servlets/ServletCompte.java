@@ -69,14 +69,12 @@ public class ServletCompte extends HttpServlet {
 		request.setAttribute("utilisateurAffiche", utilisateurAffiche);
 		
 		if (modification != null && modification) {
-			if (!creation) {
-				
-			}
 			getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);
-
+			
 		} else if (suppression != null && suppression) {
 		}
 		else{
+			System.out.println("ca passe ici");
 			getServletContext().getRequestDispatcher(JSP_PROFIL).forward(request, response);
 		}
 	}

@@ -37,7 +37,7 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 	private static final String COL_PSEUDO = "pseudo";
 	private static final String COL_NO_UTILISATEUR = "no_utilisateur";
 	
-	private static final String SQL_SELECT_BY_PSEUDO_AND_MOT_DE_PASSE = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif FROM UTILISATEURS WHERE pseudo=? AND mot_de_passe=?";
+	private static final String SQL_SELECT_BY_MOT_DE_PASSE = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif FROM UTILISATEURS WHERE mot_de_passe=?";
 	private static final String SQL_SELECT_BY_EMAIL = "SELECT no_utilisateur FROM Utilisateurs WHERE email=?";
 	private static final String SQL_SELECT_BY_PSEUDO = "SELECT no_utilisateur FROM Utilisateurs WHERE pseudo=?";
 	private static final String SQL_CREATE = "INSERT INTO Utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif) VALUES (?,?,?,?,?,?,?,?,?,?,0,1)";
@@ -130,17 +130,16 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 			
 			try {
 				
-			PreparedStatement pstmt = cnx.prepareStatement(SQL_SELECT_BY_PSEUDO_AND_MOT_DE_PASSE);
+			PreparedStatement pstmt = cnx.prepareStatement(SQL_SELECT_BY_MOT_DE_PASSE);
 			
 			// Valorisation des paramètres du PreparedStatement
-			pstmt.setString(1, pIdentifiant);
-			pstmt.setString(2, pMotDePasse);
+			pstmt.setString(1, pMotDePasse);
 			
 			// Execution de la requete
 			ResultSet rs = pstmt.executeQuery();
 			
 			// Récupération de l'ID
-			if (rs.next()) {
+			while (rs.next()) {
 				int noUtilisateur = rs.getInt(COL_NO_UTILISATEUR);
 				String pseudo = rs.getString(COL_PSEUDO);
 				String nom = rs.getString(COL_NOM);
@@ -155,7 +154,10 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 				boolean administrateur = rs.getBoolean(COL_ADMINISTRATEUR);
 				boolean actif = rs.getBoolean(COL_ACTIF);
 				
-				utilisateur = DAOFactory.creerUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur, noUtilisateur, actif);
+				if ((pIdentifiant.equals(pseudo))||(pIdentifiant.equals(email))){
+					utilisateur = DAOFactory.creerUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur, noUtilisateur, actif);
+				}
+				
 				
 			}
 			

@@ -54,8 +54,7 @@
 
 	<h1>Mon Profil</h1>
 
-	<form method="post"
-		action="<%=request.getContextPath()%>/ServletCompte">
+	<form method="post" action="<c:url value="/ServletCompte"/>">
 
 		<table>
 			<tr>
@@ -63,16 +62,24 @@
 					<div class="ProblemeIdentifiant">
 						<label for="pseudo">Pseudo:</label> <input type="text"
 							name="pseudo" id="pseudo"
-							placeholder="Veuillez entrer votre pseudo" required
+							placeholder="Veuillez entrer votre pseudo" value="${utilisateurAffiche.pseudo }" required
 							pattern="[A-Za-z0-9]{1,30}" autofocus>
 					</div>
 				</th>
 
 				<th>
 					<div>
-						<label for="nom">Nom:</label> <input type="text" name="nom"
-							id="nom" placeholder="Veuillez entrer votre nom" required
+						<label for="nom">Nom:</label>
+						<c:if test="${!param.creation}">
+						<span name="nomFige"
+							id="nomFige">${utilisateurAffiche.nom }</span>
+						
+						</c:if>
+						<c:if test="${param.creation}">
+						 <input type="text" name="nom"
+							id="nom" placeholder="Veuillez entrer votre nom" value="${utilisateurAffiche.nom }" required
 							pattern="[A-Za-z]{2,30}">
+						</c:if>
 					</div>
 				</th>
 			</tr>
@@ -82,14 +89,14 @@
 					<div>
 						<label for="prenom">Prénom:</label> <input type="text"
 							name="prenom" id="prenom"
-							placeholder="Veuillez entrer votre prénom" required
+							placeholder="Veuillez entrer votre prénom" value="${utilisateurAffiche.prenom }" required
 							pattern="[A-Za-z]{2,30}">
 					</div>
 				</th>
 				<th>
 					<div class="ProblemeIdentifiant">
 						<label for="email">Email:</label> <input type="email" name="email"
-							id="email" placeholder="Veuillez entrer votre email" required>
+							id="email" placeholder="Veuillez entrer votre email" value="${utilisateurAffiche.email }" required>
 					</div>
 				</th>
 			</tr>
@@ -98,14 +105,14 @@
 					<div>
 						<label for="telephone">Téléphone:</label> <input type="text"
 							name="telephone" id="telephone"
-							placeholder="Veuillez entrer votre téléphone" required
+							placeholder="Veuillez entrer votre téléphone" value="${utilisateurAffiche.telephone }" required
 							pattern="[0-9]{10}">
 					</div>
 				</th>
 				<th>
 					<div>
 						<label for="rue">Rue:</label> <input type="text" name="rue"
-							id="rue" placeholder="Veuillez entrer votre rue" required>
+							id="rue" placeholder="Veuillez entrer votre rue" value="${utilisateurAffiche.rue }" required>
 					</div>
 				</th>
 			</tr>
@@ -114,14 +121,14 @@
 					<div>
 						<label for="codePostal">Code Postal:</label> <input type="text"
 							name="codePostal" id="codePostal"
-							placeholder="Veuillez entrer votre code postal" required
+							placeholder="Veuillez entrer votre code postal" value="${utilisateurAffiche.codePostal }" required
 							pattern="[0-9]{5}">
 					</div>
 				</th>
 				<th>
 					<div>
 						<label for="ville">Ville:</label> <input type="text" name="ville"
-							id="ville" placeholder="Veuillez entrer votre ville" required>
+							id="ville" placeholder="Veuillez entrer votre ville" value="${utilisateurAffiche.ville }" required>
 					</div>
 				</th>
 			</tr>
@@ -187,7 +194,7 @@
 					<th>
 						<div class="ProblemeMdp">
 							<label for="confirmation">Confirmation:</label> <input
-								type="password" name="ville" id="confirmation"
+								type="password" name="confirmation" id="confirmation"
 								placeholder="Veuillez confirmer votre nouveau mot de passe">
 						</div>
 					</th>
@@ -195,8 +202,9 @@
 				<tr>
 					<th>
 						<div>
-							<label for="credit">Crédit:</label> <input type="text"
-								name="credit" id="credit">
+							<label for="credit">Crédit:</label>
+							<span name="credit" id="credit">${utilisateurAffiche.credit}</span>
+								
 						</div>
 					</th>
 				</tr>
@@ -210,7 +218,7 @@
 					<th>
 						<div>
 
-							<a href="<%=request.getContextPath()%>"> <input type="button"
+							<a href="<c:url value="/ServletCompte"/>"> <input type="button"
 								value="Supprimer mon compte" /></a>
 						</div>
 					</th>
