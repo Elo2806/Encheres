@@ -99,7 +99,7 @@ public abstract class DAOFactory {
 	 * @return
 	 */
 	public static ArticleVendu creerArticle(String nomArticle, String description, LocalDateTime dateDebutEncheres,
-			LocalDate dateFinEncheres, Utilisateur vendeur, Categorie categorie) {
+			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie) {
 
 		ArticleVendu newArticle = new ArticleVendu(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur,
 				categorie);

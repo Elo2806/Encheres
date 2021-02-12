@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -71,8 +71,8 @@ public class ArticleDAOImpl implements ArticleDAO {
 			// Valorisation des parametres du PreparedStatement
 			pstmt.setString(1, newArticle.getNomArticle());
 			pstmt.setString(2, newArticle.getDescription());
-			pstmt.setDate(3, java.sql.Date.valueOf(newArticle.getDateDebutEncheres()));
-			pstmt.setDate(4, java.sql.Date.valueOf(newArticle.getDateFinEncheres()));
+			pstmt.setTimestamp(3, Timestamp.valueOf(newArticle.getDateDebutEncheres()));
+			pstmt.setTimestamp(4, Timestamp.valueOf(newArticle.getDateFinEncheres()));
 			pstmt.setInt(5, newArticle.getPrixInitial());
 			pstmt.setInt(6, newArticle.getVendeur().getNoUtilisateur());
 			pstmt.setInt(7, newArticle.getCategorie().getNoCategorie());
@@ -127,8 +127,8 @@ public class ArticleDAOImpl implements ArticleDAO {
 							rs.getBoolean(COL_UTIL_ACTIF));
 
 					ArticleVendu article = DAOFactory.creerArticle(rs.getString(COL_ART_NOM_ARTICLE),
-							rs.getString(COL_ART_DESCRIPTION), rs.getDate(COL_ART_DATE_DEBUT_ENCHERES).toLocalDate(),
-							rs.getDate(COL_ART_DATE_FIN_ENCHERES).toLocalDate(), utilisateur, categorie);
+							rs.getString(COL_ART_DESCRIPTION), rs.getTimestamp(COL_ART_DATE_DEBUT_ENCHERES).toLocalDateTime(),
+							rs.getTimestamp(COL_ART_DATE_FIN_ENCHERES).toLocalDateTime(), utilisateur, categorie);
 					article.setNoArticle(rs.getInt(1)); // Mise à jour de l'article
 
 					mapArticles.put(article.getNoArticle(), article);
@@ -171,7 +171,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 							rs.getString(COL_UTIL_MOT_DE_PASSE), rs.getInt(COL_UTIL_CREDIT),
 							rs.getBoolean(COL_UTIL_ADMINISTRATEUR),rs.getInt(COLL_UTI_NO_UTILISATEUR),
 							rs.getBoolean(COL_UTIL_ACTIF));
-					Enchere enchereMax = new Enchere(rs.getDate("date_enchere").toLocalDate(), rs.getInt("montant_enchere"), utilisateur, article);
+					Enchere enchereMax = new Enchere(rs.getTimestamp("date_enchere").toLocalDateTime(), rs.getInt("montant_enchere"), utilisateur, article);//FIXME tester la convertion
 					article.setEnchereMax(enchereMax);
 				}
 

@@ -3,7 +3,6 @@
  */
 package org.eni.encheres.bll;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
 

@@ -6,6 +6,7 @@ package org.eni.encheres.dal.encheres;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import org.eni.encheres.bo.Enchere;
 import org.eni.encheres.dal.exceptions.ConnectionException;
@@ -34,7 +35,7 @@ public class EnchereDAOimpl implements EnchereDAO {
 				// Valorisation des parametres du PreparedStatement
 				pstmt.setInt(1, newEnchere.getUtilisateur().getNoUtilisateur());
 				pstmt.setInt(2, newEnchere.getArticle().getNoArticle());
-				pstmt.setDate(3, java.sql.Date.valueOf(newEnchere.getDateEnchere()));
+				pstmt.setTimestamp(3, Timestamp.valueOf(newEnchere.getDateEnchere()));
 				pstmt.setInt(4, newEnchere.getMontantEnchere());
 
 				// Execution de la requete

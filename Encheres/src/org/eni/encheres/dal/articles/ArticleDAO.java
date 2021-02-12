@@ -3,7 +3,6 @@
  */
 package org.eni.encheres.dal.articles;
 
-import java.util.Collection;
 import java.util.Map;
 
 import org.eni.encheres.bo.ArticleVendu;
