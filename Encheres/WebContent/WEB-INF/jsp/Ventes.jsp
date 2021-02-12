@@ -25,11 +25,11 @@
 		</div>
 		<div>
 			<label for="categorie">Categorie : </label>
+			
 			<select name="categorie" size="1" id="categorie">
-				<option value="informatique">Informatique</option>
-				<option value="ameublement">Ameublement</option>
-				<option value="vetement">Vêtement</option>
-				<option value="sportloisirs">Sport&Loisirs</option>				
+			<c:forEach var="categorie" items="${listeCategories}">
+				<option value="${categorie.noCategorie}">${categorie.libelle}</option>
+				</c:forEach>	
 			</select>
 		</div>
 		<div>
@@ -70,7 +70,7 @@
 		</div>
 		<div>
 			<button type="submit" value="Enregistrer">Enregistrer</button>
-			<button type="reset" value="Anuler">Anuler</button>
+		<a href="<c:url value="/accueil"/>">	<button type="button" value="Annuler">Annuler</button></a>
 			
 		<c:if test="${requestScope.booleen}">
 			<input onclick="" type="button" name="supprimer" id="supprimer" value="Annuler la vente">

@@ -26,6 +26,8 @@ public class ArticleVendu {
 	 *Construteur
 	 */
 	public ArticleVendu() {
+		setPrixInitial(0);
+		setPrixVente(0);
 	}
 	
 	

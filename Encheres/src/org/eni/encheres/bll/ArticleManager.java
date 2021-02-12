@@ -49,10 +49,12 @@ public class ArticleManager {
 	 * @throws BLLException
 	 */
 	public void ajouterArticle(String nomArticle, String description, LocalDateTime dateDebutEncheres,
-			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie) throws BLLException {
+			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie, int prixInitial) throws BLLException {
 
 		ArticleVendu nouvelArticle = creerArticle(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur,
 				categorie);
+		
+		nouvelArticle.setPrixInitial(prixInitial);
 		try {
 			this.articleDao.create(nouvelArticle);
 		} catch (DALException dale) {

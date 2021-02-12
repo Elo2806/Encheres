@@ -1,12 +1,13 @@
 package org.eni.encheres.bo;
 
+import java.io.Serializable;
 
 /**
  * Classe modélisant une catégorie d'article
  * @author ElCaTar
  *
  */
-public class Categorie {
+public class Categorie implements Serializable {
 
 	private Integer noCategorie;
 	private String libelle;
@@ -54,7 +55,7 @@ public class Categorie {
 	 * Méthode permettant de modifier libelle
 	 * @param libelle le new libelle
 	 */
-	private void setLibelle(String libelle) {
+	public void setLibelle(String libelle) {
 		this.libelle = libelle;
 	}
 	

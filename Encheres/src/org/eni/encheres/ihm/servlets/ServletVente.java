@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -19,6 +20,7 @@ import org.eni.encheres.bo.ArticleVendu;
 import org.eni.encheres.bo.Categorie;
 import org.eni.encheres.bo.Utilisateur;
 import org.eni.encheres.dal.exceptions.DALException;
+
 
 /**
  * Servlet implementation class ServletVente
@@ -38,7 +40,7 @@ public class ServletVente extends HttpServlet {
 	private static final String PARAM_ARTICLE = "article";
 	private static final long serialVersionUID = 1L;
 	private static final String FORMAT_DATE = "yyyy-MM-dd";
-	private static final String FORMAT_HEURE = "hh:mm";
+	private static final String FORMAT_HEURE = "HH:mm";
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -75,21 +77,21 @@ public class ServletVente extends HttpServlet {
 		// récupérer les paramètres
 		String article = request.getParameter(PARAM_ARTICLE);
 		String description = request.getParameter(PARAM_DESCRIPTION);
-		Categorie categorieArticle = null;
-
 		
+		Categorie categorieArticle = null;
+		
+		int pCategorie = Integer.parseInt(request.getParameter(PARAM_CATEGORIE));
+
 		List<Categorie> listeCategorie = (List<Categorie>) getServletContext().getAttribute("listeCategories");
-		System.out.println(listeCategorie);
 		for (Categorie categorieEnCours : listeCategorie) {
-			if (request.getParameter(PARAM_CATEGORIE).equals(categorieEnCours.getLibelle())) {
+			if (pCategorie== categorieEnCours.getNoCategorie()) {
 				categorieArticle = categorieEnCours;
 				break;
 			}
 		}
-System.out.println(request.getParameter(PARAM_DATEDEBUT));
-System.out.println(request.getParameter(PARAM_HEUREDEBUT));
 
 		Integer prixdepart = Integer.parseInt(request.getParameter(PARAM_PRIXDEPART));
+		
 		LocalDate pDateDebut = LocalDate.parse(request.getParameter(PARAM_DATEDEBUT),
 				DateTimeFormatter.ofPattern(FORMAT_DATE));
 		
@@ -112,7 +114,7 @@ System.out.println(request.getParameter(PARAM_HEUREDEBUT));
 
 		ArticleManager manager = ArticleManager.getInstance();
 		try {
-			manager.ajouterArticle(article, description, dateDebut, dateFin, vendeur, categorieArticle);
+			manager.ajouterArticle(article, description, dateDebut, dateFin, vendeur, categorieArticle, prixdepart);
 		} catch (BLLException e) {
 			e.printStackTrace();
 		}
