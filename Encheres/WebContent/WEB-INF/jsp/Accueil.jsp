@@ -13,7 +13,6 @@
 	<c:choose>
 		<c:when test="${!empty sessionScope.utilisateur}">
 			<div>
-				<span><a href="<c:url value="/ServletConnexion"/>">Enchères</a></span>
 				<span><a href="<c:url value="/ServletVente"/>">Vendre un
 						article</a></span> <span><a href="<c:url value="/ServletCompte"/>">Mon
 						profil</a></span> <span><a href="<c:url value="/ServletConnexion"/>">Déconnexion</a></span>

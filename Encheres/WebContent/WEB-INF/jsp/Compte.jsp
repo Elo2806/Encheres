@@ -172,7 +172,7 @@
 
 
 			<!-- Partie spéciale "Modifier mon profil" -->
-			<c:if test="${!param.creation}">
+			<c:if test="${param.modification}">
 
 				<tr>
 					<th>

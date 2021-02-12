@@ -111,7 +111,7 @@
 			</div>
 		</form>
 		
-		<a href="<%=request.getContextPath()%>/ServletCompte?creation=true&modification=true" id="lien_creer_compte" class="pave"><button name="creer" id="creer_compte"></button></a>
+		<a href="<%=request.getContextPath()%>/ServletCompte?creation=true&modification=true" id="lien_creer_compte" class="pave"><button name="creer" id="creer_compte">Creer un compte</button></a>
 	</section>
 
 </body>
