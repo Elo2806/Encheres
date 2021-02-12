@@ -12,7 +12,7 @@
 <!-- image à insérer dynamiquement -->
 	<img alt="photo article" src="">
 	<h1>Nouvelle vente</h1>
-	<form method="post" action="/ServletVente">
+	<form method="post" action="<c:url value="/ServletVente"/>">
 		<div>
 			<label for="article">Article : </label>
 			<input type="text"
@@ -45,11 +45,13 @@
 			<label for="datedebut">Début de l'enchère : </label>
 			<input
 				type="date" name="datedebut" id="datedebut" required>
+				<input type="time" name="heuredebut" id="heuredebut" required>
 		</div>
 		<div>
 			<label for="datefin">Fin de l'enchère : </label>
 			<input type="date"
 				name="datefin" id="datefin" required>
+				<input type="time" name="heurefin" id="heurefin" required>
 		</div>
 		<div id="retrait">Retrait
 	

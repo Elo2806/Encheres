@@ -52,8 +52,8 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static final String COL_CAT_LIBELLE = "cat.libelle";
 
 	private static final String SQL_FINDALL_CATEGORIE = "SELECT nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, art.no_utilisateur, art.no_categorie,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif,cat.libelle  "
-			+ "FROM ARTICLES_VENDUS as art INNER JOIN CATEGORIES as cat ON cat.no_categorie = art.no_categorie"
-			+ "INNER JOIN UTILISATEUR as uti ON uti.no_utilisateur = art.no_utilisateur";
+			+ " FROM ARTICLES_VENDUS as art INNER JOIN CATEGORIES as cat ON cat.no_categorie = art.no_categorie"
+			+ " INNER JOIN UTILISATEURS as uti ON uti.no_utilisateur = art.no_utilisateur";
 
 	private static final String SQL_INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, no_utilisateur, no_categorie) values (?,?,?,?,?,?,?)";
 

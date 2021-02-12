@@ -3,6 +3,7 @@ package org.eni.encheres.ihm.servlets;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -28,13 +29,16 @@ public class ServletVente extends HttpServlet {
 	private static final String PARAM_CODEPOSTAL = "codepostal";
 	private static final String PARAM_RUE = "rue";
 	private static final String PARAM_DATEFIN = "datefin";
+	private static final String PARAM_HEUREFIN = "heurefin";
 	private static final String PARAM_DATEDEBUT = "datedebut";
+	private static final String PARAM_HEUREDEBUT = "heuredebut";
 	private static final String PARAM_PRIXDEPART = "prixdepart";
 	private static final String PARAM_CATEGORIE = "categorie";
 	private static final String PARAM_DESCRIPTION = "description";
 	private static final String PARAM_ARTICLE = "article";
 	private static final long serialVersionUID = 1L;
 	private static final String FORMAT_DATE = "yyyy-MM-dd";
+	private static final String FORMAT_HEURE = "HH-mm";
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -73,24 +77,35 @@ public class ServletVente extends HttpServlet {
 		String description = request.getParameter(PARAM_DESCRIPTION);
 		Categorie categorieArticle = null;
 
-		List<Categorie> listeCategorie = (List<Categorie>) getServletContext().getAttribute("Categories");
+		
+		List<Categorie> listeCategorie = (List<Categorie>) getServletContext().getAttribute("listeCategories");
+		System.out.println(listeCategorie);
 		for (Categorie categorieEnCours : listeCategorie) {
 			if (request.getParameter(PARAM_CATEGORIE).equals(categorieEnCours.getLibelle())) {
 				categorieArticle = categorieEnCours;
 				break;
 			}
 		}
+System.out.println(request.getParameter(PARAM_DATEDEBUT));
 
 		Integer prixdepart = Integer.parseInt(request.getParameter(PARAM_PRIXDEPART));
-		LocalDateTime dateDebut = LocalDateTime.parse(request.getParameter(PARAM_DATEDEBUT),
+		LocalDate pDateDebut = LocalDate.parse(request.getParameter(PARAM_DATEDEBUT),
 				DateTimeFormatter.ofPattern(FORMAT_DATE));
-		LocalDateTime dateFin = LocalDateTime.parse(request.getParameter(PARAM_DATEFIN),
+		LocalTime pHeureDebut = LocalTime.parse(request.getParameter(PARAM_HEUREDEBUT),
+				DateTimeFormatter.ofPattern(FORMAT_HEURE));
+		LocalDate pDateFin = LocalDate.parse(request.getParameter(PARAM_DATEFIN),
 				DateTimeFormatter.ofPattern(FORMAT_DATE));
+		LocalTime pHeureFin = LocalTime.parse(request.getParameter(PARAM_HEUREFIN),
+				DateTimeFormatter.ofPattern(FORMAT_HEURE));
 
+		LocalDateTime dateDebut = LocalDateTime.of(pDateDebut, pHeureDebut);
+		LocalDateTime dateFin = LocalDateTime.of(pDateFin, pHeureFin);
+		
 		// Besoin si différent de l'adresse du vendeur :
 		String rue = request.getParameter(PARAM_RUE);
 		String codePostal = request.getParameter(PARAM_CODEPOSTAL);
 		String ville = request.getParameter(PARAM_VILLE);
+		
 
 		ArticleManager manager = ArticleManager.getInstance();
 		try {
