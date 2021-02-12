@@ -5,6 +5,7 @@ package org.eni.encheres.dal;
 
 import org.eni.encheres.dal.articles.ArticleDAO;
 import org.eni.encheres.dal.articles.ArticleDAOImpl;
+import org.eni.encheres.dal.categories.CategorieDAOimpl;
 import org.eni.encheres.dal.categories.CategorieDao;
 import org.eni.encheres.dal.encheres.EnchereDAO;
 import org.eni.encheres.dal.encheres.EnchereDAOimpl;

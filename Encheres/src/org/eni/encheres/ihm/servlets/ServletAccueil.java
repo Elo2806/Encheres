@@ -8,7 +8,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.eni.encheres.bll.CategorieManager;
 import org.eni.encheres.bo.Categorie;
@@ -26,7 +25,6 @@ public class ServletAccueil extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		getServletContext().getRequestDispatcher("/accueil").forward(request, response);
-		System.out.println(request.getSession().getAttribute("utilisateur"));
 	}
 
 	/**

@@ -1,4 +1,4 @@
-package org.eni.encheres.dal;
+package org.eni.encheres.dal.categories;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eni.encheres.bo.Categorie;
-import org.eni.encheres.dal.categories.CategorieDao;
 import org.eni.encheres.dal.exceptions.ConnectionException;
 import org.eni.encheres.dal.exceptions.DALException;
 import org.eni.encheres.dal.jdbc.ConnectionProvider;
