@@ -15,28 +15,28 @@
 
   <form action=>
         <div>    <label for="pseudo">Pseudo:</label>
-        <span name="pseudo" id="pseudo">${ }</span></div>
+        <span name="pseudo" id="pseudo">${utilisateur.pseudo}</span></div>
         
         <div>    <label for="nom">Nom:</label>
-        <span name="nom" id="nom" ></span></div>
+        <span name="nom" id="nom" >${utilisateur.nom}</span></div>
         
            <div>    <label for="prenom">Prénom:</label>
-        <span name="prenom" id="prenom"></span></div>
+        <span name="prenom" id="prenom">${utilisateur.prenom}</span></div>
         
            <div>    <label for="email">Email:</label>
-        <span name="email" id="email"></span></div>
+        <span name="email" id="email">${utilisateur.email}</span></div>
         
            <div>    <label for="telephone">Téléphone:</label>
-        <span name="telephone" id="telephone"></span></div>
+        <span name="telephone" id="telephone">${utilisateur.telephone}</span></div>
         
            <div>    <label for="rue">Rue:</label>
-        <span name="rue" id="rue"></span></div>
+        <span name="rue" id="rue">${utilisateur.rue}</span></div>
         
          <div>    <label for="codePostal">Code Postal:</label>
-        <span name="codePostal" id="codePostal"></span></div>
+        <span name="codePostal" id="codePostal">${utilisateur.codePostal}</span></div>
         
          <div>    <label for="ville">Ville:</label>
-        <span name="ville" id="ville"></span></div>
+        <span name="ville" id="ville">${utilisateur.ville}</span></div>
         
         </form>
         

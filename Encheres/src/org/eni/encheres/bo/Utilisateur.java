@@ -1,11 +1,13 @@
 package org.eni.encheres.bo;
 
+import java.io.Serializable;
+
 /**
  * Classe modélisant un utilisateur
  * @author ElCaTar
  *
  */
-public class Utilisateur {
+public class Utilisateur implements Serializable {
 
 	private Integer noUtilisateur;
 	private String pseudo;
@@ -47,7 +49,7 @@ public class Utilisateur {
 			String codePostal, String ville, String motDePasse, Integer credit, boolean administrateur) {
 		this();
 		setPseudo(pseudo);
-		setNom(prenom);
+		setNom(nom);
 		setPrenom(prenom);
 		setEmail(email);
 		setTelephone(telephone);
@@ -60,6 +62,18 @@ public class Utilisateur {
 	}
 	
 	
+	/* Méthode test
+	 * 
+	 */
+	//TODO à enlever
+	@Override
+	public String toString() {
+		return "Utilisateur [noUtilisateur=" + noUtilisateur + ", pseudo=" + pseudo + ", nom=" + nom + ", prenom="
+				+ prenom + ", email=" + email + ", telephone=" + telephone + ", rue=" + rue + ", codePostal="
+				+ codePostal + ", ville=" + ville + ", motDePasse=" + motDePasse + ", credit=" + credit
+				+ ", administrateur=" + administrateur + ", actif=" + actif + "]";
+	}
+
 	// Getters et Setters
 	/**
 	 * Méthode permettant de récupérer noUtilisateur

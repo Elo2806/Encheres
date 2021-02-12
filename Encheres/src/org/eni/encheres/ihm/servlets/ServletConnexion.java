@@ -72,9 +72,10 @@ public class ServletConnexion extends HttpServlet {
 			request.setAttribute("erreurIdentifiant", true);
 			getServletContext().getRequestDispatcher("/connexion").forward(request, response);
 		}
-
+		
 		HttpSession session = request.getSession();
 		session.setAttribute("utilisateur", utilisateur);
+		
 
 		// Si les identifiant/mot de passe ok :
 		getServletContext().getRequestDispatcher("/ServletAccueil").forward(request, response);
