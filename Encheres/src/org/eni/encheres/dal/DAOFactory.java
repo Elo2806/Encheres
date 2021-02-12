@@ -77,10 +77,11 @@ public abstract class DAOFactory {
 	 * @return
 	 */
 	public static Utilisateur creerUtilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
-			String codePostal, String ville, String motDePasse, Integer credit, boolean administrateur) {
+			String codePostal, String ville, String motDePasse, Integer credit, boolean administrateur, int noUtilisateur, boolean actif ) {
 
 		Utilisateur newUtilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
-
+		newUtilisateur.setNoUtilisateur(noUtilisateur);
+		newUtilisateur.setActif(actif);
 		return newUtilisateur;
 	}
 	

@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +25,7 @@ import org.eni.encheres.dal.jdbc.ConnectionProvider;
  */
 public class ArticleDAOImpl implements ArticleDAO {
 
+	private static final String COLL_UTI_NO_UTILISATEUR = "uti.no_utilisateur";
 	private static final String COL_ART_DATE_FIN_ENCHERES = "date_fin_encheres";
 	private static final String COL_ART_DATE_DEBUT_ENCHERES = "date_debut_encheres";
 	private static final String COL_ART_DESCRIPTION = "description";
@@ -41,9 +43,11 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static final String COL_UTIL_PSEUDO = "pseudo";
 	private static final String COL_ART_NO_CATEGORIE = "art.no_categorie";
 	private static final String COL_CAT_LIBELLE = "cat.libelle";
+	
 	private static final String SQL_FINDALL_CATEGORIE = "SELECT nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, art.no_utilisateur, art.no_categorie,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,cat.libelle  "
-	+ "FROM ARTICLES_VENDUS as art INNER JOIN CATEGORIES as cat ON cat.no_categorie = art.no_categorie"
-								+ "INNER JOIN UTILISATEUR as uti ON uti.no_utilisateur = art.no_utilisateur";
+			+ "FROM ARTICLES_VENDUS as art INNER JOIN CATEGORIES as cat ON cat.no_categorie = art.no_categorie"
+			+ "INNER JOIN UTILISATEUR as uti ON uti.no_utilisateur = art.no_utilisateur";
+	
 	private static final String SQL_INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, no_utilisateur, no_categorie) values (?,?,?,?,?,?,?)";
 
 	/* 
@@ -91,7 +95,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 	}
 
 	@Override
-	public Map<Integer, ArticleVendu> findAll() throws DALException{
+	public Map<Integer, ArticleVendu> findAll() throws DALException {
 
 		Map<Integer, ArticleVendu> mapArticles = new HashMap<>();
 
@@ -107,13 +111,19 @@ public class ArticleDAOImpl implements ArticleDAO {
 				while (rs.next()) {
 					Categorie categorie = new Categorie(rs.getString(COL_CAT_LIBELLE));
 					categorie.setNoCategorie(rs.getInt(COL_ART_NO_CATEGORIE));
-					Utilisateur utilisateur = DAOFactory.creerUtilisateur(rs.getString(COL_UTIL_PSEUDO), rs.getString(COL_UTIL_NOM), rs.getString(COL_UTIL_PRENOM), rs.getString(COL_UTIL_EMAIL), rs.getString(COL_UTIL_TELEPHONE), rs.getString(COL_UTIL_RUE), rs.getString(COL_UTIL_CODE_POSTAL), rs.getString(COL_UTIL_VILLE), rs.getString(COL_UTIL_MOT_DE_PASSE), rs.getInt(COL_UTIL_CREDIT), rs.getBoolean(COL_UTIL_ADMINISTRATEUR));
-									
-					ArticleVendu article = DAOFactory.creerArticle(rs.getString(COL_ART_NOM_ARTICLE), rs.getString(COL_ART_DESCRIPTION),
-							rs.getDate(COL_ART_DATE_DEBUT_ENCHERES).toLocalDate(),
-							rs.getDate(COL_ART_DATE_FIN_ENCHERES).toLocalDate(),utilisateur ,categorie);
+					Utilisateur utilisateur = DAOFactory.creerUtilisateur(rs.getString(COL_UTIL_PSEUDO),
+							rs.getString(COL_UTIL_NOM), rs.getString(COL_UTIL_PRENOM), rs.getString(COL_UTIL_EMAIL),
+							rs.getString(COL_UTIL_TELEPHONE), rs.getString(COL_UTIL_RUE),
+							rs.getString(COL_UTIL_CODE_POSTAL), rs.getString(COL_UTIL_VILLE),
+							rs.getString(COL_UTIL_MOT_DE_PASSE), rs.getInt(COL_UTIL_CREDIT),
+							rs.getBoolean(COL_UTIL_ADMINISTRATEUR));
+					utilisateur.setNoUtilisateur(rs.getInt(COLL_UTI_NO_UTILISATEUR));
+
+					ArticleVendu article = DAOFactory.creerArticle(rs.getString(COL_ART_NOM_ARTICLE),
+							rs.getString(COL_ART_DESCRIPTION), rs.getDate(COL_ART_DATE_DEBUT_ENCHERES).toLocalDate(),
+							rs.getDate(COL_ART_DATE_FIN_ENCHERES).toLocalDate(), utilisateur, categorie);
 					article.setNoArticle(rs.getInt(1)); // Mise à jour de l'article
-					
+
 					mapArticles.put(article.getNoArticle(), article);
 				}
 
@@ -131,5 +141,46 @@ public class ArticleDAOImpl implements ArticleDAO {
 
 		return mapArticles;
 	}
-	
+
+	@Override
+	public Map<Integer, ArticleVendu> updateEnchereMax(Collection<ArticleVendu> values) throws DALException {
+		Map<Integer, ArticleVendu> mapArticles = new HashMap<>();
+		int articleID = 0;
+		int maxEnchere = 0;
+		// Connection en base
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+
+			PreparedStatement pstmt = cnx.prepareStatement("SELECT no_utilisateur,no_article,date_enchere,montant_enchere FROM ARTICLES_VENDUS WHERE ");
+
+			try {
+				// Execution de la requete
+				ResultSet rs = pstmt.executeQuery();
+
+				while (rs.next()) {			
+					if(articleID != rs.getInt("no_article")) {
+						articleID = rs.getInt("no_article");
+						maxEnchere = 0;
+					}
+					
+					if(maxEnchere > ) {
+						
+					}
+					mapArticles.put(article.getNoArticle(), article);
+				}
+
+				rs.close();
+				pstmt.close();
+
+			} catch (SQLException sqle) {
+				pstmt.close();
+				throw new RequeteSQLException("Erreur lors de la recherche en base", sqle);
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			throw new ConnectionException("Problème de connection", sqle);
+		}
+
+		return mapArticles;
+	}
+
 }

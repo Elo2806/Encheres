@@ -155,10 +155,7 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 				boolean administrateur = rs.getBoolean(COL_ADMINISTRATEUR);
 				boolean actif = rs.getBoolean(COL_ACTIF);
 				
-				utilisateur = DAOFactory.creerUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
-				
-				utilisateur.setNoUtilisateur(noUtilisateur);
-				utilisateur.setActif(actif);
+				utilisateur = DAOFactory.creerUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur, noUtilisateur, actif);
 				
 			}
 			
