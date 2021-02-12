@@ -47,13 +47,13 @@ public class ServletAccueil extends HttpServlet {
 		List<Categorie> categories;	
 		CategorieManager manager = CategorieManager.getInstance();
 		categories = manager.getCategories();
-		getServletContext().setAttribute("Categories", categories);
+		getServletContext().setAttribute("listeCategories", categories);
 	}
 
 	private void updateArticles() {
-		List<Categorie> categories;	
-		CategorieManager manager = CategorieManager.getInstance();
-		categories = manager.getCategories();
-		getServletContext().setAttribute("Categories", categories);
+//		List<Categorie> categories;	
+//		CategorieManager manager = CategorieManager.getInstance();
+//		categories = manager.getCategories();
+		getServletContext().setAttribute("mapArticles", categories);
 	}
 }
