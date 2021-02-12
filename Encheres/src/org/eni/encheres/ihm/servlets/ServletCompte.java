@@ -65,7 +65,7 @@ public class ServletCompte extends HttpServlet {
 
 		if (modification != null && modification) {
 			if (!creation) {
-
+				
 			}
 			getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);
 

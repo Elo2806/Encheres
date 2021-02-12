@@ -66,10 +66,10 @@ public class UtilisateurManager {
 	 * @return
 	 * @throws BLLException
 	 */
-	public Utilisateur rechercherUtilisateur(String pseudo, String motDePasse) throws BLLException {
+	public Utilisateur rechercherUtilisateur(String identifiant, String motDePasse) throws BLLException {
 		Utilisateur utilisateur = null;
 		try {
-			utilisateur = utilisateurdao.controleIdentifiantsExistants (pseudo, motDePasse);
+			utilisateur = utilisateurdao.controleIdentifiantsExistants (identifiant, motDePasse);
 		} catch (DALException dale) {
 			throw new BLLException("Erreur lors des opérations en DAL",dale);
 		}
