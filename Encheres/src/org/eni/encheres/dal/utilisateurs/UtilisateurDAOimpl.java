@@ -22,7 +22,24 @@ import org.eni.encheres.dal.jdbc.ConnectionProvider;
  */
 public class UtilisateurDAOimpl implements UtilisateurDAO {
 
-	private static final String SQL_CREATE = "INSERT INTO Utilisateurs (no_utilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif) VALUES (default,?,?,?,?,?,?,?,?,?,?,FALSE,TRUE)";
+	private static final String COL_ACTIF = "actif";
+	private static final String COL_ADMINISTRATEUR = "administrateur";
+	private static final String COL_CREDIT = "credit";
+	private static final String COL_MOT_DE_PASSE = "mot_de_passe";
+	private static final String COL_VILLE = "ville";
+	private static final String COL_CODE_POSTAL = "code_postal";
+	private static final String COL_RUE = "rue";
+	private static final String COL_TELEPHONE = "telephone";
+	private static final String COL_EMAIL = "email";
+	private static final String COL_PRENOM = "prenom";
+	private static final String COL_NOM = "nom";
+	private static final String COL_PSEUDO = "pseudo";
+	private static final String COL_NO_UTILISATEUR = "no_utilisateur";
+	
+	private static final String SQL_SELECT_BY_PSEUDO_AND_MOT_DE_PASSE = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif FROM UTILISATEURS WHERE pseudo=? AND mot_de_passe=?";
+	private static final String SQL_SELECT_BY_EMAIL = "SELECT no_utilisateur FROM Utilisateurs WHERE email=?";
+	private static final String SQL_SELECT_BY_PSEUDO = "SELECT no_utilisateur FROM Utilisateurs WHERE pseudo=?";
+	private static final String SQL_CREATE = "INSERT INTO Utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif) VALUES (?,?,?,?,?,?,?,?,?,?,0,1)";
 
 	@Override
 	public Utilisateur create(Utilisateur newUtilisateur) throws DALException {
@@ -77,7 +94,7 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 			// Traitement de la requete SQL
 			try {
 				//Test existence du pseudo
-				prepare = cnx.prepareStatement("SELECT no_utilisateur FROM Utilisateurs WHERE pseudo=?");
+				prepare = cnx.prepareStatement(SQL_SELECT_BY_PSEUDO);
 				prepare.setString(1, pseudo);
 				rs = prepare.executeQuery();
 				if (rs.next()) {
@@ -85,7 +102,7 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 				}
 
 				//Test existence de l'adresse email
-				prepare = cnx.prepareStatement("SELECT no_utilisateur FROM Utilisateurs WHERE email=?");
+				prepare = cnx.prepareStatement(SQL_SELECT_BY_EMAIL);
 				prepare.setString(1,email);
 				rs = prepare.executeQuery();
 				if (rs.next()) {
@@ -112,7 +129,7 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 			
 			try {
 				
-			PreparedStatement pstmt = cnx.prepareStatement("SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif FROM UTILISATEURS WHERE pseudo=? AND mot_de_passe=?");
+			PreparedStatement pstmt = cnx.prepareStatement(SQL_SELECT_BY_PSEUDO_AND_MOT_DE_PASSE);
 			
 			// Valorisation des paramètres du PreparedStatement
 			pstmt.setString(1, pIdentifiant);
@@ -123,19 +140,19 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 			
 			// Récupération de l'ID
 			if (rs.next()) {
-				int noUtilisateur = rs.getInt("no_utilisateur");
-				String pseudo = rs.getString("pseudo");
-				String nom = rs.getString("nom");
-				String prenom = rs.getString("prenom");
-				String email = rs.getString("email");
-				String telephone = rs.getString("telephone");
-				String rue = rs.getString("rue");
-				String codePostal = rs.getString("code_postal");
-				String ville = rs.getString("ville");
-				String motDePasse = rs.getString("mot_de_passe");
-				int credit = rs.getInt("credit");
-				boolean administrateur = rs.getBoolean("administrateur");
-				boolean actif = rs.getBoolean("actif");
+				int noUtilisateur = rs.getInt(COL_NO_UTILISATEUR);
+				String pseudo = rs.getString(COL_PSEUDO);
+				String nom = rs.getString(COL_NOM);
+				String prenom = rs.getString(COL_PRENOM);
+				String email = rs.getString(COL_EMAIL);
+				String telephone = rs.getString(COL_TELEPHONE);
+				String rue = rs.getString(COL_RUE);
+				String codePostal = rs.getString(COL_CODE_POSTAL);
+				String ville = rs.getString(COL_VILLE);
+				String motDePasse = rs.getString(COL_MOT_DE_PASSE);
+				int credit = rs.getInt(COL_CREDIT);
+				boolean administrateur = rs.getBoolean(COL_ADMINISTRATEUR);
+				boolean actif = rs.getBoolean(COL_ACTIF);
 				
 				utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
 				

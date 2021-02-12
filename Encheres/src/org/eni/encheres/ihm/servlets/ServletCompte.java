@@ -148,7 +148,7 @@ public class ServletCompte extends HttpServlet {
 		if (ErreurSaisie) {
 			getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);
 		} else {
-			getServletContext().getRequestDispatcher(SERVLET_CONNEXION).forward(request, response);
+			getServletContext().getRequestDispatcher(SERVLET_CONNEXION+"?identifiant="+pseudo+"&motdepasse="+mdp).forward(request, response);
 		}
 
 	}

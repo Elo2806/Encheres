@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.eni.encheres.bo.Categorie;
+import org.eni.encheres.dal.DAOFactory;
 import org.eni.encheres.dal.categories.CategorieDao;
 import org.eni.encheres.dal.exceptions.DALException;
 
@@ -13,7 +14,7 @@ public class CategorieManager {
 	private static CategorieDao categorieDao;
 	
 	private CategorieManager() {
-		
+		categorieDao = DAOFactory.getCatogorieDAO(); 
 	}
 	
 	
