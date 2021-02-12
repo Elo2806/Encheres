@@ -15,32 +15,33 @@
 
   <form action=>
         <div>    <label for="pseudo">Pseudo:</label>
-        <input type="text" name="pseudo" id="pseudo" placeholder="Veuillez entrer votre pseudo"></div>
+        <span name="pseudo" id="pseudo">${ }</span></div>
         
         <div>    <label for="nom">Nom:</label>
-        <input type="text" name="nom" id="nom" placeholder="Veuillez entrer votre nom"></div>
+        <span name="nom" id="nom" ></span></div>
         
            <div>    <label for="prenom">Prénom:</label>
-        <input type="text" name="prenom" id="prenom" placeholder="Veuillez entrer votre prénom"></div>
+        <span name="prenom" id="prenom"></span></div>
         
            <div>    <label for="email">Email:</label>
-        <input type="text" name="email" id="email" placeholder="Veuillez entrer votre email"></div>
+        <span name="email" id="email"></span></div>
         
            <div>    <label for="telephone">Téléphone:</label>
-        <input type="text" name="telephone" id="telephone" placeholder="Veuillez entrer votre téléphone"></div>
+        <span name="telephone" id="telephone"></span></div>
         
            <div>    <label for="rue">Rue:</label>
-        <input type="text" name="rue" id="rue" placeholder="Veuillez entrer votre rue"></div>
+        <span name="rue" id="rue"></span></div>
         
          <div>    <label for="codePostal">Code Postal:</label>
-        <input type="text" name="codePostal" id="codePostal" placeholder="Veuillez entrer votre code postal"></div>
+        <span name="codePostal" id="codePostal"></span></div>
         
          <div>    <label for="ville">Ville:</label>
-        <input type="text" name="ville" id="ville" placeholder="Veuillez entrer votre ville"></div>
+        <span name="ville" id="ville"></span></div>
         
         </form>
         
         <a href="<%=request.getContextPath()%>/ServletCompte"><input type="button" value="Modifier"/></a>
+         <a href="<%=request.getContextPath()%>/ServletAccueil"><input type="button" value="Accueil"/></a>
         
 </div>
 

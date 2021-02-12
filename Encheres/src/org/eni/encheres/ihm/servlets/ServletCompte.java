@@ -18,6 +18,7 @@ import org.eni.encheres.ihm.exceptions.MotDePasseException;
 @WebServlet("/ServletCompte")
 public class ServletCompte extends HttpServlet {
 
+	private static final String JSP_PROFIL = "/profil";
 	private static final String ATTR_ERREUR_INSERTION = "erreurInsertion";
 	private static final String ATTR_ERREUR_IDENTIFIANT = "erreurIdentifiant";
 	private static final String ATTR_ERREUR_MDP = "erreurMdp";
@@ -69,6 +70,9 @@ public class ServletCompte extends HttpServlet {
 			getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);
 
 		} else if (suppression != null && suppression) {
+		}
+		else{
+			getServletContext().getRequestDispatcher(JSP_PROFIL).forward(request, response);
 		}
 	}
 
