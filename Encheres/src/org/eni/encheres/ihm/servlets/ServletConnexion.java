@@ -27,29 +27,40 @@ public class ServletConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Si "Se souvenir de moi" avait été coché, il faut renseigner les 2 champs:
-//		if (request.getParameter("memoriser") cohé avant) {
-//			// Récupérer l'identifiant de l'utilisateur...
-//			// ... et l'insérer dans le champs
-//			// Récupérer le mot de passe de l'utilisateur
-//			// ... et l'insérer dans le champs
-//		}
-		
-		getServletContext().getRequestDispatcher("/connexion").forward(request, response);
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// TODO Si "Se souvenir de moi" avait été coché, il faut renseigner les 2
+		// champs:
+		// if (request.getParameter("memoriser") cohé avant) {
+		// // Récupérer l'identifiant de l'utilisateur...
+		// // ... et l'insérer dans le champs
+		// // Récupérer le mot de passe de l'utilisateur
+		// // ... et l'insérer dans le champs
+		// }
+
+		HttpSession session = request.getSession();
+		if (session.getAttribute("utilisateur") == null) {
+			getServletContext().getRequestDispatcher("/connexion").forward(request, response);
+		} else {
+			session.setAttribute("utilisateur", null);
+			getServletContext().getRequestDispatcher("/accueil").forward(request, response);
+		}
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		response.setCharacterEncoding("UTF-8");
-		
+
 		String identifiants = request.getParameter("identifiant");
 		String motDePasse = request.getParameter("motdepasse");
-		
+
 		// Vérifier identifiant et mots de passe
 		UtilisateurManager manager = UtilisateurManager.getInstance();
 		Utilisateur utilisateur = null;
@@ -57,17 +68,17 @@ public class ServletConnexion extends HttpServlet {
 			utilisateur = manager.rechercherUtilisateur(identifiants, motDePasse);
 		} catch (BLLException blle) {
 			blle.printStackTrace();
-			//Si les identifiant/mot de passe pas existants :
+			// Si les identifiant/mot de passe pas existants :
 			request.setAttribute("erreurIdentifiant", true);
 			getServletContext().getRequestDispatcher("/connexion").forward(request, response);
 		}
-		
+
 		HttpSession session = request.getSession();
 		session.setAttribute("utilisateur", utilisateur);
-		
-		//Si les identifiant/mot de passe ok :
+
+		// Si les identifiant/mot de passe ok :
 		getServletContext().getRequestDispatcher("/ServletAccueil").forward(request, response);
-	
+
 	}
 
 }

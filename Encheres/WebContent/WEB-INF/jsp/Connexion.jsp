@@ -97,8 +97,8 @@
 					<label for="motdepasse" class="element">Mot de passe : </label>
 				</div>
 				<div class="champ">
-					<input type="text" name="identifiant" class="element" id="identifiant" value="${param.identifiant }">
-					<input type="password" name="motdepasse" class="element" id="motdepasse" value="${param.motdepasse }">
+					<input type="text" name="identifiant" class="element" id="identifiant" required value="${param.identifiant }">
+					<input type="password" name="motdepasse" class="element" id="motdepasse" required value="${param.motdepasse }">
 				</div>
 			</div>
 			
