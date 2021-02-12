@@ -1,8 +1,8 @@
 package org.eni.encheres.bll;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.eni.encheres.bll.exceptions.BLLException;
 import org.eni.encheres.bo.Categorie;
 import org.eni.encheres.dal.DAOFactory;
 import org.eni.encheres.dal.categories.CategorieDao;
@@ -26,13 +26,13 @@ public class CategorieManager {
 	}
 
 	
-	public List<Categorie> getCategories() {
+	public List<Categorie> getCategories() throws BLLException {
 		List<Categorie> categories = null;
 		
 		try {
 			categories = categorieDao.findAll();
-		} catch (DALException e) {
-			e.printStackTrace();
+		} catch (DALException dale) {
+			throw new BLLException("Erreur lors du traitement en DAL",dale);
 		}
 		
 		return categories;

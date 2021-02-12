@@ -1,6 +1,8 @@
 package org.eni.encheres.ihm.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.eni.encheres.bll.ArticleManager;
 import org.eni.encheres.bll.CategorieManager;
+import org.eni.encheres.bll.exceptions.BLLException;
 import org.eni.encheres.bo.ArticleVendu;
 import org.eni.encheres.bo.Categorie;
 
@@ -44,19 +47,29 @@ public class ServletAccueil extends HttpServlet {
 	public void init() throws ServletException {
 		super.init();
 		updateCategories();
+		updateArticles();
 	}
 
 	private void updateCategories() {
-		List<Categorie> categories;	
+		List<Categorie> categories = new ArrayList<>();	
 		CategorieManager manager = CategorieManager.getInstance();
-		categories = manager.getCategories();
+		try {
+			categories = manager.getCategories();
+		} catch (BLLException blle) {
+			blle.printStackTrace();//TODO voir si possible de faire mieux en gestion de
+		}
 		getServletContext().setAttribute("listeCategories", categories);
 	}
 
 	private void updateArticles() {
-		Map<Integer,ArticleVendu> articles;	
+		Map<Integer,ArticleVendu> articles = new HashMap<>();	
 		ArticleManager manager = ArticleManager.getInstance();
-		articles = manager.getMapArticles();
+		
+		try {
+			articles = manager.getMapArticles();
+		}catch (BLLException blle) {
+			blle.printStackTrace();//TODO voir si possible de faire mieux en gestion de
+		}
 		getServletContext().setAttribute("mapArticles", articles);
 	}
 }

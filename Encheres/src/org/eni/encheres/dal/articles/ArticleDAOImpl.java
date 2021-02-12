@@ -145,7 +145,9 @@ public class ArticleDAOImpl implements ArticleDAO {
 			sqle.printStackTrace();
 			throw new ConnectionException("Problème de connection", sqle);
 		}
-
+		
+		mapArticles = updateEnchereMax(mapArticles);
+		
 		return mapArticles;
 	}
 
@@ -186,6 +188,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 			sqle.printStackTrace();
 			throw new ConnectionException("Problème de connection", sqle);
 		}
+		
 		mapArticles = articles;
 		
 		return mapArticles;

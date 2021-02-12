@@ -81,15 +81,14 @@ public class ArticleManager {
 		return newArticle;
 	}
 
-	public Map<Integer, ArticleVendu> getMapArticles() throws DALException {
+	public Map<Integer, ArticleVendu> getMapArticles() throws BLLException {
 		 Map<Integer, ArticleVendu> articles;
+		 
 		 try {
 			articles = articleDao.findAll();
 		} catch (DALException dale) {
-			throw new DALException("Erreur lors du traitement en DAL",dale);
+			throw new BLLException("Erreur lors du traitement en DAL",dale);
 		}
-		 
-		 articles = articleDao.updateEnchereMax(articles);
 		 
 		return articles;
 	}
