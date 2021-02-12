@@ -1,6 +1,6 @@
 package org.eni.encheres.bo;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 /**
  * Classe modélisant une enchere
@@ -9,7 +9,7 @@ import java.time.LocalDate;
  */
 public class Enchere {
 
-	private LocalDate dateEnchere;
+	private LocalDateTime dateEnchere;
 	private Integer montantEnchere;
 	private Utilisateur utilisateur;
 	private ArticleVendu article;
@@ -29,7 +29,7 @@ public class Enchere {
 	 * @param utilisateur
 	 * @param article
 	 */
-	public Enchere(LocalDate dateEnchere, Integer montantEnchere, Utilisateur utilisateur, ArticleVendu article) {
+	public Enchere(LocalDateTime dateEnchere, Integer montantEnchere, Utilisateur utilisateur, ArticleVendu article) {
 		this();
 		setDateEnchere(dateEnchere);
 		setMontantEnchere(montantEnchere);
@@ -41,7 +41,7 @@ public class Enchere {
 	 * Méthode permettant de modifier dateEnchere
 	 * @param dateEnchere le new dateEnchere
 	 */
-	private void setDateEnchere(LocalDate dateEnchere) {
+	private void setDateEnchere(LocalDateTime dateEnchere) {
 		this.dateEnchere = dateEnchere;
 	}
 	/**
@@ -69,7 +69,7 @@ public class Enchere {
 	 * Méthode permettant de récupérer dateEnchere
 	 * @return le dateEnchere
 	 */
-	public LocalDate getDateEnchere() {
+	public LocalDateTime getDateEnchere() {
 		return dateEnchere;
 	}
 	/**

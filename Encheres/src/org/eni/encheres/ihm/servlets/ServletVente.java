@@ -2,6 +2,7 @@ package org.eni.encheres.ihm.servlets;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -81,9 +82,9 @@ public class ServletVente extends HttpServlet {
 		}
 
 		Integer prixdepart = Integer.parseInt(request.getParameter(PARAM_PRIXDEPART));
-		LocalDate dateDebut = LocalDate.parse(request.getParameter(PARAM_DATEDEBUT),
+		LocalDateTime dateDebut = LocalDateTime.parse(request.getParameter(PARAM_DATEDEBUT),
 				DateTimeFormatter.ofPattern(FORMAT_DATE));
-		LocalDate dateFin = LocalDate.parse(request.getParameter(PARAM_DATEFIN),
+		LocalDateTime dateFin = LocalDateTime.parse(request.getParameter(PARAM_DATEFIN),
 				DateTimeFormatter.ofPattern(FORMAT_DATE));
 
 		// Besoin si différent de l'adresse du vendeur :

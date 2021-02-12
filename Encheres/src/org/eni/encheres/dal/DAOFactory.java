@@ -4,6 +4,7 @@
 package org.eni.encheres.dal;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.eni.encheres.bo.ArticleVendu;
 import org.eni.encheres.bo.Categorie;
@@ -97,7 +98,7 @@ public abstract class DAOFactory {
 	 * @param categorie
 	 * @return
 	 */
-	public static ArticleVendu creerArticle(String nomArticle, String description, LocalDate dateDebutEncheres,
+	public static ArticleVendu creerArticle(String nomArticle, String description, LocalDateTime dateDebutEncheres,
 			LocalDate dateFinEncheres, Utilisateur vendeur, Categorie categorie) {
 
 		ArticleVendu newArticle = new ArticleVendu(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur,

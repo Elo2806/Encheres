@@ -4,6 +4,7 @@
 package org.eni.encheres.bll;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.eni.encheres.bo.ArticleVendu;
 import org.eni.encheres.bo.Enchere;
@@ -38,7 +39,7 @@ public class EnchereManager {
 	}
 
 	
-	public Enchere creerEnchere(LocalDate dateEnchere, Integer montantEnchere, Utilisateur utilisateur,
+	public Enchere creerEnchere(LocalDateTime dateEnchere, Integer montantEnchere, Utilisateur utilisateur,
 			ArticleVendu article) {
 		Enchere newEnchere = new Enchere(dateEnchere, montantEnchere, utilisateur, article);
 		return newEnchere;

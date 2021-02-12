@@ -39,11 +39,11 @@ public interface ArticleDAO {
 	 * 
 	 * Méthode permettant de mettre a jour 
 	 * 
-	 * @param values
+	 * @param articles
 	 * @return
 	 * @throws DALException 
 	 */
-	Map<Integer, ArticleVendu> updateEnchereMax(Collection<ArticleVendu> values) throws DALException;
+	Map<Integer, ArticleVendu> updateEnchereMax(Map<Integer, ArticleVendu> articles) throws DALException;
 	
 	
 }

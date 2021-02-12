@@ -1,7 +1,8 @@
 
 package org.eni.encheres.bo;
 
-import java.time.LocalDate;
+
+import java.time.LocalDateTime;
 
 /**
  * @author ElCaTar
@@ -12,8 +13,8 @@ public class ArticleVendu {
 	private Integer noArticle;
 	private String nomArticle;
 	private String description;
-	private LocalDate dateDebutEncheres;
-	private LocalDate dateFinEncheres;
+	private LocalDateTime dateDebutEncheres;
+	private LocalDateTime dateFinEncheres;
 	private Integer prixInitial;
 	private Integer prixVente;
 	private Utilisateur vendeur;
@@ -37,7 +38,7 @@ public class ArticleVendu {
 	 * @param vendeur
 	 * @param categorie
 	 */
-	public ArticleVendu(String nomArticle, String description, LocalDate dateDebutEncheres, LocalDate dateFinEncheres,
+	public ArticleVendu(String nomArticle, String description, LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres,
 			Utilisateur vendeur, Categorie categorie) {
 		this();
 		setNomArticle(nomArticle);
@@ -96,28 +97,28 @@ public class ArticleVendu {
 	 * Méthode permettant de récupérer dateDebutEncheres
 	 * @return le dateDebutEncheres
 	 */
-	public LocalDate getDateDebutEncheres() {
+	public LocalDateTime getDateDebutEncheres() {
 		return dateDebutEncheres;
 	}
 	/**
 	 * Méthode permettant de modifier dateDebutEncheres
 	 * @param dateDebutEncheres le new dateDebutEncheres
 	 */
-	public void setDateDebutEncheres(LocalDate dateDebutEncheres) {
+	public void setDateDebutEncheres(LocalDateTime dateDebutEncheres) {
 		this.dateDebutEncheres = dateDebutEncheres;
 	}
 	/**
 	 * Méthode permettant de récupérer dateFinEncheres
 	 * @return le dateFinEncheres
 	 */
-	public LocalDate getDateFinEncheres() {
+	public LocalDateTime getDateFinEncheres() {
 		return dateFinEncheres;
 	}
 	/**
 	 * Méthode permettant de modifier dateFinEncheres
 	 * @param dateFinEncheres le new dateFinEncheres
 	 */
-	public void setDateFinEncheres(LocalDate dateFinEncheres) {
+	public void setDateFinEncheres(LocalDateTime dateFinEncheres) {
 		this.dateFinEncheres = dateFinEncheres;
 	}
 	/**

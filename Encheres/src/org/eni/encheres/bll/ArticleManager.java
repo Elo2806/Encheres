@@ -4,6 +4,7 @@
 package org.eni.encheres.bll;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 import org.eni.encheres.bll.exceptions.BLLException;
@@ -48,8 +49,8 @@ public class ArticleManager {
 	 * @param categorie
 	 * @throws BLLException
 	 */
-	public void ajouterArticle(String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, Utilisateur vendeur, Categorie categorie) throws BLLException {
+	public void ajouterArticle(String nomArticle, String description, LocalDateTime dateDebutEncheres,
+			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie) throws BLLException {
 
 		ArticleVendu nouvelArticle = creerArticle(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur,
 				categorie);
@@ -72,8 +73,8 @@ public class ArticleManager {
 	 * @param categorie
 	 * @return
 	 */
-	public ArticleVendu creerArticle(String nomArticle, String description, LocalDate dateDebutEncheres,
-			LocalDate dateFinEncheres, Utilisateur vendeur, Categorie categorie) {
+	public ArticleVendu creerArticle(String nomArticle, String description, LocalDateTime dateDebutEncheres,
+			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie) {
 
 		ArticleVendu newArticle = new ArticleVendu(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur,
 				categorie);
@@ -89,7 +90,7 @@ public class ArticleManager {
 			throw new DALException("Erreur lors du traitement en DAL",dale);
 		}
 		 
-		 articles = articleDao.updateEnchereMax(articles.values());
+		 articles = articleDao.updateEnchereMax(articles);
 		 
 		return articles;
 	}
