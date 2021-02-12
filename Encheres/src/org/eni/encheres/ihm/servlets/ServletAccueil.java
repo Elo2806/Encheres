@@ -2,6 +2,7 @@ package org.eni.encheres.ihm.servlets;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,7 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.eni.encheres.bll.ArticleManager;
 import org.eni.encheres.bll.CategorieManager;
+import org.eni.encheres.bo.ArticleVendu;
 import org.eni.encheres.bo.Categorie;
 
 /**
@@ -51,9 +54,9 @@ public class ServletAccueil extends HttpServlet {
 	}
 
 	private void updateArticles() {
-//		List<Categorie> categories;	
-//		CategorieManager manager = CategorieManager.getInstance();
-//		categories = manager.getCategories();
-		getServletContext().setAttribute("mapArticles", categories);
+		Map<Integer,ArticleVendu> articles;	
+		ArticleManager manager = ArticleManager.getInstance();
+		articles = manager.getMapArticles();
+		getServletContext().setAttribute("mapArticles", articles);
 	}
 }

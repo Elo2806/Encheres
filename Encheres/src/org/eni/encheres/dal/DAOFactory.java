@@ -3,6 +3,11 @@
  */
 package org.eni.encheres.dal;
 
+import java.time.LocalDate;
+
+import org.eni.encheres.bo.ArticleVendu;
+import org.eni.encheres.bo.Categorie;
+import org.eni.encheres.bo.Utilisateur;
 import org.eni.encheres.dal.articles.ArticleDAO;
 import org.eni.encheres.dal.articles.ArticleDAOImpl;
 import org.eni.encheres.dal.categories.CategorieDAOimpl;
@@ -55,4 +60,48 @@ public abstract class DAOFactory {
 		return new CategorieDAOimpl();
 	}
 	
+	/**
+	 * 
+	 * Méthode permettant de créer une instance Utilisateur à partir des paramètres
+	 * @param pseudo
+	 * @param nom
+	 * @param prenom
+	 * @param email
+	 * @param telephone
+	 * @param rue
+	 * @param codePostal
+	 * @param ville
+	 * @param motDePasse
+	 * @param credit
+	 * @param administrateur
+	 * @return
+	 */
+	public static Utilisateur creerUtilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
+			String codePostal, String ville, String motDePasse, Integer credit, boolean administrateur) {
+
+		Utilisateur newUtilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
+
+		return newUtilisateur;
+	}
+	
+	/**
+	 * 
+	 * Méthode permettant de créer une instance Article à partir des paramètres
+	 * 
+	 * @param nomArticle
+	 * @param description
+	 * @param dateDebutEncheres
+	 * @param dateFinEncheres
+	 * @param vendeur
+	 * @param categorie
+	 * @return
+	 */
+	public static ArticleVendu creerArticle(String nomArticle, String description, LocalDate dateDebutEncheres,
+			LocalDate dateFinEncheres, Utilisateur vendeur, Categorie categorie) {
+
+		ArticleVendu newArticle = new ArticleVendu(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur,
+				categorie);
+
+		return newArticle;
+	}
 }

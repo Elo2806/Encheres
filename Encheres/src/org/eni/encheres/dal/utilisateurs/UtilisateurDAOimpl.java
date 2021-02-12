@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.eni.encheres.bo.Utilisateur;
+import org.eni.encheres.dal.DAOFactory;
 import org.eni.encheres.dal.exceptions.ConnectionException;
 import org.eni.encheres.dal.exceptions.DALException;
 import org.eni.encheres.dal.exceptions.RequeteSQLException;
@@ -154,7 +155,7 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 				boolean administrateur = rs.getBoolean(COL_ADMINISTRATEUR);
 				boolean actif = rs.getBoolean(COL_ACTIF);
 				
-				utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
+				utilisateur = DAOFactory.creerUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
 				
 				utilisateur.setNoUtilisateur(noUtilisateur);
 				utilisateur.setActif(actif);
@@ -180,5 +181,5 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 		return utilisateur;
 		
 	}
-
+	
 }

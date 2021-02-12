@@ -4,6 +4,7 @@
 package org.eni.encheres.bll;
 
 import java.time.LocalDate;
+import java.util.Map;
 
 import org.eni.encheres.bll.exceptions.BLLException;
 import org.eni.encheres.bo.ArticleVendu;
@@ -35,6 +36,18 @@ public class ArticleManager {
 		return instance;
 	}
 
+	/**
+	 * 
+	 * Méthode permettant d'ajouter un article dans le systeme de persistance
+	 * 
+	 * @param nomArticle
+	 * @param description
+	 * @param dateDebutEncheres
+	 * @param dateFinEncheres
+	 * @param vendeur
+	 * @param categorie
+	 * @throws BLLException
+	 */
 	public void ajouterArticle(String nomArticle, String description, LocalDate dateDebutEncheres,
 			LocalDate dateFinEncheres, Utilisateur vendeur, Categorie categorie) throws BLLException {
 
@@ -47,6 +60,18 @@ public class ArticleManager {
 		}
 	}
 
+	/**
+	 * 
+	 * Méthode permettant de créer un objet Article à partir des paramètres
+	 * 
+	 * @param nomArticle
+	 * @param description
+	 * @param dateDebutEncheres
+	 * @param dateFinEncheres
+	 * @param vendeur
+	 * @param categorie
+	 * @return
+	 */
 	public ArticleVendu creerArticle(String nomArticle, String description, LocalDate dateDebutEncheres,
 			LocalDate dateFinEncheres, Utilisateur vendeur, Categorie categorie) {
 
@@ -54,6 +79,19 @@ public class ArticleManager {
 				categorie);
 
 		return newArticle;
+	}
+
+	public Map<Integer, ArticleVendu> getMapArticles() throws DALException {
+		 Map<Integer, ArticleVendu> articles;
+		 try {
+			articles = articleDao.findAll();
+		} catch (DALException dale) {
+			throw new DALException("Erreur lors du traitement en DAL",dale);
+		}
+		 
+		 articles = articleDao.updateEnchereMax(articles.values());
+		 
+		return articles;
 	}
 
 }

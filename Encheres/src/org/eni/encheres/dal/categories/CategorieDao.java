@@ -8,5 +8,6 @@ import org.eni.encheres.dal.exceptions.DALException;
 public interface CategorieDao {
 
 	List<Categorie> findAll() throws DALException;
-
+	
+	Categorie find(int categorieId) throws DALException;
 }
