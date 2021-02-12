@@ -7,9 +7,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.eni.encheres.bll.UtilisateurManager;
 import org.eni.encheres.bll.exceptions.BLLException;
+import org.eni.encheres.bo.Utilisateur;
 import org.eni.encheres.ihm.exceptions.MotDePasseException;
 
 /**
@@ -63,6 +65,9 @@ public class ServletCompte extends HttpServlet {
 		modification = Boolean.parseBoolean(request.getParameter(PARAM_MODIFICATION));
 		suppression = Boolean.parseBoolean(request.getParameter(PARAM_SUPPRESSION));
 
+		Utilisateur utilisateurAffiche = (Utilisateur) request.getSession().getAttribute("utilisateur");
+		request.setAttribute("utilisateurAffiche", utilisateurAffiche);
+		
 		if (modification != null && modification) {
 			if (!creation) {
 
