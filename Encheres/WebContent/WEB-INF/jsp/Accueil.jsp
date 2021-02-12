@@ -11,7 +11,7 @@
 	<%@include file="EnTeteEni.jspf"%>
 
 	<c:choose>
-		<c:when test="${!empty sessionScoope.utilisateur}">
+		<c:when test="${!empty sessionScope.utilisateur}">
 			<div>
 				<span><a href="<c:url value="/ServletConnexion"/>">Enchères</a></span>
 				<span><a href="<c:url value="/ServletVente"/>">Vendre un
@@ -50,7 +50,7 @@
 		</div>
 
 		<!-- Attribut en plus lors de la connection -->
-		<c:if test="${!empty sessionScoope.utilisateur}">
+		<c:if test="${!empty sessionScope.utilisateur}">
 			<div>
 				<div>
 					<div>

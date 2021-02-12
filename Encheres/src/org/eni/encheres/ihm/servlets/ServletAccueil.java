@@ -26,6 +26,7 @@ public class ServletAccueil extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		getServletContext().getRequestDispatcher("/accueil").forward(request, response);
+		System.out.println(request.getSession().getAttribute("utilisateur"));
 	}
 
 	/**
