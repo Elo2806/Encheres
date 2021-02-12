@@ -34,7 +34,7 @@ public class EnchereManager {
 	}
 
 	public void encherir(LocalDate dateEnchere, Integer montantEnchere, Utilisateur utilisateur, ArticleVendu article) {
-		Enchere nouvelle
+		Enchere nouvelle;
 	}
 
 	

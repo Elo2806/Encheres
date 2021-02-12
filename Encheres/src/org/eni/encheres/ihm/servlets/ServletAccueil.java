@@ -50,4 +50,10 @@ public class ServletAccueil extends HttpServlet {
 		getServletContext().setAttribute("Categories", categories);
 	}
 
+	private void updateArticles() {
+		List<Categorie> categories;	
+		CategorieManager manager = CategorieManager.getInstance();
+		categories = manager.getCategories();
+		getServletContext().setAttribute("Categories", categories);
+	}
 }

@@ -19,7 +19,7 @@ public class ArticleVendu {
 	private Utilisateur vendeur;
 	private Utilisateur acheteur;
 	private Categorie categorie;
-	
+	private Enchere EnchereMax;
 	
 	/**
 	 *Construteur
@@ -46,6 +46,7 @@ public class ArticleVendu {
 		setDateFinEncheres(dateFinEncheres);
 		setVendeur(vendeur);
 		setCategorie(categorie);
+		EnchereMax = new Enchere(dateDebutEncheres, 0, vendeur, this);//enchere 
 	}
 
 
@@ -137,15 +138,15 @@ public class ArticleVendu {
 	 * Méthode permettant de récupérer prixVnete
 	 * @return le prixVnete
 	 */
-	public Integer getPrixVnete() {
+	public Integer getPrixVente() {
 		return prixVente;
 	}
 	/**
 	 * Méthode permettant de modifier prixVnete
 	 * @param prixVnete le new prixVnete
 	 */
-	public void setPrixVnete(Integer prixVnete) {
-		this.prixVente = prixVnete;
+	public void setPrixVente(Integer prixVente) {
+		this.prixVente = prixVente;
 	}
 	/**
 	 * Méthode permettant de récupérer vendeur
@@ -188,6 +189,24 @@ public class ArticleVendu {
 	 */
 	public void setCategorie(Categorie categorie) {
 		this.categorie = categorie;
+	}
+
+
+	/**
+	 * Méthode permettant de récupérer enchereMax
+	 * @return le enchereMax
+	 */
+	public Enchere getEnchereMax() {
+		return EnchereMax;
+	}
+
+
+	/**
+	 * Méthode permettant de modifier enchereMax
+	 * @param enchereMax new enchereMax
+	 */
+	public void setEnchereMax(Enchere enchereMax) {
+		EnchereMax = enchereMax;
 	}
 	
 	
