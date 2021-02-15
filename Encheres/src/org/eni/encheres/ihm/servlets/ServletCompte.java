@@ -20,6 +20,8 @@ import org.eni.encheres.ihm.exceptions.MotDePasseException;
 @WebServlet("/ServletCompte")
 public class ServletCompte extends HttpServlet {
 
+	private static final String PARAM_OLD_MDP = "oldMdp";
+	private static final String PARAM_NEW_MDP = "newMdp";
 	private static final String JSP_PROFIL = "/profil";
 	private static final String ATTR_ERREUR_INSERTION = "erreurInsertion";
 	private static final String ATTR_ERREUR_IDENTIFIANT = "erreurIdentifiant";
@@ -45,7 +47,7 @@ public class ServletCompte extends HttpServlet {
 	private static final String PARAM_NOM = "nom";
 	private static final String PARAM_PSEUDO = "pseudo";
 	private static final String PARAM_CONFIRMATION = "confirmation";
-	private static final String PARAM_MDP = ERREUR_MDP;
+	private static final String PARAM_MDP = "mdp";
 	private static final String PARAM_SUPPRESSION = "suppression";
 	private static final String PARAM_MODIFICATION = "modification";
 	private static final long serialVersionUID = 1L;
@@ -69,12 +71,12 @@ public class ServletCompte extends HttpServlet {
 		request.setAttribute("utilisateurAffiche", utilisateurAffiche);
 		
 		if (modification != null && modification) {
-			getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);
+
+			getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);	
 			
 		} else if (suppression != null && suppression) {
 		}
 		else{
-			System.out.println("ca passe ici");
 			getServletContext().getRequestDispatcher(JSP_PROFIL).forward(request, response);
 		}
 	}
@@ -98,34 +100,11 @@ public class ServletCompte extends HttpServlet {
 		String codePostal = request.getParameter(PARAM_CODE_POSTAL);
 		String ville = request.getParameter(PARAM_VILLE);
 		String mdp = request.getParameter(PARAM_MDP);
+		String oldMdp = request.getParameter(PARAM_OLD_MDP);
+		String newMdp = request.getParameter(PARAM_NEW_MDP);
 		String confirmation = request.getParameter(PARAM_CONFIRMATION);
 		UtilisateurManager manager = UtilisateurManager.getInstance();
 
-		// try {
-		// controlerMdp(mdp,confirmation);
-		// } catch (MotDePasseException mdpe) {
-		// request.setAttribute(ATTR_ERREUR_MESSAGE, ERREUR_MDP);
-		// getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request,
-		// response);
-		// }
-		//
-		// try {
-		// manager.controleIdentifiantNewUtilisateur(pseudo,email);
-		// } catch (BLLException e) {
-		// request.setAttribute(ATTR_ERREUR_MESSAGE, ERREUR_IDENTIFIANT);
-		// getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request,
-		// response);
-		// }
-		//
-		// try {
-		// manager.ajouterUtilisateur(pseudo, nom, prenom, email, telephone, rue,
-		// codePostal, ville, mdp);
-		// }catch(BLLException blle) {
-		// request.setAttribute(ATTR_ERREUR_MESSAGE, ERREUR_GENERIQUE);
-		// blle.printStackTrace();
-		// getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request,
-		// response);
-		// }
 
 		try {
 			controlerMdp(mdp, confirmation);
