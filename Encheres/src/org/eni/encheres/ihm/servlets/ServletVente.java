@@ -82,13 +82,16 @@ public class ServletVente extends HttpServlet {
 		
 		int pCategorie = Integer.parseInt(request.getParameter(PARAM_CATEGORIE));
 
-		List<Categorie> listeCategorie = (List<Categorie>) getServletContext().getAttribute("listeCategories");
-		for (Categorie categorieEnCours : listeCategorie) {
-			if (pCategorie== categorieEnCours.getNoCategorie()) {
-				categorieArticle = categorieEnCours;
-				break;
-			}
-		}
+		Map<Integer, Categorie> listeCategorie = (Map<Integer, Categorie>) getServletContext().getAttribute("mapCategories");
+		categorieArticle = listeCategorie.get(pCategorie);
+		
+//		List<Categorie> listeCategorie = (List<Categorie>) getServletContext().getAttribute("listeCategories");
+//		for (Categorie categorieEnCours : listeCategorie) {
+//			if (pCategorie== categorieEnCours.getNoCategorie()) {
+//				categorieArticle = categorieEnCours;
+//				break;
+//			}
+//		}
 
 		Integer prixdepart = Integer.parseInt(request.getParameter(PARAM_PRIXDEPART));
 		
