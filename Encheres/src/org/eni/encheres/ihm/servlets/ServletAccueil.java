@@ -80,17 +80,25 @@ public class ServletAccueil extends HttpServlet {
 			throws ServletException, IOException {
 		Map<Integer, ArticleVendu> mapArticleAffiche = new HashMap<>();
 		
-		// Encodage de la reponse http en utf-8
-		request.setCharacterEncoding("UTF-8");
 		
-		mapArticleAffiche = creerMapArticlesAffiches(request);
 		
-		//Chargement de l'attribut dans la requete
-		request.setAttribute(ATTR_MAP_ARTICLES_AFFICHES, mapArticleAffiche);
-		
-		//Envoi de la requete au navigateur
-		getServletContext().getRequestDispatcher(JSP_ACCUEIL).forward(request, response);
+		if(request.getAttribute("Recherche")!=null) {
+			// Encodage de la reponse http en utf-8
+			request.setCharacterEncoding("UTF-8");
+			
+			mapArticleAffiche = creerMapArticlesAffiches(request);
+			
+			//Chargement de l'attribut dans la requete
+			request.setAttribute(ATTR_MAP_ARTICLES_AFFICHES, mapArticleAffiche);
+			
+			//Envoi de la requete au navigateur
+			getServletContext().getRequestDispatcher(JSP_ACCUEIL).forward(request, response);
 
+		}else{
+			doGet(request, response);
+		}
+		
+		
 	}
 
 	/**
@@ -107,7 +115,7 @@ public class ServletAccueil extends HttpServlet {
 		} catch (BLLException blle) {
 			blle.printStackTrace();// TODO voir si possible de faire mieux en gestion de
 		}
-		getServletContext().setAttribute("listeCategories", categories);//
+		//getServletContext().setAttribute("listeCategories", categories);//TODO supprimer si pas de problème
 		getServletContext().setAttribute(APP_ATTR_MAP_CATEGORIES, mapCategories);
 	}
 
@@ -135,9 +143,7 @@ public class ServletAccueil extends HttpServlet {
 	 * @return
 	 */
 	private Map<Integer, ArticleVendu> creerMapArticlesAffiches(HttpServletRequest request) {
-		Map<Integer, Categorie> mapCategorie;
 		Categorie categorieFiltre;
-		int categorieId;
 		List<Filtre> listFiltres = new ArrayList<>();
 		Map<Integer,ArticleVendu> mapArticleAffiche=new HashMap<>();
 		Utilisateur utilisateur;
