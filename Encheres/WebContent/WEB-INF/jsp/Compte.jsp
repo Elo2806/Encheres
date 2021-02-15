@@ -193,21 +193,25 @@
 			<!-- Partie spéciale "Modifier mon profil" -->
 
 			<c:if test="${param.modification}">
+				<input type="hidden" name="modification" value="true">
+
 				<tr>
-					<th><a href="<c:url value="/ServletCompte?modifMdp=true&modification=true"/>">Modifier
+
+					<th>
+						<div class="ProblemeMdp">
+							<label for="oldMdp">Mot de passe actuel:</label> <input
+								type="password" name="oldMdp" id="oldMdp"
+								placeholder="Veuillez entrer votre mot de passe actuel">
+						</div>
+					</th>
+				</tr>
+				<tr>
+					<th><a
+						href="<c:url value="/ServletCompte?modifMdp=true&modification=true"/>">Modifier
 							mon mot de passe</a></th>
 				</tr>
-				<c:if test="${param.modifMdp}">
-					<tr>
 
-						<th>
-							<div class="ProblemeMdp">
-								<label for="oldMdp">Mot de passe actuel:</label> <input
-									type="password" name="oldMdp" id="oldMdp"
-									placeholder="Veuillez entrer votre mot de passe actuel">
-							</div>
-						</th>
-					</tr>
+				<c:if test="${param.modifMdp}">
 					<tr>
 						<th>
 							<div class="ProblemeMdp">

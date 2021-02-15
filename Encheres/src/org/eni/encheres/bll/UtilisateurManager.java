@@ -10,7 +10,7 @@ public class UtilisateurManager {
 
 	private static UtilisateurManager instance;
 	private UtilisateurDAO utilisateurdao;
-	
+
 	/**
 	 * 
 	 * Constructeur
@@ -18,49 +18,87 @@ public class UtilisateurManager {
 	private UtilisateurManager() {
 		utilisateurdao = DAOFactory.getUtilisateurDAO();
 	}
-	
+
 	public static UtilisateurManager getInstance() {
-		if(instance==null) {
-			instance =  new UtilisateurManager();
+		if (instance == null) {
+			instance = new UtilisateurManager();
 		}
-		
+
 		return instance;
 	}
-	
-	public void ajouterUtilisateur(String pseudo,String nom,String prenom,String email,String telephone,String rue,String codePostal,String ville,String motDePasse) throws BLLException {
-		Utilisateur nouvelUtilisateur = creerUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse);
-		
+
+	public void ajouterUtilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
+			String codePostal, String ville, String motDePasse) throws BLLException {
+		Utilisateur nouvelUtilisateur = creerUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville,
+				motDePasse);
+
 		try {
 			utilisateurdao.create(nouvelUtilisateur);
 		} catch (DALException dale) {
-			throw new BLLException("Erreur lors de l'acces à la DAL",dale);
+			throw new BLLException("Erreur lors de l'acces à la DAL", dale);
 		}
-	
+
 	}
-		
-	private Utilisateur creerUtilisateur(String pseudo,String nom,String prenom,String email,String telephone,String rue,String codePostal,String ville,String motDePasse) {
-		Utilisateur user = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, 0, false);
+
+	/**
+	 * 
+	 * Méthode permettant de modifier les données d'un compte utilisateur
+	 * 
+	 * @param pseudo
+	 * @param nom
+	 * @param prenom
+	 * @param email
+	 * @param telephone
+	 * @param rue
+	 * @param codePostal
+	 * @param ville
+	 * @param motDePasse
+	 * @param credit
+	 * @return
+	 * @throws BLLException
+	 */
+	public void modifierUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
+			String rue, String codePostal, String ville, String motDePasse, int credit) throws BLLException {
+		Utilisateur user = creerUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse);
+		try {
+			utilisateurdao.update(user);
+		} catch (DALException dale) {
+			throw new BLLException("Erreur lors de l'acces à la DAL", dale);
+		}
+	}
+
+	private Utilisateur creerUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
+			String rue, String codePostal, String ville, String motDePasse) {
+		Utilisateur user = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, 0,
+				false);
 		return user;
 	}
 
 	/**
 	 * 
-	 * Méthode permettant d'appeler un contrôle du pseudo et de l'email dans le systeme de persistance
+	 * Méthode permettant d'appeler un contrôle du pseudo et de l'email dans le
+	 * systeme de persistance (pour créer un compte) // TODO enlever comm entre
+	 * parenthese + changer nom méthode
+	 * 
 	 * @param pseudo
 	 * @param email
-	 * @throws BLLException si un des deux identifiants existent en base
+	 * @throws BLLException
+	 *             si un des deux identifiants existent en base
 	 */
-	public void controleIdentifiantNewUtilisateur(String pseudo,String email) throws BLLException {
+	public void controleIdentifiantNewUtilisateur(String pseudo, String email) throws BLLException {
 		try {
-			utilisateurdao.controleUtilisateurExistence(pseudo,email);
+			utilisateurdao.controleUtilisateurExistence(pseudo, email);
 		} catch (DALException dale) {
-			throw new BLLException("Erreur lors des opérations en DAL",dale);
+			throw new BLLException("Erreur lors des opérations en DAL", dale);
 		}
 	}
 
 	/**
 	 * 
-	 * Méthode permettant de vérifier et récuperer un utilisateur existant selon son pseudo et son mot de pass
+	 * Méthode permettant de vérifier et récuperer un utilisateur existant selon son
+	 * pseudo et son mot de passe (pour se connecter) // TODO enlever comm entre
+	 * parenthese + changer nom méthode
+	 * 
 	 * @param identifiant
 	 * @param pseudo
 	 * @return
@@ -69,15 +107,12 @@ public class UtilisateurManager {
 	public Utilisateur rechercherUtilisateur(String identifiant, String motDePasse) throws BLLException {
 		Utilisateur utilisateur = null;
 		try {
-			utilisateur = utilisateurdao.controleIdentifiantsExistants (identifiant, motDePasse);
+			utilisateur = utilisateurdao.controleIdentifiantsExistants(identifiant, motDePasse);
 		} catch (DALException dale) {
-			throw new BLLException("Erreur lors des opérations en DAL",dale);
+			throw new BLLException("Erreur lors des opérations en DAL", dale);
 		}
-		
+
 		return utilisateur;
 	}
-		
-	
-	
-	
+
 }

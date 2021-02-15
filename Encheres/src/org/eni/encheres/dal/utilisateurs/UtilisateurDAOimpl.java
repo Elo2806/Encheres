@@ -41,7 +41,8 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 	private static final String SQL_SELECT_BY_EMAIL = "SELECT no_utilisateur FROM Utilisateurs WHERE email=?";
 	private static final String SQL_SELECT_BY_PSEUDO = "SELECT no_utilisateur FROM Utilisateurs WHERE pseudo=?";
 	private static final String SQL_CREATE = "INSERT INTO Utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif) VALUES (?,?,?,?,?,?,?,?,?,?,0,1)";
-
+	private static final String SQL_UPDATE = "UPDATE Utilisateurs SET pseudo=?,nom=?,prenom=?,email=?,telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=?,credit=?,administrateur=?,actif=? WHERE no_utilisateur=?";
+	
 	@Override
 	public Utilisateur create(Utilisateur newUtilisateur) throws DALException {
 		Utilisateur updatedUtilisateur;
@@ -179,6 +180,48 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 		
 		return utilisateur;
 		
+	}
+
+	@Override
+	public Utilisateur update(Utilisateur utilisateurAModifier) throws DALException {
+		Utilisateur modifiedUtilisateur;
+		PreparedStatement pstmt;
+		int nbLigne = 0;
+
+		// Connection en base
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			// Traitement de la requete SQL
+			try {
+				pstmt = cnx.prepareStatement(SQL_UPDATE);
+				pstmt.setString(1, utilisateurAModifier.getPseudo());
+				pstmt.setString(2, utilisateurAModifier.getNom());
+				pstmt.setString(3, utilisateurAModifier.getPrenom());
+				pstmt.setString(4, utilisateurAModifier.getEmail());
+				pstmt.setString(5, utilisateurAModifier.getTelephone());
+				pstmt.setString(6, utilisateurAModifier.getRue());
+				pstmt.setString(7, utilisateurAModifier.getCodePostal());
+				pstmt.setString(8, utilisateurAModifier.getVille());
+				pstmt.setString(9, utilisateurAModifier.getMotDePasse());
+				pstmt.setInt(10, utilisateurAModifier.getCredit());
+				pstmt.setInt(11, utilisateurAModifier.getNoUtilisateur());
+				pstmt.executeUpdate();
+
+				nbLigne = pstmt.executeUpdate();
+				
+				pstmt.close();
+			} catch (SQLException sqle) {
+				throw new RequeteSQLException("Erreur lors de la mise à jour en base", sqle);
+			}
+
+		} catch (SQLException sqle) {
+			throw new ConnectionException("Erreur connection", sqle);
+		}
+
+		//Mise à jour de l'utilisateur
+		modifiedUtilisateur = utilisateurAModifier;
+
+		return modifiedUtilisateur;
+
 	}
 	
 }

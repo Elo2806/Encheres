@@ -42,4 +42,13 @@ public interface UtilisateurDAO {
 	 */
 	public Utilisateur controleIdentifiantsExistants(String identifiant, String motDePasse) throws DALException;
 	
+	/**
+	 * 
+	 * Méthode permettant de modifier un utilisateur en base de données
+	 * @param utilisateurAModifier
+	 * @return
+	 * @throws DALException
+	 */
+	public Utilisateur update(Utilisateur utilisateurAModifier) throws DALException;
+	
 }

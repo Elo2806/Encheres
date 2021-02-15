@@ -20,6 +20,7 @@ import org.eni.encheres.ihm.exceptions.MotDePasseException;
 @WebServlet("/ServletCompte")
 public class ServletCompte extends HttpServlet {
 
+	private static final String PARAM_CREDIT = "credit";
 	private static final String PARAM_OLD_MDP = "oldMdp";
 	private static final String PARAM_NEW_MDP = "newMdp";
 	private static final String JSP_PROFIL = "/profil";
@@ -103,9 +104,71 @@ public class ServletCompte extends HttpServlet {
 		String oldMdp = request.getParameter(PARAM_OLD_MDP);
 		String newMdp = request.getParameter(PARAM_NEW_MDP);
 		String confirmation = request.getParameter(PARAM_CONFIRMATION);
+		Integer credit = Integer.parseInt(request.getParameter(PARAM_CREDIT));
 		UtilisateurManager manager = UtilisateurManager.getInstance();
 
 
+		creerCompte(request, response, ErreurSaisie, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, mdp,
+				confirmation, manager);
+		
+
+		/*
+		 * Si modif mail: si mail ou pseudo existe en base ok si mail = mail du noUser = utilisateur en cours
+		 * 
+		 * Si modif éléments = validation avec mdp
+		 * 
+		 * Si modif mdp = validation avec mdp + lien vers modification controlerMdp identique
+		 * 
+		 * Creer methode differenciée modifierUtilisateur (admin + user)		*/
+		
+//			try {
+//				manager.controleIdentifiantNewUtilisateur(pseudo, email);
+//				request.setAttribute(ATTR_ERREUR_IDENTIFIANT, false);
+//			} catch (BLLException e) {
+//				request.setAttribute(ATTR_ERREUR_IDENTIFIANT, true);
+//				ErreurSaisie=true;
+//			}
+
+			try {
+				manager.modifierUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, mdp, credit);
+				request.setAttribute(ATTR_ERREUR_INSERTION, false);
+			} catch (BLLException blle) {
+				request.setAttribute(ATTR_ERREUR_INSERTION, true);
+				blle.printStackTrace();
+				ErreurSaisie=true;
+			}
+			
+			if (ErreurSaisie) {
+				getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);
+			} else {
+				getServletContext().getRequestDispatcher(SERVLET_CONNEXION+"?identifiant="+pseudo+"&motdepasse="+mdp).forward(request, response);
+			}
+
+	}
+
+	/**
+	 * Méthode permettant de créer un nouveau compte après les contrôles metiers IHM (saisie mdp identique 2 fois + pseudo et email non existants en base)
+	 * @param request
+	 * @param response
+	 * @param ErreurSaisie
+	 * @param pseudo
+	 * @param nom
+	 * @param prenom
+	 * @param email
+	 * @param telephone
+	 * @param rue
+	 * @param codePostal
+	 * @param ville
+	 * @param mdp
+	 * @param confirmation
+	 * @param manager
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void creerCompte(HttpServletRequest request, HttpServletResponse response, boolean ErreurSaisie,
+			String pseudo, String nom, String prenom, String email, String telephone, String rue, String codePostal,
+			String ville, String mdp, String confirmation, UtilisateurManager manager)
+			throws ServletException, IOException {
 		try {
 			controlerMdp(mdp, confirmation);
 			request.setAttribute(ATTR_ERREUR_MDP, false);
@@ -136,7 +199,6 @@ public class ServletCompte extends HttpServlet {
 		} else {
 			getServletContext().getRequestDispatcher(SERVLET_CONNEXION+"?identifiant="+pseudo+"&motdepasse="+mdp).forward(request, response);
 		}
-
 	}
 
 	private void controlerMdp(String mdp, String confirmation) throws MotDePasseException {
