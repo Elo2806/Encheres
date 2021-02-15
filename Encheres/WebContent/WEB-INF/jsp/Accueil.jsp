@@ -33,17 +33,17 @@
 	<div>
 		<h3>Filtres :</h3>
 	</div>
-	<form method="post" action="<c:url value="/ServletAccueil"/>">
+	<form method="post"
+		action="<c:url value="/ServletAccueil?recherche=true"/>">
 		<div>
 			<input type="button" /><input type="text">
 		</div>
 		<div>
-			<label for="categorieFiltre">Categorie : </label>
-			
-			<select name="categorie" size="1" id="categorie">
-			<c:forEach var="categorie" items="${mapCategories}">
-				<option value="${categorie.key}">${categorie.value.libelle}</option>
-				</c:forEach>	
+			<label for="categorie">Categorie : </label> <select name="categorieFiltre"
+				size="1" id="categorie">
+				<c:forEach var="categorie" items="${mapCategories}">
+					<option name="test" value="${categorie.key}">${categorie.value.libelle}</option>
+				</c:forEach>
 			</select>
 		</div>
 
@@ -56,15 +56,18 @@
 					</div>
 					<div>
 						<div>
-							<input type="checkbox" name="chkEncheresOuvertes"><label>enchères
-								ouvertes</label>
+							<input type="checkbox" name="chkEncheresOuvertes"
+								<c:if test="${param.chkEncheresOuvertes}">checked="checked"</c:if>>
+							<label for="chkEncheresOuvertes">enchères ouvertes</label>
 						</div>
 						<div>
-							<input type="checkbox" name="chkMesEnchereEnCours"><label>mes
+							<input type="checkbox" name="chkMesEnchereEnCours"
+								<c:if test="${param.chkMesEnchereEnCours}">checked="checked"</c:if>><label>mes
 								enchères en cours</label>
 						</div>
 						<div>
-							<input type="checkbox" name="chkMesEncheresRemportes"><label>mes
+							<input type="checkbox" name="chkMesEncheresRemportes"
+								<c:if test="${param.chkMesEncheresRemportes}">checked="checked"</c:if>><label>mes
 								enchères remportées</label>
 						</div>
 					</div>
@@ -75,15 +78,18 @@
 					</div>
 					<div>
 						<div>
-							<input type="checkbox" name="chkVentesEnCours"><label>mes
+							<input type="checkbox" name="chkVentesEnCours"
+								<c:if test="${param.chkVentesEnCours}">checked="checked"</c:if>><label>mes
 								ventes en cours</label>
 						</div>
 						<div>
-							<input type="checkbox" name="chkVentesNonDebutes"><label>ventes
+							<input type="checkbox" name="chkVentesNonDebutes"
+								<c:if test="${param.chkVentesNonDebutes}">checked="checked"</c:if>><label>ventes
 								non débutées</label>
 						</div>
 						<div>
-							<input type="checkbox" name="chkVentesTerminees"><label>ventes
+							<input type="checkbox" name="chkVentesTerminees"
+								<c:if test="${param.chkVentesTerminees}">checked="checked"</c:if>><label>ventes
 								terminées</label>
 						</div>
 					</div>
@@ -99,25 +105,36 @@
 
 	<!-- Liste des enchères à mettre dynamiquement -->
 	<div class="Enchere">
-		<div>
-			<img alt="photo objet" src="">
-		</div>
-		<div>
+
+		<c:forEach var="article" items="${mapArticles}">
+
+			<!--  <option value="${article.key}">${categorie.value.libelle}</option> -->
+
 			<div>
-				<a href="<c:url value="/ServletEnchere"/>" id="libelleArticle">PC
-					Gamer pour travailler</a>
+				<img alt="photo objet" src="">
 			</div>
+
 			<div>
-				Prix : <span id="nbPoints">210</span> points
+				<div>
+					<a href="<c:url value="/ServletEnchere?noArticle=${article.key}"/>"
+						id="libelleArticle">${article.value.nomArticle}</a>
+				</div>
+				<div>
+					Prix : <span id="nbPoints">${article.value.enchereMax.montantEnchere}</span>
+					points
+				</div>
+				<div>
+					Fin de l'enchère : <span id="dateFinEnchere">${article.value.dateFinEncheres}</span>
+				</div>
+				<div>
+					Vendeur : <span><a href="<c:url value="/ServletProfil"/>"
+						id="pseudoVendeur" name="pseudoVendeur">${article.value.vendeur.pseudo}</a></span>
+				</div>
 			</div>
-			<div>
-				Fin de l'enchère : <span id="dateFinEnchere">10/08/2018</span>
-			</div>
-			<div>
-				Vendeur : <span><a href="<c:url value="/ServletProfil"/>"
-					id="pseudoVendeur" name=id="pseudoVendeur">jojo44</a></span>
-			</div>
-		</div>
+
+		</c:forEach>
+
+
 
 	</div>
 </body>

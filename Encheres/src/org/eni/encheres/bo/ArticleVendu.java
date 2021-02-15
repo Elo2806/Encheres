@@ -2,14 +2,19 @@
 package org.eni.encheres.bo;
 
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * @author ElCaTar
  *
  */
-public class ArticleVendu {
+public class ArticleVendu implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer noArticle;
 	private String nomArticle;
 	private String description;
@@ -20,7 +25,7 @@ public class ArticleVendu {
 	private Utilisateur vendeur;
 	private Utilisateur acheteur;
 	private Categorie categorie;
-	private Enchere EnchereMax;
+	private Enchere enchereMax;
 	
 	/**
 	 *Construteur
@@ -49,7 +54,7 @@ public class ArticleVendu {
 		setDateFinEncheres(dateFinEncheres);
 		setVendeur(vendeur);
 		setCategorie(categorie);
-		EnchereMax = new Enchere(dateDebutEncheres, 0, vendeur, this);//enchere 
+		enchereMax = new Enchere(dateDebutEncheres, 0, vendeur, this);//enchere 
 	}
 
 
@@ -200,7 +205,7 @@ public class ArticleVendu {
 	 * @return le enchereMax
 	 */
 	public Enchere getEnchereMax() {
-		return EnchereMax;
+		return enchereMax;
 	}
 
 
@@ -208,8 +213,8 @@ public class ArticleVendu {
 	 * Méthode permettant de modifier enchereMax
 	 * @param enchereMax new enchereMax
 	 */
-	public void setEnchereMax(Enchere enchereMax) {
-		EnchereMax = enchereMax;
+	public void setEnchereMax(Enchere penchereMax) {
+		enchereMax = penchereMax;
 	}
 	
 	

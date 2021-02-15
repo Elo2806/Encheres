@@ -29,6 +29,7 @@ import org.eni.encheres.ihm.exceptions.FiltreInexistantException;
  */
 @WebServlet("/ServletAccueil")
 public class ServletAccueil extends HttpServlet {
+	private static final String PARAM_RECHERCHE = "recherche";
 	private static final String APP_ATTR_UTILISATEUR = "utilisateur";
 	private static final String APP_ATTR_MAP_ARTICLES = "mapArticles";
 	private static final String APP_ATTR_MAP_CATEGORIES = "mapCategories";
@@ -82,19 +83,21 @@ public class ServletAccueil extends HttpServlet {
 		
 		
 		
-		if(request.getAttribute("Recherche")!=null) {
+		if(request.getParameter(PARAM_RECHERCHE)!=null) {
 			// Encodage de la reponse http en utf-8
 			request.setCharacterEncoding("UTF-8");
+			
+			System.out.println("ok");
 			
 			mapArticleAffiche = creerMapArticlesAffiches(request);
 			
 			//Chargement de l'attribut dans la requete
 			request.setAttribute(ATTR_MAP_ARTICLES_AFFICHES, mapArticleAffiche);
-			
 			//Envoi de la requete au navigateur
 			getServletContext().getRequestDispatcher(JSP_ACCUEIL).forward(request, response);
 
 		}else{
+			System.out.println("nok");
 			doGet(request, response);
 		}
 		
@@ -173,7 +176,9 @@ public class ServletAccueil extends HttpServlet {
 		Map<Integer, Categorie> mapCategorie;
 		Categorie categorieFiltre;
 		int categorieId;
+		System.out.println(request.getParameter("categorieFiltre"));//TODO a enlever
 		categorieId = Integer.parseInt(request.getParameter(PARAM_CATEGORIE_FILTRE));
+		
 		mapCategorie = (Map<Integer, Categorie>) request.getServletContext().getAttribute(APP_ATTR_MAP_CATEGORIES);
 		categorieFiltre = mapCategorie.get(categorieId);
 		return categorieFiltre;

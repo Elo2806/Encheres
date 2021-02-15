@@ -1,5 +1,6 @@
 package org.eni.encheres.bo;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
@@ -7,8 +8,12 @@ import java.time.LocalDateTime;
  * @author ElCaTar
  *
  */
-public class Enchere {
+public class Enchere implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private LocalDateTime dateEnchere;
 	private Integer montantEnchere;
 	private Utilisateur utilisateur;

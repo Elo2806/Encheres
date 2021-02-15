@@ -25,12 +25,12 @@
 		</div>
 		<div>
 			<label for="categorie">Categorie : </label>
-			
-			<select name="categorie" size="1" id="categorie">
+			<select name="categorie" id="categorie">
 			<c:forEach var="categorie" items="${mapCategories}">
-				<option value="${mapCategories.key}">${mapCategories.value.libelle}</option>
+				<option value="${categorie.key}">${categorie.value.libelle}</option>
 				</c:forEach>	
 			</select>
+			
 		</div>
 		<div>
 			<label for="photo">Photo de l'article : </label>
