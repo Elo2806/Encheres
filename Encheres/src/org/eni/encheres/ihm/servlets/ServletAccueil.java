@@ -51,14 +51,17 @@ public class ServletAccueil extends HttpServlet {
 	}
 
 	private void updateCategories() {
-		Map<Integer,Categorie> categories = new HashMap<>();	
+		List<Categorie> categories = new ArrayList<>();
+		Map<Integer, Categorie> mapCategories = new HashMap<>();
 		CategorieManager manager = CategorieManager.getInstance();
 		try {
-			categories = manager.getCategories();
+			mapCategories = manager.getCategories();
+			categories.addAll(mapCategories.values());
 		} catch (BLLException blle) {
 			blle.printStackTrace();//TODO voir si possible de faire mieux en gestion de
 		}
 		getServletContext().setAttribute("listeCategories", categories);
+		getServletContext().setAttribute("mapCategories", mapCategories);
 	}
 
 	private void updateArticles() {

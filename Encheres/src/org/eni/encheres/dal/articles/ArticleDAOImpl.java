@@ -26,13 +26,7 @@ import org.eni.encheres.dal.jdbc.ConnectionProvider;
  */
 public class ArticleDAOImpl implements ArticleDAO {
 
-	private static final String SQL_SELECT_ENCHERE_MAX = "SELECT e.no_article,date_enchere, montant_enchere,e.no_utilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif "
-			+ " FROM ENCHERES as e INNER JOIN (SELECT no_article, max(montant_enchere) as montant_max  "
-			                           + " FROM ENCHERES GROUP BY no_article) as selectMontantMax ON e.no_article = selectMontantMax.no_article "
-			                    + " INNER JOIN UTILISATEURS as u ON u.no_utilisateur = e.no_utilisateur "
-			+ " WHERE e.montant_enchere = selectMontantMax.montant_max;";
-
-	private static final String COLL_UTI_NO_UTILISATEUR = "uti.no_utilisateur";
+	private static final String COLL_UTI_NO_UTILISATEUR = "no_utilisateur";
 	private static final String COL_ART_DATE_FIN_ENCHERES = "date_fin_encheres";
 	private static final String COL_ART_DATE_DEBUT_ENCHERES = "date_debut_encheres";
 	private static final String COL_ART_DESCRIPTION = "description";
@@ -49,10 +43,16 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static final String COL_UTIL_NOM = "nom";
 	private static final String COL_UTIL_PSEUDO = "pseudo";
 	private static final String COL_UTIL_ACTIF = "actif";
-	private static final String COL_ART_NO_CATEGORIE = "art.no_categorie";
-	private static final String COL_CAT_LIBELLE = "cat.libelle";
+	private static final String COL_ART_NO_CATEGORIE = "no_categorie";
+	private static final String COL_CAT_LIBELLE = "libelle";
 
-	private static final String SQL_FINDALL_CATEGORIE = "SELECT nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, art.no_utilisateur, art.no_categorie,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif,cat.libelle  "
+	private static final String SQL_SELECT_ENCHERE_MAX = "SELECT e.no_article,date_enchere, montant_enchere,e.no_utilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif "
+			+ " FROM ENCHERES as e INNER JOIN (SELECT no_article, max(montant_enchere) as montant_max  "
+			                           + " FROM ENCHERES GROUP BY no_article) as selectMontantMax ON e.no_article = selectMontantMax.no_article "
+			                    + " INNER JOIN UTILISATEURS as u ON u.no_utilisateur = e.no_utilisateur "
+			+ " WHERE e.montant_enchere = selectMontantMax.montant_max;";
+	
+	private static final String SQL_FINDALL_CATEGORIE = "SELECT nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, art.no_utilisateur, art.no_categorie,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif,libelle  "
 			+ " FROM ARTICLES_VENDUS as art INNER JOIN CATEGORIES as cat ON cat.no_categorie = art.no_categorie"
 			+ " INNER JOIN UTILISATEURS as uti ON uti.no_utilisateur = art.no_utilisateur";
 
