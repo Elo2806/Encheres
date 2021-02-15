@@ -44,11 +44,31 @@ public interface UtilisateurDAO {
 	
 	/**
 	 * 
+	 * Méthode permettant de controler l'existence d'un email dans le système de persistance
+	 * @param email
+	 * @throws DALException 
+	 */
+	public void controleEmailExistence(String email) throws DALException;
+	
+	/**
+	 * 
+	 * Méthode permettant de controler l'existence d'un pseudo dans le système de persistance
+	 * @param email
+	 * @throws DALException 
+	 */
+	public void controlePseudoExistence(String pseudo) throws DALException;
+	
+	/**
+	 * 
 	 * Méthode permettant de modifier un utilisateur en base de données
 	 * @param utilisateurAModifier
 	 * @return
 	 * @throws DALException
 	 */
 	public Utilisateur update(Utilisateur utilisateurAModifier) throws DALException;
+
+	
+
+	
 	
 }

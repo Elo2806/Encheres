@@ -40,7 +40,7 @@ public class ServletConnexion extends HttpServlet {
 		// // Récupérer le mot de passe de l'utilisateur
 		// // ... et l'insérer dans le champs
 		// }
-
+		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
 		if (session.getAttribute("utilisateur") == null) {
 			getServletContext().getRequestDispatcher("/connexion").forward(request, response);
@@ -56,7 +56,7 @@ public class ServletConnexion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding("UTF-8");
 
 		String identifiants = request.getParameter("identifiant");
 		String motDePasse = request.getParameter("motdepasse");

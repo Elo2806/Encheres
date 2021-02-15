@@ -88,6 +88,17 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 
 	@Override
 	public void controleUtilisateurExistence(String pseudo, String email) throws DALException {
+			
+		//Test existence du pseudo
+		controlePseudoExistence(pseudo);
+
+		//Test existence de l'adresse email
+		controleEmailExistence(email);
+		
+	}
+	
+	@Override
+	public void controlePseudoExistence(String pseudo) throws DALException {
 		PreparedStatement prepare;
 		ResultSet rs;
 		
@@ -102,6 +113,28 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 				if (rs.next()) {
 					throw new UtilisateurExistantException() ;
 				}
+
+				rs.close();
+				prepare.close();
+			} catch (SQLException sqle) {
+				throw new RequeteSQLException("Erreur lors des selections en base", sqle);
+			}
+
+		} catch (SQLException sqle) {
+			throw new ConnectionException("Erreur connection", sqle);
+		}
+				
+	}
+	
+	@Override
+	public void controleEmailExistence(String email) throws DALException {
+		PreparedStatement prepare;
+		ResultSet rs;
+		
+		// Connection en base
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			// Traitement de la requete SQL
+			try {
 
 				//Test existence de l'adresse email
 				prepare = cnx.prepareStatement(SQL_SELECT_BY_EMAIL);
@@ -120,7 +153,6 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 		} catch (SQLException sqle) {
 			throw new ConnectionException("Erreur connection", sqle);
 		}
-		
 	}
 
 	@Override
@@ -181,6 +213,8 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 		return utilisateur;
 		
 	}
+	
+	
 
 	@Override
 	public Utilisateur update(Utilisateur utilisateurAModifier) throws DALException {
@@ -224,5 +258,9 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 		return modifiedUtilisateur;
 
 	}
+
+	
+
+	
 	
 }

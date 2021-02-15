@@ -129,6 +129,14 @@ public class UtilisateurManager {
 			throw new BLLException("Erreur lors des opérations en DAL", dale);
 		}
 	}
+	
+	public void controleEmailExistant(String email) throws DALException {
+		utilisateurdao.controleEmailExistence(email);
+	}
+	
+	public void controlePseudoExistant(String pseudo) throws DALException {
+		utilisateurdao.controlePseudoExistence(pseudo);
+	}
 
 	/**
 	 * 

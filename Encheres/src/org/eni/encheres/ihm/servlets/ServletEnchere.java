@@ -38,10 +38,6 @@ public class ServletEnchere extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-		
-		
-		
-
 		// permet d'enchérir sur un article
 		getServletContext().getRequestDispatcher("/enchere").forward(request, response);
 	}
