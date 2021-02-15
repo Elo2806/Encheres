@@ -201,7 +201,7 @@
 						<div class="ProblemeMdp">
 							<label for="oldMdp">Mot de passe actuel:</label> <input
 								type="password" name="oldMdp" id="oldMdp"
-								placeholder="Veuillez entrer votre mot de passe actuel">
+								placeholder="Veuillez entrer votre mot de passe actuel" required>
 						</div>
 					</th>
 				</tr>
@@ -224,7 +224,7 @@
 							<div class="ProblemeMdp">
 								<label for="confirmation">Confirmation:</label> <input
 									type="password" name="confirmation" id="confirmation"
-									placeholder="Veuillez confirmer votre nouveau mot de passe">
+									placeholder="Veuillez confirmer votre nouveau mot de passe" required>
 							</div>
 						</th>
 					</tr>

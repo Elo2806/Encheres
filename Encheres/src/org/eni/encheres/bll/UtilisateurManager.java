@@ -57,16 +57,53 @@ public class UtilisateurManager {
 	 * @return
 	 * @throws BLLException
 	 */
-	public void modifierUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, String codePostal, String ville, String motDePasse) throws BLLException {
-		Utilisateur user = creerUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse);
+	public Utilisateur modifierUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
+			String rue, String codePostal, String ville, String motDePasse, Integer noUtilisateur) throws BLLException {
+		Utilisateur user = creerUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, noUtilisateur);
 		try {
 			utilisateurdao.update(user);
 		} catch (DALException dale) {
 			throw new BLLException("Erreur lors de l'acces à la DAL", dale);
 		}
+		return user;
 	}
 
+	/**
+	 * 
+	 * Méthode permettant de créer une instance d'utilisateur avec noUtilisateur récupéré
+	 * @param pseudo
+	 * @param nom
+	 * @param prenom
+	 * @param email
+	 * @param telephone
+	 * @param rue
+	 * @param codePostal
+	 * @param ville
+	 * @param motDePasse
+	 * @param noUtilisateur
+	 * @return
+	 */
+	private Utilisateur creerUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
+			String rue, String codePostal, String ville, String motDePasse, Integer noUtilisateur) {
+		Utilisateur user = creerUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse);
+		user.setNoUtilisateur(noUtilisateur);
+		return user;
+	}
+
+	/**
+	 * 
+	 * Méthode permettant de créer une instance d'utilisateur  
+	 * @param pseudo
+	 * @param nom
+	 * @param prenom
+	 * @param email
+	 * @param telephone
+	 * @param rue
+	 * @param codePostal
+	 * @param ville
+	 * @param motDePasse
+	 * @return
+	 */
 	private Utilisateur creerUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse) {
 		Utilisateur user = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, 0,

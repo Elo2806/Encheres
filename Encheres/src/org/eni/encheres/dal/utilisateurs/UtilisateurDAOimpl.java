@@ -203,9 +203,10 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 				pstmt.setString(8, utilisateurAModifier.getVille());
 				pstmt.setString(9, utilisateurAModifier.getMotDePasse());
 				pstmt.setInt(10, utilisateurAModifier.getCredit());
-				pstmt.setInt(11, utilisateurAModifier.getNoUtilisateur());
+				pstmt.setBoolean(11, utilisateurAModifier.isAdministrateur());
+				pstmt.setBoolean(12, utilisateurAModifier.isActif());
+				pstmt.setInt(13, utilisateurAModifier.getNoUtilisateur());
 				pstmt.executeUpdate();
-
 				nbLigne = pstmt.executeUpdate();
 				
 				pstmt.close();

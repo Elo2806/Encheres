@@ -81,6 +81,7 @@ public abstract class DAOFactory {
 			String codePostal, String ville, String motDePasse, Integer credit, boolean administrateur, int noUtilisateur, boolean actif ) {
 
 		Utilisateur newUtilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
+		System.out.println(" nUtilisateur : "+ noUtilisateur);// TODO	à suppr après les tests
 		newUtilisateur.setNoUtilisateur(noUtilisateur);
 		newUtilisateur.setActif(actif);
 		return newUtilisateur;

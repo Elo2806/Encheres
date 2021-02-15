@@ -20,9 +20,8 @@ import org.eni.encheres.ihm.exceptions.MotDePasseException;
 @WebServlet("/ServletCompte")
 public class ServletCompte extends HttpServlet {
 
-	private static final String PARAM_CREDIT = "credit";
-	private static final String PARAM_OLD_MDP = "oldMdp";
-	private static final String PARAM_NEW_MDP = "newMdp";
+	
+	private static final String SESSION_ATTR_UTILISATEUR = "utilisateur";
 	private static final String JSP_PROFIL = "/profil";
 	private static final String ATTR_ERREUR_INSERTION = "erreurInsertion";
 	private static final String ATTR_ERREUR_IDENTIFIANT = "erreurIdentifiant";
@@ -39,6 +38,8 @@ public class ServletCompte extends HttpServlet {
 	private static final String JSP_COMPTE = "/compte";
 	
 	private static final String PARAM_CREATION = "creation";
+	private static final String PARAM_OLD_MDP = "oldMdp";
+	private static final String PARAM_NEW_MDP = "newMdp";
 	private static final String PARAM_VILLE = "ville";
 	private static final String PARAM_CODE_POSTAL = "codePostal";
 	private static final String PARAM_RUE = "rue";
@@ -68,7 +69,7 @@ public class ServletCompte extends HttpServlet {
 		modification = Boolean.parseBoolean(request.getParameter(PARAM_MODIFICATION));
 		suppression = Boolean.parseBoolean(request.getParameter(PARAM_SUPPRESSION));
 
-		Utilisateur utilisateurAffiche = (Utilisateur) request.getSession().getAttribute("utilisateur");
+		Utilisateur utilisateurAffiche = (Utilisateur) request.getSession().getAttribute(SESSION_ATTR_UTILISATEUR);
 		request.setAttribute("utilisateurAffiche", utilisateurAffiche);
 		
 		if (modification != null && modification) {
@@ -92,6 +93,8 @@ public class ServletCompte extends HttpServlet {
 		boolean ErreurSaisie = false;
 		response.setCharacterEncoding("UTF-8");
 
+		Utilisateur user = (Utilisateur) request.getSession().getAttribute(SESSION_ATTR_UTILISATEUR);
+		Integer noUtilisateur = user.getNoUtilisateur();
 		String pseudo = request.getParameter(PARAM_PSEUDO);
 		String nom = request.getParameter(PARAM_NOM);
 		String prenom = request.getParameter(PARAM_PRENOM);
@@ -126,20 +129,40 @@ public class ServletCompte extends HttpServlet {
 //					request.setAttribute(ATTR_ERREUR_IDENTIFIANT, true);
 //					ErreurSaisie=true;
 //				}
-
-				try {
-					manager.modifierUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, mdp);
-					request.setAttribute(ATTR_ERREUR_INSERTION, false);
-				} catch (BLLException blle) {
-					request.setAttribute(ATTR_ERREUR_INSERTION, true);
-					blle.printStackTrace();
-					ErreurSaisie=true;
-				}
-				
-				if (ErreurSaisie) {
-					getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);
+				if (oldMdp == user.getMotDePasse()) {
+					nom = user.getNom();
+					prenom = user.getPrenom();
+					Utilisateur utilisateurAffiche = null;
+					try {
+						manager.controleIdentifiantNewUtilisateur(pseudo, email);
+						request.setAttribute(ATTR_ERREUR_IDENTIFIANT, false);
+					} catch (BLLException e) {
+						request.setAttribute(ATTR_ERREUR_IDENTIFIANT, true);
+						ErreurSaisie=true;
+					}
+					try {
+						utilisateurAffiche = manager.modifierUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, oldMdp, noUtilisateur);
+						request.setAttribute(ATTR_ERREUR_INSERTION, false);
+					} catch (BLLException blle) {
+						request.setAttribute(ATTR_ERREUR_INSERTION, true);
+						blle.printStackTrace();
+						ErreurSaisie=true;
+					}
+					
+					if (ErreurSaisie) {
+						request.setAttribute("utilisateurAffiche", request.getSession().getAttribute(SESSION_ATTR_UTILISATEUR));
+						getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);
+					} else {
+						// Mise à jour de la session utilisateur :
+						request.getSession().setAttribute(SESSION_ATTR_UTILISATEUR, utilisateurAffiche);
+						// Transferer l'affichage (pour JSP) :
+						request.setAttribute("utilisateurAffiche", utilisateurAffiche);
+						getServletContext().getRequestDispatcher(JSP_PROFIL).forward(request, response);
+					}
 				} else {
-					getServletContext().getRequestDispatcher(SERVLET_CONNEXION+"?identifiant="+pseudo+"&motdepasse="+mdp).forward(request, response);
+					// TODO mettre un message erreur sur mauvais mot de passe
+					request.setAttribute("utilisateurAffiche", request.getSession().getAttribute(SESSION_ATTR_UTILISATEUR));
+					getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);
 				}
 		}
 		
