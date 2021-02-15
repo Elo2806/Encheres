@@ -11,19 +11,19 @@
 <!-- Déclaration des variables -->
 <c:set var="colorIdentifiant" value="black" scope="page" />
 <c:set var="colorMdp" value="black" scope="page" />
-<c:set var="textErreur" value="L insertion a échoué car :\n"
+<c:set var="textErreur" value="Cette insertion a échoué car : \n"
 	scope="page" />
 <c:set var="erreur" value="false" scope="page" />
 
 <!-- Tests des attributs d'erreur pour changer la couleur de champs en erreur  -->
-<c:if test="${param.erreurIdentifiant == true }">
+<c:if test="${requestScope.erreurIdentifiant == true }">
 	<c:set var="ColorIdentifiant" value="red" scope="page" />
 	<c:set var="textErreur" value="${textErreur} identifiant existe déjà\n"
 		scope="page" />
 	<c:set var="erreur" value="true" scope="page" />
 </c:if>
 
-<c:if test="${param.erreurMdp == true }">
+<c:if test="${requestScope.erreurMdp == true }">
 	<c:set var="ColorMdp" value="red" scope="page" />
 	<c:set var="textErreur"
 		value="${textErreur} confirmation différente du mot de passe\n"
@@ -192,8 +192,8 @@
 
 			<!-- Partie spéciale "Modifier mon profil" -->
 
-			<c:if test="${param.modification}">
-				<input type="hidden" name="modification" value="true">
+			<c:if test="${empty param.creation}">
+				<input type="hidden" name="modificationCompte" value="true">
 
 				<tr>
 
