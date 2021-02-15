@@ -38,13 +38,12 @@
 			<input type="button" /><input type="text">
 		</div>
 		<div>
-			<Label for="Categories">Catégories :</Label> <select
-				name="Categories">
-				<!-- Coder en dur en attendant d'être mis en dynamique -->
-				<option value=1>Informatique</option>
-				<option value=2>Ameublement</option>
-				<option value=3>Vêtement</option>
-				<option value=4>Sport&amp;Loisirs</option>
+			<label for="categorie">Categorie : </label>
+			
+			<select name="categorie" size="1" id="categorie">
+			<c:forEach var="categorie" items="${listeCategories}">
+				<option value="${categorie.noCategorie}">${categorie.libelle}</option>
+				</c:forEach>	
 			</select>
 		</div>
 
