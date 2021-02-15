@@ -58,7 +58,7 @@ public class UtilisateurManager {
 	 * @throws BLLException
 	 */
 	public void modifierUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, String codePostal, String ville, String motDePasse, int credit) throws BLLException {
+			String rue, String codePostal, String ville, String motDePasse) throws BLLException {
 		Utilisateur user = creerUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse);
 		try {
 			utilisateurdao.update(user);

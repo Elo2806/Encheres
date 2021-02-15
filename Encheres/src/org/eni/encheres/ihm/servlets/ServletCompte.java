@@ -104,45 +104,48 @@ public class ServletCompte extends HttpServlet {
 		String oldMdp = request.getParameter(PARAM_OLD_MDP);
 		String newMdp = request.getParameter(PARAM_NEW_MDP);
 		String confirmation = request.getParameter(PARAM_CONFIRMATION);
-		Integer credit = Integer.parseInt(request.getParameter(PARAM_CREDIT));
 		UtilisateurManager manager = UtilisateurManager.getInstance();
 
-
-		creerCompte(request, response, ErreurSaisie, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, mdp,
-				confirmation, manager);
-		
-
-		/*
-		 * Si modif mail: si mail ou pseudo existe en base ok si mail = mail du noUser = utilisateur en cours
-		 * 
-		 * Si modif éléments = validation avec mdp
-		 * 
-		 * Si modif mdp = validation avec mdp + lien vers modification controlerMdp identique
-		 * 
-		 * Creer methode differenciée modifierUtilisateur (admin + user)		*/
-		
-//			try {
-//				manager.controleIdentifiantNewUtilisateur(pseudo, email);
-//				request.setAttribute(ATTR_ERREUR_IDENTIFIANT, false);
-//			} catch (BLLException e) {
-//				request.setAttribute(ATTR_ERREUR_IDENTIFIANT, true);
-//				ErreurSaisie=true;
-//			}
-
-			try {
-				manager.modifierUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, mdp, credit);
-				request.setAttribute(ATTR_ERREUR_INSERTION, false);
-			} catch (BLLException blle) {
-				request.setAttribute(ATTR_ERREUR_INSERTION, true);
-				blle.printStackTrace();
-				ErreurSaisie=true;
-			}
+		if (!(Boolean.parseBoolean(request.getParameter("modificationCompte")))) {
+			creerCompte(request, response, ErreurSaisie, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, mdp,
+					confirmation, manager);
+		} else {
+			/*
+			 * Si modif mail: si mail ou pseudo existe en base ok si mail = mail du noUser = utilisateur en cours
+			 * 
+			 * Si modif éléments = validation avec mdp
+			 * 
+			 * Si modif mdp = validation avec mdp + lien vers modification controlerMdp identique
+			 * 
+			 * Creer methode differenciée modifierUtilisateur (admin + user)		*/
 			
-			if (ErreurSaisie) {
-				getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);
-			} else {
-				getServletContext().getRequestDispatcher(SERVLET_CONNEXION+"?identifiant="+pseudo+"&motdepasse="+mdp).forward(request, response);
-			}
+//				try {
+//					manager.controleIdentifiantNewUtilisateur(pseudo, email);
+//					request.setAttribute(ATTR_ERREUR_IDENTIFIANT, false);
+//				} catch (BLLException e) {
+//					request.setAttribute(ATTR_ERREUR_IDENTIFIANT, true);
+//					ErreurSaisie=true;
+//				}
+
+				try {
+					manager.modifierUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, mdp);
+					request.setAttribute(ATTR_ERREUR_INSERTION, false);
+				} catch (BLLException blle) {
+					request.setAttribute(ATTR_ERREUR_INSERTION, true);
+					blle.printStackTrace();
+					ErreurSaisie=true;
+				}
+				
+				if (ErreurSaisie) {
+					getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);
+				} else {
+					getServletContext().getRequestDispatcher(SERVLET_CONNEXION+"?identifiant="+pseudo+"&motdepasse="+mdp).forward(request, response);
+				}
+		}
+		
+		
+
+		
 
 	}
 
@@ -195,7 +198,9 @@ public class ServletCompte extends HttpServlet {
 		}
 		
 		if (ErreurSaisie) {
-			getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);
+			Utilisateur utilisateurAffiche = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, "", 0, false);
+			request.setAttribute("utilisateurAffiche", utilisateurAffiche);
+			getServletContext().getRequestDispatcher(JSP_COMPTE+"?creation=true").forward(request, response);
 		} else {
 			getServletContext().getRequestDispatcher(SERVLET_CONNEXION+"?identifiant="+pseudo+"&motdepasse="+mdp).forward(request, response);
 		}
