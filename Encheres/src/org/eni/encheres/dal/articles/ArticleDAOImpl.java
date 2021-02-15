@@ -26,11 +26,15 @@ import org.eni.encheres.dal.jdbc.ConnectionProvider;
  */
 public class ArticleDAOImpl implements ArticleDAO {
 
-	private static final String COLL_UTI_NO_UTILISATEUR = "no_utilisateur";
+	
+	private static final String COL_ART_NO_ARTICLE = "no_article";
 	private static final String COL_ART_DATE_FIN_ENCHERES = "date_fin_encheres";
 	private static final String COL_ART_DATE_DEBUT_ENCHERES = "date_debut_encheres";
 	private static final String COL_ART_DESCRIPTION = "description";
 	private static final String COL_ART_NOM_ARTICLE = "nom_article";
+	private static final String COL_ART_NO_CATEGORIE = "no_categorie";
+	
+	private static final String COL_UTIL_NO_UTILISATEUR = "no_utilisateur";
 	private static final String COL_UTIL_ADMINISTRATEUR = "administrateur";
 	private static final String COL_UTIL_CREDIT = "credit";
 	private static final String COL_UTIL_MOT_DE_PASSE = "mot_de_passe";
@@ -43,7 +47,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static final String COL_UTIL_NOM = "nom";
 	private static final String COL_UTIL_PSEUDO = "pseudo";
 	private static final String COL_UTIL_ACTIF = "actif";
-	private static final String COL_ART_NO_CATEGORIE = "no_categorie";
+
 	private static final String COL_CAT_LIBELLE = "libelle";
 
 	private static final String SQL_SELECT_ENCHERE_MAX = "SELECT e.no_article,date_enchere, montant_enchere,e.no_utilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif "
@@ -52,15 +56,12 @@ public class ArticleDAOImpl implements ArticleDAO {
 			                    + " INNER JOIN UTILISATEURS as u ON u.no_utilisateur = e.no_utilisateur "
 			+ " WHERE e.montant_enchere = selectMontantMax.montant_max;";
 	
-	private static final String SQL_FINDALL_CATEGORIE = "SELECT nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, art.no_utilisateur, art.no_categorie,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif,libelle  "
+	private static final String SQL_FINDALL_CATEGORIE = "SELECT no_article,nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, art.no_utilisateur, art.no_categorie,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif,libelle  "
 			+ " FROM ARTICLES_VENDUS as art INNER JOIN CATEGORIES as cat ON cat.no_categorie = art.no_categorie"
 			+ " INNER JOIN UTILISATEURS as uti ON uti.no_utilisateur = art.no_utilisateur";
 
 	private static final String SQL_INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, no_utilisateur, no_categorie) values (?,?,?,?,?,?,?)";
 
-	/* 
-	 * 
-	 */
 	@Override
 	public void create(ArticleVendu newArticle) throws DALException {
 
@@ -124,13 +125,13 @@ public class ArticleDAOImpl implements ArticleDAO {
 							rs.getString(COL_UTIL_TELEPHONE), rs.getString(COL_UTIL_RUE),
 							rs.getString(COL_UTIL_CODE_POSTAL), rs.getString(COL_UTIL_VILLE),
 							rs.getString(COL_UTIL_MOT_DE_PASSE), rs.getInt(COL_UTIL_CREDIT),
-							rs.getBoolean(COL_UTIL_ADMINISTRATEUR),rs.getInt(COLL_UTI_NO_UTILISATEUR),
+							rs.getBoolean(COL_UTIL_ADMINISTRATEUR),rs.getInt(COL_UTIL_NO_UTILISATEUR),
 							rs.getBoolean(COL_UTIL_ACTIF));
 
 					ArticleVendu article = DAOFactory.creerArticle(rs.getString(COL_ART_NOM_ARTICLE),
 							rs.getString(COL_ART_DESCRIPTION), rs.getTimestamp(COL_ART_DATE_DEBUT_ENCHERES).toLocalDateTime(),
 							rs.getTimestamp(COL_ART_DATE_FIN_ENCHERES).toLocalDateTime(), utilisateur, categorie);
-					article.setNoArticle(rs.getInt(1)); // Mise à jour de l'article
+					article.setNoArticle(rs.getInt(COL_ART_NO_ARTICLE)); // Mise à jour de l'article
 
 					mapArticles.put(article.getNoArticle(), article);
 				}
@@ -172,7 +173,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 							rs.getString(COL_UTIL_TELEPHONE), rs.getString(COL_UTIL_RUE),
 							rs.getString(COL_UTIL_CODE_POSTAL), rs.getString(COL_UTIL_VILLE),
 							rs.getString(COL_UTIL_MOT_DE_PASSE), rs.getInt(COL_UTIL_CREDIT),
-							rs.getBoolean(COL_UTIL_ADMINISTRATEUR),rs.getInt(COLL_UTI_NO_UTILISATEUR),
+							rs.getBoolean(COL_UTIL_ADMINISTRATEUR),rs.getInt(COL_UTIL_NO_UTILISATEUR),
 							rs.getBoolean(COL_UTIL_ACTIF));
 					Enchere enchereMax = new Enchere(rs.getTimestamp("date_enchere").toLocalDateTime(), rs.getInt("montant_enchere"), utilisateur, article);//FIXME tester la convertion
 					article.setEnchereMax(enchereMax);

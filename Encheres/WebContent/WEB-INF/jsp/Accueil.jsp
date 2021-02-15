@@ -33,16 +33,16 @@
 	<div>
 		<h3>Filtres :</h3>
 	</div>
-	<form action="<c:url value="/ServletAccueil"/>">
+	<form method="post" action="<c:url value="/ServletAccueil"/>">
 		<div>
 			<input type="button" /><input type="text">
 		</div>
 		<div>
-			<label for="categorie">Categorie : </label>
+			<label for="categorieFiltre">Categorie : </label>
 			
 			<select name="categorie" size="1" id="categorie">
-			<c:forEach var="categorie" items="${listeCategories}">
-				<option value="${categorie.noCategorie}">${categorie.libelle}</option>
+			<c:forEach var="categorie" items="${mapCategories}">
+				<option value="${categorie.key}">${categorie.value.libelle}</option>
 				</c:forEach>	
 			</select>
 		</div>
@@ -52,7 +52,7 @@
 			<div>
 				<div>
 					<div>
-						<input type="radio" name="type"><label>Achats</label>
+						<input type="radio" name="typeFiltre" value="achat"><label>Achats</label>
 					</div>
 					<div>
 						<div>
@@ -71,7 +71,7 @@
 				</div>
 				<div>
 					<div>
-						<input type="radio" name="type"><label>Ventes</label>
+						<input type="radio" name="typeFiltre" value="vente"><label>Ventes</label>
 					</div>
 					<div>
 						<div>
