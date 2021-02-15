@@ -27,8 +27,8 @@
 			<label for="categorie">Categorie : </label>
 			
 			<select name="categorie" size="1" id="categorie">
-			<c:forEach var="categorie" items="${listeCategories}">
-				<option value="${categorie.noCategorie}">${categorie.libelle}</option>
+			<c:forEach var="categorie" items="${mapCategories}">
+				<option value="${mapCategories.key}">${mapCategories.value.libelle}</option>
 				</c:forEach>	
 			</select>
 		</div>
