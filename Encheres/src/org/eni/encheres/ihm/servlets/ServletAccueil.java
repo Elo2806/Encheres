@@ -60,7 +60,7 @@ public class ServletAccueil extends HttpServlet {
 		} catch (BLLException blle) {
 			blle.printStackTrace();//TODO voir si possible de faire mieux en gestion de
 		}
-		getServletContext().setAttribute("listeCategories", categories);
+		getServletContext().setAttribute("listeCategories", categories);//
 		getServletContext().setAttribute("mapCategories", mapCategories);
 	}
 
