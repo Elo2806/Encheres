@@ -5,7 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.eni.encheres.bo.Categorie;
 import org.eni.encheres.dal.exceptions.ConnectionException;
@@ -22,9 +24,9 @@ public class CategorieDAOimpl implements CategorieDao {
 	private static final String SQL_SELECT_CATEGORIES = "SELECT no_categorie,libelle FROM categories";
 
 	@Override
-	public List<Categorie> findAll() throws DALException {
+	public Map<Integer,Categorie> findAll() throws DALException {
 
-		List<Categorie> listeCategories = new ArrayList<>();
+		Map<Integer,Categorie> listeCategories = new HashMap<>();
 
 		// Connection en base
 		try (Connection cnx = ConnectionProvider.getConnection()) {
@@ -43,7 +45,7 @@ public class CategorieDAOimpl implements CategorieDao {
 					Categorie categorie = new Categorie(lib);
 					categorie.setNoCategorie(numCategorie);
 
-					listeCategories.add(categorie);
+					listeCategories.put(numCategorie,categorie);
 				}
 				
 				rs.close();

@@ -1,6 +1,7 @@
 package org.eni.encheres.bll;
 
 import java.util.List;
+import java.util.Map;
 
 import org.eni.encheres.bll.exceptions.BLLException;
 import org.eni.encheres.bo.Categorie;
@@ -26,8 +27,8 @@ public class CategorieManager {
 	}
 
 	
-	public List<Categorie> getCategories() throws BLLException {
-		List<Categorie> categories = null;
+	public Map<Integer,Categorie> getCategories() throws BLLException {
+		Map<Integer,Categorie> categories = null;
 		
 		try {
 			categories = categorieDao.findAll();

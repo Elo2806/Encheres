@@ -51,7 +51,7 @@ public class ServletAccueil extends HttpServlet {
 	}
 
 	private void updateCategories() {
-		List<Categorie> categories = new ArrayList<>();	
+		Map<Integer,Categorie> categories = new HashMap<>();	
 		CategorieManager manager = CategorieManager.getInstance();
 		try {
 			categories = manager.getCategories();
