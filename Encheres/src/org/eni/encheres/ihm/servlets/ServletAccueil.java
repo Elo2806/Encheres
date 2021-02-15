@@ -81,8 +81,6 @@ public class ServletAccueil extends HttpServlet {
 			throws ServletException, IOException {
 		Map<Integer, ArticleVendu> mapArticleAffiche = new HashMap<>();
 		
-		
-		
 		if(request.getParameter(PARAM_RECHERCHE)!=null) {
 			// Encodage de la reponse http en utf-8
 			request.setCharacterEncoding("UTF-8");
@@ -93,6 +91,11 @@ public class ServletAccueil extends HttpServlet {
 			
 			//Chargement de l'attribut dans la requete
 			request.setAttribute(ATTR_MAP_ARTICLES_AFFICHES, mapArticleAffiche);
+			
+			
+			Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(APP_ATTR_UTILISATEUR);
+			System.out.println(utilisateur.getNoUtilisateur());
+			
 			//Envoi de la requete au navigateur
 			getServletContext().getRequestDispatcher(JSP_ACCUEIL).forward(request, response);
 
@@ -176,7 +179,6 @@ public class ServletAccueil extends HttpServlet {
 		Map<Integer, Categorie> mapCategorie;
 		Categorie categorieFiltre;
 		int categorieId;
-		System.out.println(request.getParameter("categorieFiltre"));//TODO a enlever
 		categorieId = Integer.parseInt(request.getParameter(PARAM_CATEGORIE_FILTRE));
 		
 		mapCategorie = (Map<Integer, Categorie>) request.getServletContext().getAttribute(APP_ATTR_MAP_CATEGORIES);

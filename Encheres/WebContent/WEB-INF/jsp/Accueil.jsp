@@ -39,8 +39,8 @@
 			<input type="button" /><input type="text">
 		</div>
 		<div>
-			<label for="categorie">Categorie : </label> <select name="categorieFiltre"
-				size="1" id="categorie">
+			<label for="categorieFiltre">Categorie : </label> <select name="categorieFiltre"
+				size="1" id="categorieFiltre">
 				<c:forEach var="categorie" items="${mapCategories}">
 					<option name="test" value="${categorie.key}">${categorie.value.libelle}</option>
 				</c:forEach>
@@ -57,7 +57,7 @@
 					<div>
 						<div>
 							<input type="checkbox" name="chkEncheresOuvertes"
-								<c:if test="${param.chkEncheresOuvertes}">checked="checked"</c:if>>
+								<c:if test="${param.chkEncheresOuvertes == 'on'}">checked="checked"</c:if>>
 							<label for="chkEncheresOuvertes">enchères ouvertes</label>
 						</div>
 						<div>
@@ -67,7 +67,7 @@
 						</div>
 						<div>
 							<input type="checkbox" name="chkMesEncheresRemportes"
-								<c:if test="${param.chkMesEncheresRemportes}">checked="checked"</c:if>><label>mes
+								<c:if test="${param.chkMesEncheresRemportes == 'on'}">checked="checked"</c:if>><label>mes
 								enchères remportées</label>
 						</div>
 					</div>
@@ -79,17 +79,17 @@
 					<div>
 						<div>
 							<input type="checkbox" name="chkVentesEnCours"
-								<c:if test="${param.chkVentesEnCours}">checked="checked"</c:if>><label>mes
+								<c:if test="${param.chkVentesEnCours == 'on'}">checked="checked"</c:if>><label>mes
 								ventes en cours</label>
 						</div>
 						<div>
 							<input type="checkbox" name="chkVentesNonDebutes"
-								<c:if test="${param.chkVentesNonDebutes}">checked="checked"</c:if>><label>ventes
+								<c:if test="${param.chkVentesNonDebutes == 'on'}">checked="checked"</c:if>><label>ventes
 								non débutées</label>
 						</div>
 						<div>
 							<input type="checkbox" name="chkVentesTerminees"
-								<c:if test="${param.chkVentesTerminees}">checked="checked"</c:if>><label>ventes
+								<c:if test="${param.chkVentesTerminees == 'on'}">checked="checked"</c:if>><label>ventes
 								terminées</label>
 						</div>
 					</div>
