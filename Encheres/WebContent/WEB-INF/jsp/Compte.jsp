@@ -431,7 +431,7 @@
 					<th>
 						<div>
 
-							<a href="<c:url value="/ServletCompte"/>"> <input
+							<a href="<c:url value="/ServletCompte?suppression=true"/>"> <input
 								type="button"
 								value="Supprimer mon compte" /></a>
 						</div>

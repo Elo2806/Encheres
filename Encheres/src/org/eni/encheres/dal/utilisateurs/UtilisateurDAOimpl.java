@@ -220,7 +220,6 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 	public Utilisateur update(Utilisateur utilisateurAModifier) throws DALException {
 		Utilisateur modifiedUtilisateur;
 		PreparedStatement pstmt;
-		int nbLigne = 0;
 
 		// Connection en base
 		try (Connection cnx = ConnectionProvider.getConnection()) {
@@ -241,7 +240,7 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 				pstmt.setBoolean(12, utilisateurAModifier.isActif());
 				pstmt.setInt(13, utilisateurAModifier.getNoUtilisateur());
 				pstmt.executeUpdate();
-				nbLigne = pstmt.executeUpdate();
+				
 				
 				pstmt.close();
 			} catch (SQLException sqle) {

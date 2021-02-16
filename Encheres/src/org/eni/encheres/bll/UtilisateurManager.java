@@ -110,6 +110,8 @@ public class UtilisateurManager {
 				false);
 		return user;
 	}
+	
+	
 
 	/**
 	 * 

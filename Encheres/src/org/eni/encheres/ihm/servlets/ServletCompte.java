@@ -80,9 +80,19 @@ public class ServletCompte extends HttpServlet {
 		}
 
 		else if (suppression != null && suppression) {
+			
+			supprimerCompte(utilisateurAffiche);
+			
+			request.setAttribute(PARAM_SUPPRESSION, suppression);
+			getServletContext().getRequestDispatcher(SERVLET_CONNEXION).forward(request, response);
 		} else {
 			getServletContext().getRequestDispatcher(JSP_PROFIL).forward(request, response);
 		}
+	}
+
+	private void supprimerCompte(Utilisateur utilisateurAffiche) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	/**
@@ -117,12 +127,13 @@ public class ServletCompte extends HttpServlet {
 		} else {
 			modifierCompte(request, response, ErreurSaisie, user, pseudo, email, telephone, rue, codePostal, ville,
 					oldMdp, newMdp, confirmation, manager);
-		}//else (cas modif)
+		}
 		
-	}// doPost
+	}
 
 	/**
-	 * Méthode permettant de 
+	 * Méthode permettant de mettre à jour un compte utilisateur après les contrôles metiers IHM
+	 * (saisie du bon mdp + contrôle des 2 mdp à changer identiques + pseudo et email non existants en base si modif)
 	 * @param request
 	 * @param response
 	 * @param ErreurSaisie
@@ -146,24 +157,10 @@ public class ServletCompte extends HttpServlet {
 			String ville, String oldMdp, String newMdp, String confirmation, UtilisateurManager manager)
 			throws  ServletException, IOException {
 		/*
-		 * Si modif mail: si mail ou pseudo existe en base ok si mail = mail du noUser =
-		 * utilisateur en cours
-		 * 
-		 * Si modif éléments = validation avec mdp
-		 * 
-		 * Si modif mdp = validation avec mdp + lien vers modification controlerMdp
-		 * identique
-		 * 
+		 * TODO
 		 * Creer methode differenciée modifierUtilisateur (admin + user)
 		 */
 
-		// try {
-		// manager.controleIdentifiantNewUtilisateur(pseudo, email);
-		// request.setAttribute(ATTR_ERREUR_IDENTIFIANT, false);
-		// } catch (BLLException e) {
-		// request.setAttribute(ATTR_ERREUR_IDENTIFIANT, true);
-		// ErreurSaisie=true;
-		// }
 		String nom;
 		String prenom;
 		Integer noUtilisateur = user.getNoUtilisateur();
@@ -179,7 +176,6 @@ public class ServletCompte extends HttpServlet {
 		Utilisateur utilisateurAffiche = null;
 		System.out.println(request.getParameter(PARAM_MODIF_MDP));
 		if (Boolean.parseBoolean(request.getParameter(PARAM_MODIF_MDP))) {
-		//if (request.getParameter(PARAM_MODIF_MDP).equals("true")) {
 			try {
 				controlerMdp(newMdp, confirmation);
 				request.setAttribute(ATTR_ERREUR_MDP, false);

@@ -22,6 +22,7 @@ public class Utilisateur implements Serializable {
 	private Integer credit;
 	private boolean administrateur;
 	private boolean actif;
+	private boolean supprime;
 	
 	// Constructeurs
 	/**
@@ -29,6 +30,7 @@ public class Utilisateur implements Serializable {
 	 */
 	public Utilisateur() {
 		actif = true;
+		supprime = false;
 	}
 	
 	/**
