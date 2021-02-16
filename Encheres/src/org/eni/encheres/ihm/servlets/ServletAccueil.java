@@ -116,7 +116,6 @@ public class ServletAccueil extends HttpServlet {
 		} catch (BLLException blle) {
 			blle.printStackTrace();// TODO voir si possible de faire mieux en gestion de
 		}
-		//getServletContext().setAttribute("listeCategories", categories);//TODO supprimer si pas de problème
 		getServletContext().setAttribute(APP_ATTR_MAP_CATEGORIES, mapCategories);
 	}
 
@@ -154,14 +153,13 @@ public class ServletAccueil extends HttpServlet {
 		categorieFiltre = getCategorieFromRequest(request);
 		listFiltres = getListeFiltres(request);
 		utilisateur = (Utilisateur)request.getSession().getAttribute(APP_ATTR_UTILISATEUR);
-		System.out.println("listFiltres :" + listFiltres);//TODO a enlevé
+		
 		//Mise à jour de la map article
 		try {
 			mapArticleAffiche = creerMapArticlesFiltres(utilisateur,categorieFiltre, listFiltres,texteRecherche);
 		} catch (FiltreInexistantException fie) {
 			fie.printStackTrace();//TODO voir comment gérer cette exception
 		}
-		System.out.println(mapArticleAffiche);//TODO a enlevé
 		return mapArticleAffiche;
 	}
 
@@ -175,7 +173,6 @@ public class ServletAccueil extends HttpServlet {
 		Categorie categorieFiltre;
 		int categorieId;
 		categorieId = Integer.parseInt(request.getParameter(PARAM_CATEGORIE_FILTRE));
-		
 		mapCategorie = (Map<Integer, Categorie>) request.getServletContext().getAttribute(APP_ATTR_MAP_CATEGORIES);
 		categorieFiltre = mapCategorie.get(categorieId);
 		
@@ -241,48 +238,54 @@ public class ServletAccueil extends HttpServlet {
 		Map<Integer, ArticleVendu> mapArticlesFiltres = new HashMap<>();
 		Map<Integer, ArticleVendu> articles = (Map<Integer, ArticleVendu>) getServletContext()
 				.getAttribute(APP_ATTR_MAP_ARTICLES);
-			
+		
+		System.out.println(listFiltres);
+		
 		for (ArticleVendu article : articles.values()) {
-
+				
 			if (categorieFiltre.getNoCategorie() == article.getCategorie().getNoCategorie()) {
 				boolean ajouterArticle = true;
-				for (Filtre filtre : listFiltres) {
-					
-					if (ajouterArticle) {
-						System.out.println("filtre :" + filtre);//TODO a enlevé
-						switch (filtre) {
-						case ENCHERE_OUVERTES:
-							ajouterArticle = article.getDateFinEncheres().isAfter(LocalDateTime.now());
-							break;
-						case MES_ENCHERES_EN_COURS:
-							ajouterArticle = article.getDateFinEncheres().isAfter(LocalDateTime.now())
-									      && article.getDateDebutEncheres().isBefore(LocalDateTime.now());
-							break;
-						case MES_ENCHERES_REMPORTES:
-							if(article.getAcheteur() !=null) {
-								ajouterArticle = article.getDateFinEncheres().isBefore(LocalDateTime.now())
-						                  && article.getAcheteur().getNoUtilisateur() == utilisateur.getNoUtilisateur();
+				
+				if(texteRecherche!=null && !article.getNomArticle().toLowerCase().contains(texteRecherche.toLowerCase())) {
+					ajouterArticle = false;
+				}else {
+					for (Filtre filtre : listFiltres) {
+						if (ajouterArticle) {
+							switch (filtre) {
+							case ENCHERE_OUVERTES:
+								ajouterArticle = article.getDateFinEncheres().isAfter(LocalDateTime.now());
+								break;
+							case MES_ENCHERES_EN_COURS:
+								ajouterArticle = article.getDateFinEncheres().isAfter(LocalDateTime.now())
+										      && article.getDateDebutEncheres().isBefore(LocalDateTime.now());
+								//&& article.getAcheteur().getNoUtilisateur().equals(utilisateur.getNoUtilisateur()); //TODO a revoir
+								break;
+							case MES_ENCHERES_REMPORTES:
+								if(article.getAcheteur() !=null) {
+									ajouterArticle = article.getDateFinEncheres().isBefore(LocalDateTime.now())
+							                  && article.getAcheteur().getNoUtilisateur().equals(utilisateur.getNoUtilisateur());
+								}
+								ajouterArticle = false;
+								break;  
+							case VENTES_EN_COURS:
+								ajouterArticle = article.getDateFinEncheres().isAfter(LocalDateTime.now())
+							                  && article.getDateDebutEncheres().isBefore(LocalDateTime.now())
+							                  && article.getVendeur().getNoUtilisateur().equals(utilisateur.getNoUtilisateur());
+								break;
+							case VENTES_NON_DEBUTES:
+								ajouterArticle = article.getDateFinEncheres().isAfter(LocalDateTime.now())
+				                  && article.getDateDebutEncheres().isAfter(LocalDateTime.now());
+								break;
+							case VENTES_TERMINEES:
+								ajouterArticle = article.getDateFinEncheres().isBefore(LocalDateTime.now());
+								break;
+							default:
+								throw new FiltreInexistantException("Il n'y a aucune methode pour gérer le filtre : " + filtre.name());
 							}
-							ajouterArticle = false;
-							break;  
-						case VENTES_EN_COURS:
-							ajouterArticle = article.getDateFinEncheres().isAfter(LocalDateTime.now())
-						                  && article.getDateDebutEncheres().isBefore(LocalDateTime.now())
-						                  && article.getVendeur().equals(utilisateur);
-							break;
-						case VENTES_NON_DEBUTES:
-							System.out.println("datefin :" + article.getDateFinEncheres());//TODO a enlevé
-							System.out.println("datedebut :" + article.getDateFinEncheres());//TODO a enlevé
-							ajouterArticle = article.getDateFinEncheres().isAfter(LocalDateTime.now())
-			                  && article.getDateDebutEncheres().isAfter(LocalDateTime.now());
-							break;
-						case VENTES_TERMINEES:
-							ajouterArticle = article.getDateFinEncheres().isBefore(LocalDateTime.now());
-							break;
-						default:
-							throw new FiltreInexistantException("Il n'y a aucune methode pour gérer le filtre : " + filtre.name());
 						}
-					}
+				}
+				
+				
 				}
 				if(ajouterArticle) {
 					mapArticlesFiltres.put(article.getNoArticle(), article);

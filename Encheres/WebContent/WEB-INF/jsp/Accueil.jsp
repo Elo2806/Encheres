@@ -48,7 +48,12 @@
 		method="post"
 		action="<c:url value="/ServletAccueil?recherche=true"/>">
 		<div>
-			<input name="rechercheTexte" type="search" placeholder="Le nom de l'article contient"/>
+			<input
+				name="rechercheTexte"
+				type="search"
+				placeholder="Le nom de l'article contient"
+				value="<c:if test="${!empty param.rechercheTexte}">${param.rechercheTexte}</c:if>" 
+			/>
 		</div>
 		<div>
 			<label for="categorieFiltre">Categorie : </label>
@@ -66,7 +71,6 @@
 
 		<!-- Attribut en plus lors de la connection -->
 		<c:if test="${!empty sessionScope.utilisateur}">
-
 			<div id="Filtres">
 				<div>
 					<div>
@@ -94,7 +98,7 @@
 								class="achat"
 								type="checkbox"
 								name="chkMesEnchereEnCours"
-								<c:if test="${param.chkMesEnchereEnCours}">checked="checked"</c:if>>
+								<c:if test="${param.chkMesEnchereEnCours== 'on'}">checked="checked"</c:if>>
 							<label>mes enchères en cours</label>
 						</div>
 						<div>
@@ -199,18 +203,18 @@
 	<!-- selection par défaut -->
 	<c:if test="${empty param.recherche}">
 		<script type="text/javascript">
-			selectType(true,'vente');
+			selectType(true, 'vente');
 		</script>
 	</c:if>
 	<c:if test="${param.recherche}">
 		<c:if test="${param.typeFiltre == 'achat'}">
 			<script type="text/javascript">
-				selectType(true,'vente');
+				selectType(true, 'vente');
 			</script>
 		</c:if>
 		<c:if test="${param.typeFiltre != 'achat'}">
 			<script type="text/javascript">
-				selectType(true,'achat');
+				selectType(true, 'achat');
 			</script>
 		</c:if>
 	</c:if>
