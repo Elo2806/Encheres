@@ -21,8 +21,6 @@ import org.eni.encheres.ihm.exceptions.MotDePasseException;
 @WebServlet("/ServletCompte")
 public class ServletCompte extends HttpServlet {
 
-	private static final String PARAM_SUPPRIMER = "supprimer";
-	private static final String PARAM_MODIFICATION_COMPTE = "modificationCompte";
 	private static final String SESSION_ATTR_UTILISATEUR = "utilisateur";
 	private static final String JSP_PROFIL = "/profil";
 	private static final String ATTR_ERREUR_INSERTION = "erreurInsertion";
@@ -39,7 +37,6 @@ public class ServletCompte extends HttpServlet {
 
 	private static final String JSP_COMPTE = "/compte";
 
-	private static final String PARAM_CREATION = "creation";
 	private static final String PARAM_OLD_MDP = "oldMdp";
 	private static final String PARAM_NEW_MDP = "newMdp";
 	private static final String PARAM_VILLE = "ville";
@@ -52,9 +49,10 @@ public class ServletCompte extends HttpServlet {
 	private static final String PARAM_PSEUDO = "pseudo";
 	private static final String PARAM_CONFIRMATION = "confirmation";
 	private static final String PARAM_MDP = "mdp";
-	private static final String PARAM_SUPPRESSION = "suppression";
 	private static final String PARAM_MODIFICATION = "modification";
 	private static final String PARAM_MODIF_MDP = "modifMdp";
+	private static final String PARAM_SUPPRIMER = "supprimer";
+	private static final String PARAM_MODIFICATION_COMPTE = "modificationCompte";
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -105,17 +103,20 @@ public class ServletCompte extends HttpServlet {
 		String newMdp = request.getParameter(PARAM_NEW_MDP);
 		String confirmation = request.getParameter(PARAM_CONFIRMATION);
 		UtilisateurManager manager = UtilisateurManager.getInstance();
-
+		System.out.println(request.getParameter(PARAM_SUPPRIMER));
+		System.out.println(request.getParameter("enregistrer"));
 		if (!(Boolean.parseBoolean(request.getParameter(PARAM_MODIFICATION_COMPTE)))) {
 			creerCompte(request, response, ErreurSaisie, pseudo, nom, prenom, email, telephone, rue, codePostal, ville,
 					mdp, confirmation, manager);
-		} else if (request.getParameter(PARAM_SUPPRIMER)!=null) {
-			supprimerCompte(request, response, user);
+			
 		} else {
+			if (request.getParameter(PARAM_SUPPRIMER)!=null) {
+				supprimerCompte(request, response, user);
+			} else {
 			modifierCompte(request, response, ErreurSaisie, user, pseudo, email, telephone, rue, codePostal, ville,
 					oldMdp, newMdp, confirmation, manager);
+			}
 		}
-		
 	}
 
 	/**
@@ -304,7 +305,7 @@ public class ServletCompte extends HttpServlet {
 		boolean ErreurSaisie = false;
 		UtilisateurManager manager = UtilisateurManager.getInstance();
 		try {
-			controlerMdp(request.getParameter(PARAM_MDP), utilisateurAffiche.getMotDePasse());
+			controlerMdp(request.getParameter(PARAM_OLD_MDP), utilisateurAffiche.getMotDePasse());
 			request.setAttribute(ATTR_ERREUR_MDP, false);
 			utilisateurAffiche.setSupprime(true);
 			
@@ -325,7 +326,6 @@ public class ServletCompte extends HttpServlet {
 		} else {
 			// Mise à jour de la session utilisateur :
 			request.getSession().setAttribute(SESSION_ATTR_UTILISATEUR, utilisateurAffiche);
-			
 			getServletContext().getRequestDispatcher(SERVLET_CONNEXION).forward(request, response);;
 		}
 	}	

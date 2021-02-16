@@ -25,6 +25,7 @@ import org.eni.encheres.dal.jdbc.ConnectionProvider;
 @WebServlet("/ServletConnexion")
 public class ServletConnexion extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static final String PARAM_SUPPRIMER = "supprimer";
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -57,29 +58,29 @@ public class ServletConnexion extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
-
-		String identifiants = request.getParameter("identifiant");
-		String motDePasse = request.getParameter("motdepasse");
-
-		// Vérifier identifiant et mots de passe
-		UtilisateurManager manager = UtilisateurManager.getInstance();
-		Utilisateur utilisateur = null;
-		try {
-			utilisateur = manager.rechercherUtilisateur(identifiants, motDePasse);
-		} catch (BLLException blle) {
-			blle.printStackTrace();
-			// Si les identifiant/mot de passe pas existants :
-			request.setAttribute("erreurIdentifiant", true);
-			getServletContext().getRequestDispatcher("/connexion").forward(request, response);
-		}
-		
-		HttpSession session = request.getSession();
-		session.setAttribute("utilisateur", utilisateur);
-		
-
-		// Si les identifiant/mot de passe ok :
-		getServletContext().getRequestDispatcher("/ServletAccueil").forward(request, response);
-
+	
+			String identifiants = request.getParameter("identifiant");
+			String motDePasse = request.getParameter("motdepasse");
+	
+			// Vérifier identifiant et mots de passe
+			UtilisateurManager manager = UtilisateurManager.getInstance();
+			Utilisateur utilisateur = null;
+			try {
+				utilisateur = manager.rechercherUtilisateur(identifiants, motDePasse);
+			} catch (BLLException blle) {
+				blle.printStackTrace();
+				// Si les identifiant/mot de passe pas existants :
+				request.setAttribute("erreurIdentifiant", true);
+				getServletContext().getRequestDispatcher("/connexion").forward(request, response);
+			}
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("utilisateur", utilisateur);
+			
+	
+			// Si les identifiant/mot de passe ok et si attribut 'supprime"=false :
+				getServletContext().getRequestDispatcher("/ServletAccueil").forward(request, response);
+			
 	}
 
 }

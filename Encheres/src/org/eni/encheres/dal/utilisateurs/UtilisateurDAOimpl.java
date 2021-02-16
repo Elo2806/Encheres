@@ -37,7 +37,7 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 	private static final String COL_PSEUDO = "pseudo";
 	private static final String COL_NO_UTILISATEUR = "no_utilisateur";
 	
-	private static final String SQL_SELECT_BY_MOT_DE_PASSE = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif FROM UTILISATEURS WHERE mot_de_passe=?";
+	private static final String SQL_SELECT_BY_MOT_DE_PASSE = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif FROM UTILISATEURS WHERE mot_de_passe=? AND supprime=0";
 	private static final String SQL_SELECT_BY_EMAIL = "SELECT no_utilisateur FROM Utilisateurs WHERE email=?";
 	private static final String SQL_SELECT_BY_PSEUDO = "SELECT no_utilisateur FROM Utilisateurs WHERE pseudo=?";
 	private static final String SQL_CREATE = "INSERT INTO Utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif) VALUES (?,?,?,?,?,?,?,?,?,?,0,1)";
@@ -190,6 +190,7 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 				
 				if ((pIdentifiant.equals(pseudo))||(pIdentifiant.equals(email))){
 					utilisateur = DAOFactory.creerUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur, noUtilisateur, actif);
+					break;
 				}
 				
 				
