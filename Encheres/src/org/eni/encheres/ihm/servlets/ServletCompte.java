@@ -115,80 +115,111 @@ public class ServletCompte extends HttpServlet {
 			creerCompte(request, response, ErreurSaisie, pseudo, nom, prenom, email, telephone, rue, codePostal, ville,
 					mdp, confirmation, manager);
 		} else {
-			/*
-			 * Si modif mail: si mail ou pseudo existe en base ok si mail = mail du noUser =
-			 * utilisateur en cours
-			 * 
-			 * Si modif éléments = validation avec mdp
-			 * 
-			 * Si modif mdp = validation avec mdp + lien vers modification controlerMdp
-			 * identique
-			 * 
-			 * Creer methode differenciée modifierUtilisateur (admin + user)
-			 */
+			modifierCompte(request, response, ErreurSaisie, user, pseudo, email, telephone, rue, codePostal, ville,
+					oldMdp, newMdp, confirmation, manager);
+		}//else (cas modif)
+		
+	}// doPost
 
-			// try {
-			// manager.controleIdentifiantNewUtilisateur(pseudo, email);
-			// request.setAttribute(ATTR_ERREUR_IDENTIFIANT, false);
-			// } catch (BLLException e) {
-			// request.setAttribute(ATTR_ERREUR_IDENTIFIANT, true);
-			// ErreurSaisie=true;
-			// }
-			Integer noUtilisateur = user.getNoUtilisateur();
+	/**
+	 * Méthode permettant de 
+	 * @param request
+	 * @param response
+	 * @param ErreurSaisie
+	 * @param user
+	 * @param pseudo
+	 * @param email
+	 * @param telephone
+	 * @param rue
+	 * @param codePostal
+	 * @param ville
+	 * @param oldMdp
+	 * @param newMdp
+	 * @param confirmation
+	 * @param manager
+	 * @throws DALException
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void modifierCompte(HttpServletRequest request, HttpServletResponse response, boolean ErreurSaisie,
+			Utilisateur user, String pseudo, String email, String telephone, String rue, String codePostal,
+			String ville, String oldMdp, String newMdp, String confirmation, UtilisateurManager manager)
+			throws  ServletException, IOException {
+		/*
+		 * Si modif mail: si mail ou pseudo existe en base ok si mail = mail du noUser =
+		 * utilisateur en cours
+		 * 
+		 * Si modif éléments = validation avec mdp
+		 * 
+		 * Si modif mdp = validation avec mdp + lien vers modification controlerMdp
+		 * identique
+		 * 
+		 * Creer methode differenciée modifierUtilisateur (admin + user)
+		 */
+
+		// try {
+		// manager.controleIdentifiantNewUtilisateur(pseudo, email);
+		// request.setAttribute(ATTR_ERREUR_IDENTIFIANT, false);
+		// } catch (BLLException e) {
+		// request.setAttribute(ATTR_ERREUR_IDENTIFIANT, true);
+		// ErreurSaisie=true;
+		// }
+		String nom;
+		String prenom;
+		Integer noUtilisateur = user.getNoUtilisateur();
+		try {
+			controlerMdp(oldMdp, user.getMotDePasse());
+			request.setAttribute(ATTR_ERREUR_MDP, false);
+		} catch (MotDePasseException mdpe) {
+			request.setAttribute(ATTR_ERREUR_MDP, true);
+			ErreurSaisie = true;
+		}
+
+
+		Utilisateur utilisateurAffiche = null;
+		System.out.println(request.getParameter(PARAM_MODIF_MDP));
+		if (Boolean.parseBoolean(request.getParameter(PARAM_MODIF_MDP))) {
+		//if (request.getParameter(PARAM_MODIF_MDP).equals("true")) {
 			try {
-				controlerMdp(oldMdp, user.getMotDePasse());
+				controlerMdp(newMdp, confirmation);
 				request.setAttribute(ATTR_ERREUR_MDP, false);
 			} catch (MotDePasseException mdpe) {
 				request.setAttribute(ATTR_ERREUR_MDP, true);
 				ErreurSaisie = true;
 			}
-
-
-			Utilisateur utilisateurAffiche = null;
-			System.out.println(request.getParameter(PARAM_MODIF_MDP));
-			if (Boolean.parseBoolean(request.getParameter(PARAM_MODIF_MDP))) {
-			//if (request.getParameter(PARAM_MODIF_MDP).equals("true")) {
-				try {
-					controlerMdp(newMdp, confirmation);
-					request.setAttribute(ATTR_ERREUR_MDP, false);
-				} catch (MotDePasseException mdpe) {
-					request.setAttribute(ATTR_ERREUR_MDP, true);
-					ErreurSaisie = true;
-				}
-				try {
-					utilisateurAffiche = manager.modifierUtilisateur(user.getPseudo(),user.getNom(), user.getPrenom(), user.getEmail(), user.getTelephone(), user.getRue(),
-							user.getCodePostal(), user.getVille(), newMdp, user.getNoUtilisateur());
-					request.setAttribute(ATTR_ERREUR_INSERTION, false);
-				} catch (BLLException blle) {
-					request.setAttribute(ATTR_ERREUR_INSERTION, true);
-					blle.printStackTrace();
-					ErreurSaisie = true;
-				}
+			try {
+				utilisateurAffiche = manager.modifierUtilisateur(user.getPseudo(),user.getNom(), user.getPrenom(), user.getEmail(), user.getTelephone(), user.getRue(),
+						user.getCodePostal(), user.getVille(), newMdp, user.getNoUtilisateur());
+				request.setAttribute(ATTR_ERREUR_INSERTION, false);
+			} catch (BLLException blle) {
+				request.setAttribute(ATTR_ERREUR_INSERTION, true);
+				blle.printStackTrace();
+				ErreurSaisie = true;
 			}
-			else {
-				//nom et prénoms non modifiables par user donc impossible de les récupérer en paramètres
-				nom = user.getNom();
-				prenom = user.getPrenom();
-			if (!((pseudo.equals(user.getPseudo())) && (email.equals(user.getEmail()))))
-				try {
-					if(!pseudo.equals(user.getPseudo()) ) {
+		} else {
+			//nom et prénoms non modifiables par user donc impossible de les récupérer en paramètres
+			nom = user.getNom();
+			prenom = user.getPrenom();
+			if (!((pseudo.equals(user.getPseudo())) && (email.equals(user.getEmail())))) {
+				if(!pseudo.equals(user.getPseudo()) ) {
+					try {
 						manager.controlePseudoExistant(pseudo);
 						request.setAttribute(ATTR_ERREUR_IDENTIFIANT, false);
-					}
-					
-				} catch(BLLException e) {
+					} catch(BLLException e) {
 					request.setAttribute(ATTR_ERREUR_IDENTIFIANT, true);
 					ErreurSaisie = true;
-				}
-						else {
-						manager.controleEmailExistant(email);	
-					}	
-					request.setAttribute(ATTR_ERREUR_IDENTIFIANT, false);
-					
-					} catch(BLLException e) {
-						request.setAttribute(ATTR_ERREUR_IDENTIFIANT, true);
-						ErreurSaisie = true;
 					}
+				}
+				if(!email.equals(user.getEmail()) ) {
+					try {
+						manager.controleEmailExistant(email);
+						request.setAttribute(ATTR_ERREUR_IDENTIFIANT, false);
+					} catch(BLLException e) {
+					request.setAttribute(ATTR_ERREUR_IDENTIFIANT, true);
+					ErreurSaisie = true;
+					}
+				}
+			}
 			try {
 				utilisateurAffiche = manager.modifierUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal,
 						ville, oldMdp, noUtilisateur);
@@ -198,20 +229,18 @@ public class ServletCompte extends HttpServlet {
 				blle.printStackTrace();
 				ErreurSaisie = true;
 			}
-			}
-			if (ErreurSaisie) {
-				request.setAttribute("utilisateurAffiche", request.getSession().getAttribute(SESSION_ATTR_UTILISATEUR));
-				getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);
-			} else {
-				// Mise à jour de la session utilisateur :
-				request.getSession().setAttribute(SESSION_ATTR_UTILISATEUR, utilisateurAffiche);
-				// Transferer l'affichage (pour JSP) :
-				request.setAttribute("utilisateurAffiche", utilisateurAffiche);
-				getServletContext().getRequestDispatcher(JSP_PROFIL).forward(request, response);
-			}
+		}//fin modif
+		if (ErreurSaisie) {
+			request.setAttribute("utilisateurAffiche", request.getSession().getAttribute(SESSION_ATTR_UTILISATEUR));
+			getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);
+		} else {
+			// Mise à jour de la session utilisateur :
+			request.getSession().setAttribute(SESSION_ATTR_UTILISATEUR, utilisateurAffiche);
+			// Transferer l'affichage (pour JSP) :
+			request.setAttribute("utilisateurAffiche", utilisateurAffiche);
+			getServletContext().getRequestDispatcher(JSP_PROFIL).forward(request, response);
 		}
-
-	}
+	}// fin méthode
 
 	/**
 	 * Méthode permettant de créer un nouveau compte après les contrôles metiers IHM

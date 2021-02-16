@@ -130,12 +130,20 @@ public class UtilisateurManager {
 		}
 	}
 	
-	public void controleEmailExistant(String email) throws DALException {
-		utilisateurdao.controleEmailExistence(email);
+	public void controleEmailExistant(String email) throws BLLException {
+		try {
+			utilisateurdao.controleEmailExistence(email);
+		} catch (DALException dale) {
+			throw new BLLException("Erreur lors des opérations en DAL", dale);
+		}
 	}
 	
-	public void controlePseudoExistant(String pseudo) throws DALException {
-		utilisateurdao.controlePseudoExistence(pseudo);
+	public void controlePseudoExistant(String pseudo) throws BLLException {
+		try {
+			utilisateurdao.controlePseudoExistence(pseudo);
+		} catch (DALException dale) {
+			throw new BLLException("Erreur lors des opérations en DAL", dale);
+		}
 	}
 
 	/**
