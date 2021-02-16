@@ -29,6 +29,7 @@ import org.eni.encheres.ihm.exceptions.FiltreInexistantException;
  */
 @WebServlet("/ServletAccueil")
 public class ServletAccueil extends HttpServlet {
+	private static final String PARAM_RECHERCHE_TEXTE = "rechercheTexte";
 	private static final String PARAM_RECHERCHE = "recherche";
 	private static final String APP_ATTR_UTILISATEUR = "utilisateur";
 	private static final String APP_ATTR_MAP_ARTICLES = "mapArticles";
@@ -146,15 +147,17 @@ public class ServletAccueil extends HttpServlet {
 		List<Filtre> listFiltres = new ArrayList<>();
 		Map<Integer,ArticleVendu> mapArticleAffiche=new HashMap<>();
 		Utilisateur utilisateur;
+		String texteRecherche;
 		
 		// Récupération les paramètres de la requete
+		texteRecherche = request.getParameter(PARAM_RECHERCHE_TEXTE);
 		categorieFiltre = getCategorieFromRequest(request);
 		listFiltres = getListeFiltres(request);
 		utilisateur = (Utilisateur)request.getSession().getAttribute(APP_ATTR_UTILISATEUR);
 		System.out.println("listFiltres :" + listFiltres);//TODO a enlevé
 		//Mise à jour de la map article
 		try {
-			mapArticleAffiche = creerMapArticlesFiltres(utilisateur,categorieFiltre, listFiltres);
+			mapArticleAffiche = creerMapArticlesFiltres(utilisateur,categorieFiltre, listFiltres,texteRecherche);
 		} catch (FiltreInexistantException fie) {
 			fie.printStackTrace();//TODO voir comment gérer cette exception
 		}
@@ -189,7 +192,7 @@ public class ServletAccueil extends HttpServlet {
 		String typeFiltre;
 		List<Filtre> listFiltres = new ArrayList<>();
 		typeFiltre = request.getParameter(PARAM_TYPE_FILTRE);
-
+		
 		if (ACHAT.name().equalsIgnoreCase(typeFiltre)) {
 			encheresOuvertes = checkToBoolean(request.getParameter(PARAM_ENCHERES_OUVERTES));
 			if (encheresOuvertes) {
@@ -234,7 +237,7 @@ public class ServletAccueil extends HttpServlet {
 	 * critères en paramètre
 	 * @throws FiltreInexistantException si le filtre n'est pas géré dans la méthode
 	 */
-	private Map<Integer, ArticleVendu> creerMapArticlesFiltres(Utilisateur utilisateur,Categorie categorieFiltre, List<Filtre> listFiltres) throws FiltreInexistantException {
+	private Map<Integer, ArticleVendu> creerMapArticlesFiltres(Utilisateur utilisateur,Categorie categorieFiltre, List<Filtre> listFiltres, String texteRecherche) throws FiltreInexistantException {
 		Map<Integer, ArticleVendu> mapArticlesFiltres = new HashMap<>();
 		Map<Integer, ArticleVendu> articles = (Map<Integer, ArticleVendu>) getServletContext()
 				.getAttribute(APP_ATTR_MAP_ARTICLES);

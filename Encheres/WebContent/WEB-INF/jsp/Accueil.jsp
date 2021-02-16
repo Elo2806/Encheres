@@ -48,7 +48,7 @@
 		method="post"
 		action="<c:url value="/ServletAccueil?recherche=true"/>">
 		<div>
-			<input type="button" /><input type="text">
+			<input name="rechercheTexte" type="search" placeholder="Le nom de l'article contient"/>
 		</div>
 		<div>
 			<label for="categorieFiltre">Categorie : </label>
