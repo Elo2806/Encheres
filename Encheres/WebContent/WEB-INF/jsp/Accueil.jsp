@@ -39,8 +39,8 @@
 			<input type="button" /><input type="text">
 		</div>
 		<div>
-			<label for="categorieFiltre">Categorie : </label> <select name="categorieFiltre"
-				size="1" id="categorieFiltre">
+			<label for="categorieFiltre">Categorie : </label> <select
+				name="categorieFiltre" size="1" id="categorieFiltre">
 				<c:forEach var="categorie" items="${mapCategories}">
 					<option name="test" value="${categorie.key}">${categorie.value.libelle}</option>
 				</c:forEach>
@@ -52,7 +52,8 @@
 			<div>
 				<div>
 					<div>
-						<input type="radio" name="typeFiltre" value="achat"><label>Achats</label>
+						<input type="radio" name="typeFiltre" value="achat"
+							<c:if test="${param.typeFiltre == 'achat'}">checked="checked"</c:if>><label>Achats</label>
 					</div>
 					<div>
 						<div>
@@ -74,7 +75,10 @@
 				</div>
 				<div>
 					<div>
-						<input type="radio" name="typeFiltre" value="vente"><label>Ventes</label>
+						<input type="radio" name="typeFiltre" value="vente"
+							<c:if test="${param.typeFiltre == 'vente'}">
+								checked="checked" 
+							</c:if>><label>Ventes</label>
 					</div>
 					<div>
 						<div>

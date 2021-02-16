@@ -81,9 +81,11 @@ public class ServletAccueil extends HttpServlet {
 			throws ServletException, IOException {
 		Map<Integer, ArticleVendu> mapArticleAffiche = new HashMap<>();
 		
+		// Encodage de la reponse http en utf-8
+		request.setCharacterEncoding("UTF-8");
+		
 		if(request.getParameter(PARAM_RECHERCHE)!=null) {
-			// Encodage de la reponse http en utf-8
-			request.setCharacterEncoding("UTF-8");
+			
 			
 			System.out.println("ok");
 			
