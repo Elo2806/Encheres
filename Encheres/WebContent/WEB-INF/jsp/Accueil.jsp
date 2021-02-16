@@ -74,9 +74,10 @@
 							type="radio"
 							name="typeFiltre"
 							value="achat"
-							onclick="changeType('achat')"
+							onclick="selectType(false)"
 							<c:if test="${param.typeFiltre == 'achat'}">checked="checked"</c:if>
-							<c:if test="${ empty param.recherche}">checked="checked"</c:if>>
+							<c:if test="${ empty param.recherche}">checked="checked"</c:if>
+						>
 						<label>Achats</label>
 					</div>
 					<div id="venteid">
@@ -113,8 +114,9 @@
 							type="radio"
 							name="typeFiltre"
 							value="vente"
-							onclick="changeType('vente')"
-							<c:if test="${param.typeFiltre == 'vente'}">checked="checked"</c:if>>
+							onclick="selectType(false)"
+							<c:if test="${param.typeFiltre == 'vente'}">checked="checked"</c:if>
+						>
 						<label>Ventes</label>
 					</div>
 					<div>
@@ -123,7 +125,8 @@
 								class="vente"
 								type="checkbox"
 								name="chkVentesEnCours"
-								<c:if test="${param.chkVentesEnCours == 'on'}">checked="checked"</c:if>>
+								<c:if test="${param.chkVentesEnCours == 'on'}">checked="checked"</c:if>
+							>
 							<label>mes ventes en cours</label>
 						</div>
 						<div>
@@ -198,7 +201,7 @@
 	<!-- selection par défaut -->
 	<c:if test="${empty param.recherche}">
 		<script type="text/javascript">
-			selectType('vente');
+			selectType(true);
 		</script>
 	</c:if>
 </body>
