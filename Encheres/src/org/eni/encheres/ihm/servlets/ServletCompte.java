@@ -20,14 +20,13 @@ import org.eni.encheres.ihm.exceptions.MotDePasseException;
 @WebServlet("/ServletCompte")
 public class ServletCompte extends HttpServlet {
 
-	
 	private static final String PARAM_MODIFICATION_COMPTE = "modificationCompte";
 	private static final String SESSION_ATTR_UTILISATEUR = "utilisateur";
 	private static final String JSP_PROFIL = "/profil";
 	private static final String ATTR_ERREUR_INSERTION = "erreurInsertion";
 	private static final String ATTR_ERREUR_IDENTIFIANT = "erreurIdentifiant";
 	private static final String ATTR_ERREUR_MDP = "erreurMdp";
-	
+
 	private static final String ERREUR_GENERIQUE = "generique";
 	private static final String ERREUR_IDENTIFIANT = "identifiant";
 	private static final String ERREUR_MDP = "mdp";
@@ -35,9 +34,9 @@ public class ServletCompte extends HttpServlet {
 	private static final String ATTR_ERREUR_MESSAGE = "ErreurMessage";
 
 	private static final String SERVLET_CONNEXION = "/ServletConnexion";
-	
+
 	private static final String JSP_COMPTE = "/compte";
-	
+
 	private static final String PARAM_CREATION = "creation";
 	private static final String PARAM_OLD_MDP = "oldMdp";
 	private static final String PARAM_NEW_MDP = "newMdp";
@@ -53,6 +52,7 @@ public class ServletCompte extends HttpServlet {
 	private static final String PARAM_MDP = "mdp";
 	private static final String PARAM_SUPPRESSION = "suppression";
 	private static final String PARAM_MODIFICATION = "modification";
+	private static final String PARAM_MODIF_MDP = "modifMdp";
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -71,14 +71,15 @@ public class ServletCompte extends HttpServlet {
 
 		Utilisateur utilisateurAffiche = (Utilisateur) request.getSession().getAttribute(SESSION_ATTR_UTILISATEUR);
 		request.setAttribute("utilisateurAffiche", utilisateurAffiche);
-		
+
 		if (modification != null && modification) {
 
-			getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);	
-			
-		} else if (suppression != null && suppression) {
+			getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);
+
 		}
-		else{
+
+		else if (suppression != null && suppression) {
+		} else {
 			getServletContext().getRequestDispatcher(JSP_PROFIL).forward(request, response);
 		}
 	}
@@ -94,7 +95,7 @@ public class ServletCompte extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 
 		Utilisateur user = (Utilisateur) request.getSession().getAttribute(SESSION_ATTR_UTILISATEUR);
-		
+
 		String pseudo = request.getParameter(PARAM_PSEUDO);
 		String nom = request.getParameter(PARAM_NOM);
 		String prenom = request.getParameter(PARAM_PRENOM);
@@ -110,53 +111,57 @@ public class ServletCompte extends HttpServlet {
 		UtilisateurManager manager = UtilisateurManager.getInstance();
 
 		if (!(Boolean.parseBoolean(request.getParameter(PARAM_MODIFICATION_COMPTE)))) {
-			creerCompte(request, response, ErreurSaisie, pseudo, nom, prenom, email, telephone, rue, codePostal, ville, mdp,
-					confirmation, manager);
+			creerCompte(request, response, ErreurSaisie, pseudo, nom, prenom, email, telephone, rue, codePostal, ville,
+					mdp, confirmation, manager);
 		} else {
 			/*
-			 * Si modif mail: si mail ou pseudo existe en base ok si mail = mail du noUser = utilisateur en cours
+			 * Si modif mail: si mail ou pseudo existe en base ok si mail = mail du noUser =
+			 * utilisateur en cours
 			 * 
 			 * Si modif éléments = validation avec mdp
 			 * 
-			 * Si modif mdp = validation avec mdp + lien vers modification controlerMdp identique
+			 * Si modif mdp = validation avec mdp + lien vers modification controlerMdp
+			 * identique
 			 * 
-			 * Creer methode differenciée modifierUtilisateur (admin + user)		*/
-			
-//				try {
-//					manager.controleIdentifiantNewUtilisateur(pseudo, email);
-//					request.setAttribute(ATTR_ERREUR_IDENTIFIANT, false);
-//				} catch (BLLException e) {
-//					request.setAttribute(ATTR_ERREUR_IDENTIFIANT, true);
-//					ErreurSaisie=true;
-//				}
+			 * Creer methode differenciée modifierUtilisateur (admin + user)
+			 */
+
+			// try {
+			// manager.controleIdentifiantNewUtilisateur(pseudo, email);
+			// request.setAttribute(ATTR_ERREUR_IDENTIFIANT, false);
+			// } catch (BLLException e) {
+			// request.setAttribute(ATTR_ERREUR_IDENTIFIANT, true);
+			// ErreurSaisie=true;
+			// }
 			Integer noUtilisateur = user.getNoUtilisateur();
 			try {
 				controlerMdp(oldMdp, user.getMotDePasse());
 				request.setAttribute(ATTR_ERREUR_MDP, false);
 			} catch (MotDePasseException mdpe) {
 				request.setAttribute(ATTR_ERREUR_MDP, true);
-				ErreurSaisie=true;
+				ErreurSaisie = true;
 			}
 			nom = user.getNom();
 			prenom = user.getPrenom();
 			Utilisateur utilisateurAffiche = null;
-			if (!( (pseudo.equals(user.getPseudo()) ) && (email.equals(user.getEmail()) )) )
+			if (!((pseudo.equals(user.getPseudo())) && (email.equals(user.getEmail()))))
 				try {
 					manager.controleIdentifiantNewUtilisateur(pseudo, email);
 					request.setAttribute(ATTR_ERREUR_IDENTIFIANT, false);
 				} catch (BLLException e) {
 					request.setAttribute(ATTR_ERREUR_IDENTIFIANT, true);
-					ErreurSaisie=true;
+					ErreurSaisie = true;
 				}
 			try {
-				utilisateurAffiche = manager.modifierUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, oldMdp, noUtilisateur);
+				utilisateurAffiche = manager.modifierUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal,
+						ville, oldMdp, noUtilisateur);
 				request.setAttribute(ATTR_ERREUR_INSERTION, false);
 			} catch (BLLException blle) {
 				request.setAttribute(ATTR_ERREUR_INSERTION, true);
 				blle.printStackTrace();
-				ErreurSaisie=true;
+				ErreurSaisie = true;
 			}
-			
+
 			if (ErreurSaisie) {
 				request.setAttribute("utilisateurAffiche", request.getSession().getAttribute(SESSION_ATTR_UTILISATEUR));
 				getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);
@@ -168,15 +173,13 @@ public class ServletCompte extends HttpServlet {
 				getServletContext().getRequestDispatcher(JSP_PROFIL).forward(request, response);
 			}
 		}
-		
-		
-
-		
 
 	}
 
 	/**
-	 * Méthode permettant de créer un nouveau compte après les contrôles metiers IHM (saisie mdp identique 2 fois + pseudo et email non existants en base)
+	 * Méthode permettant de créer un nouveau compte après les contrôles metiers IHM
+	 * (saisie mdp identique 2 fois + pseudo et email non existants en base)
+	 * 
 	 * @param request
 	 * @param response
 	 * @param ErreurSaisie
@@ -203,7 +206,7 @@ public class ServletCompte extends HttpServlet {
 			request.setAttribute(ATTR_ERREUR_MDP, false);
 		} catch (MotDePasseException mdpe) {
 			request.setAttribute(ATTR_ERREUR_MDP, true);
-			ErreurSaisie=true;
+			ErreurSaisie = true;
 		}
 
 		try {
@@ -211,7 +214,7 @@ public class ServletCompte extends HttpServlet {
 			request.setAttribute(ATTR_ERREUR_IDENTIFIANT, false);
 		} catch (BLLException e) {
 			request.setAttribute(ATTR_ERREUR_IDENTIFIANT, true);
-			ErreurSaisie=true;
+			ErreurSaisie = true;
 		}
 
 		try {
@@ -220,15 +223,18 @@ public class ServletCompte extends HttpServlet {
 		} catch (BLLException blle) {
 			request.setAttribute(ATTR_ERREUR_INSERTION, true);
 			blle.printStackTrace();
-			ErreurSaisie=true;
+			ErreurSaisie = true;
 		}
-		
+
 		if (ErreurSaisie) {
-			Utilisateur utilisateurAffiche = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, "", 0, false);
+			Utilisateur utilisateurAffiche = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal,
+					ville, "", 0, false);
 			request.setAttribute("utilisateurAffiche", utilisateurAffiche);
-			getServletContext().getRequestDispatcher(JSP_COMPTE+"?creation=true").forward(request, response);
+			getServletContext().getRequestDispatcher(JSP_COMPTE + "?creation=true").forward(request, response);
 		} else {
-			getServletContext().getRequestDispatcher(SERVLET_CONNEXION+"?identifiant="+pseudo+"&motdepasse="+mdp).forward(request, response);
+			getServletContext()
+					.getRequestDispatcher(SERVLET_CONNEXION + "?identifiant=" + pseudo + "&motdepasse=" + mdp)
+					.forward(request, response);
 		}
 	}
 
