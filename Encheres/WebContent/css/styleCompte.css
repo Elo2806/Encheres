@@ -18,5 +18,6 @@ div{
 div.button{
     text-align: center;
     border-radius: 10px;
+    padding:20px 50px 20px 50px;
 }
 

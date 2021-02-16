@@ -34,6 +34,7 @@
 	var="erreur"
 	value="false"
 	scope="page" />
+	
 
 <!-- Tests des attributs d'erreur pour changer la couleur de champs en erreur  -->
 <c:if test="${requestScope.erreurIdentifiant == true }">
@@ -419,14 +420,14 @@
 
 				<tr>
 					<th>
-						<div>
+						<div class = "btn_submit">
 							<input name="enregistrer"
 								type="submit"
 								value="Enregistrer" />
 						</div>
 					</th>
 					<th>
-						<div>
+						<div class = "btn_submit">
 
 							<input
 								name="supprimer"
