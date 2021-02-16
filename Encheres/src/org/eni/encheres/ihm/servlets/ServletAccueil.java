@@ -189,7 +189,7 @@ public class ServletAccueil extends HttpServlet {
 		String typeFiltre;
 		List<Filtre> listFiltres = new ArrayList<>();
 		typeFiltre = request.getParameter(PARAM_TYPE_FILTRE);
-		
+
 		if (ACHAT.name().equalsIgnoreCase(typeFiltre)) {
 			encheresOuvertes = checkToBoolean(request.getParameter(PARAM_ENCHERES_OUVERTES));
 			if (encheresOuvertes) {
@@ -205,7 +205,7 @@ public class ServletAccueil extends HttpServlet {
 			if (encheresRemportes) {
 				listFiltres.add(Filtre.MES_ENCHERES_REMPORTES);
 			}
-		} else if (VENTE.name().equals(typeFiltre)) {
+		} else if (VENTE.name().equalsIgnoreCase(typeFiltre)) {
 			ventesEnCours = checkToBoolean(request.getParameter(PARAM_VENTES_EN_COURS));
 			if (ventesEnCours) {
 				listFiltres.add(Filtre.VENTES_EN_COURS);
@@ -240,29 +240,27 @@ public class ServletAccueil extends HttpServlet {
 				.getAttribute(APP_ATTR_MAP_ARTICLES);
 			
 		for (ArticleVendu article : articles.values()) {
-			
-			System.out.println("filtre :" + articles);//TODO a enlevé
-			
-			if (categorieFiltre.equals(article.getCategorie())) {
+
+			if (categorieFiltre.getNoCategorie() == article.getCategorie().getNoCategorie()) {
 				boolean ajouterArticle = true;
-				
-				System.out.println("articleboo :" + article);//TODO a enlevé
 				for (Filtre filtre : listFiltres) {
 					
 					if (ajouterArticle) {
+						System.out.println("filtre :" + filtre);//TODO a enlevé
 						switch (filtre) {
 						case ENCHERE_OUVERTES:
 							ajouterArticle = article.getDateFinEncheres().isAfter(LocalDateTime.now());
-							System.out.println("filtre :" + filtre);//TODO a enlevé
-							System.out.println("resultat :" + ajouterArticle);//TODO a enlevé
 							break;
 						case MES_ENCHERES_EN_COURS:
 							ajouterArticle = article.getDateFinEncheres().isAfter(LocalDateTime.now())
 									      && article.getDateDebutEncheres().isBefore(LocalDateTime.now());
 							break;
 						case MES_ENCHERES_REMPORTES:
-							ajouterArticle = article.getDateFinEncheres().isBefore(LocalDateTime.now())
-						                  && article.getAcheteur().equals(utilisateur);
+							if(article.getAcheteur() !=null) {
+								ajouterArticle = article.getDateFinEncheres().isBefore(LocalDateTime.now())
+						                  && article.getAcheteur().getNoUtilisateur() == utilisateur.getNoUtilisateur();
+							}
+							ajouterArticle = false;
 							break;  
 						case VENTES_EN_COURS:
 							ajouterArticle = article.getDateFinEncheres().isAfter(LocalDateTime.now())
@@ -270,13 +268,13 @@ public class ServletAccueil extends HttpServlet {
 						                  && article.getVendeur().equals(utilisateur);
 							break;
 						case VENTES_NON_DEBUTES:
+							System.out.println("datefin :" + article.getDateFinEncheres());//TODO a enlevé
+							System.out.println("datedebut :" + article.getDateFinEncheres());//TODO a enlevé
 							ajouterArticle = article.getDateFinEncheres().isAfter(LocalDateTime.now())
-			                  && article.getDateDebutEncheres().isAfter(LocalDateTime.now())
-			                  && article.getVendeur().equals(utilisateur);
+			                  && article.getDateDebutEncheres().isAfter(LocalDateTime.now());
 							break;
 						case VENTES_TERMINEES:
-							ajouterArticle = article.getDateFinEncheres().isBefore(LocalDateTime.now())
-			                  && article.getVendeur().equals(utilisateur);
+							ajouterArticle = article.getDateFinEncheres().isBefore(LocalDateTime.now());
 							break;
 						default:
 							throw new FiltreInexistantException("Il n'y a aucune methode pour gérer le filtre : " + filtre.name());

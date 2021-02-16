@@ -76,8 +76,7 @@
 							value="achat"
 							onclick="selectType(false)"
 							<c:if test="${param.typeFiltre == 'achat'}">checked="checked"</c:if>
-							<c:if test="${ empty param.recherche}">checked="checked"</c:if>
-						>
+							<c:if test="${ empty param.recherche}">checked="checked"</c:if>>
 						<label>Achats</label>
 					</div>
 					<div id="venteid">
@@ -115,8 +114,7 @@
 							name="typeFiltre"
 							value="vente"
 							onclick="selectType(false)"
-							<c:if test="${param.typeFiltre == 'vente'}">checked="checked"</c:if>
-						>
+							<c:if test="${param.typeFiltre == 'vente'}">checked="checked"</c:if>>
 						<label>Ventes</label>
 					</div>
 					<div>
@@ -125,8 +123,7 @@
 								class="vente"
 								type="checkbox"
 								name="chkVentesEnCours"
-								<c:if test="${param.chkVentesEnCours == 'on'}">checked="checked"</c:if>
-							>
+								<c:if test="${param.chkVentesEnCours == 'on'}">checked="checked"</c:if>>
 							<label>mes ventes en cours</label>
 						</div>
 						<div>
@@ -163,7 +160,7 @@
 
 		<c:forEach
 			var="article"
-			items="${mapArticles}">
+			items="${mapArticlesAffiches}">
 
 			<!--  <option value="${article.key}">${categorie.value.libelle}</option> -->
 
@@ -187,22 +184,35 @@
 					Fin de l'enchère : <span id="dateFinEnchere">${article.value.dateFinEncheres}</span>
 				</div>
 				<div>
-					Vendeur : <span><a href="<c:url value="/ServletProfil"/>"
+					Vendeur : <span><a
+						href="<c:url value="/ServletProfil"/>"
 						id="pseudoVendeur">${article.value.vendeur.pseudo}</a></span>
 				</div>
 			</div>
 
 		</c:forEach>
 	</div>
-	
+
 	<script src="<c:url value="/js/accueil.js"/>"></script>
 	<!--<script src="<c:url value="/WEB-INF/Accueil/accueil.js"/>"></script> A revoir-->
-	
+
 	<!-- selection par défaut -->
 	<c:if test="${empty param.recherche}">
 		<script type="text/javascript">
-			selectType(true);
+			selectType(true,'vente');
 		</script>
+	</c:if>
+	<c:if test="${param.recherche}">
+		<c:if test="${param.typeFiltre == 'achat'}">
+			<script type="text/javascript">
+				selectType(true,'vente');
+			</script>
+		</c:if>
+		<c:if test="${param.typeFiltre != 'achat'}">
+			<script type="text/javascript">
+				selectType(true,'achat');
+			</script>
+		</c:if>
 	</c:if>
 </body>
 </html>

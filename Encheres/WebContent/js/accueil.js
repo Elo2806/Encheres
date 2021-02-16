@@ -10,13 +10,12 @@ function changeType(type) {
 	}
 }
 
-function selectType(init) {
+function selectType(init=false,type = 'vente') {
+	
 	if(init){
-		changeType('vente');
+		changeType(type);
 	}else{
 		changeType('achat');
 		changeType('vente');
 	}
-	
-
 }
