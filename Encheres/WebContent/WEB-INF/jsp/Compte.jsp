@@ -204,7 +204,7 @@
 					</div>
 				</th>
 				<th>
-					<div class="ProblemeIdentifiant">
+					<div>
 
 						<label for="email">Email:</label>
 
@@ -213,13 +213,15 @@
 								name="emailFige"
 								id="emailFige">${utilisateurAffiche.email }</span>
 						</c:if>
-						<input
-							type="email"
-							name="email"
-							id="email"
-							placeholder="Entrer votre email"
-							value="${utilisateurAffiche.email }"
-							required>
+						<c:if test="${!param.modifMdp}">
+							<input
+								type="email"
+								name="email"
+								id="email"
+								placeholder="Entrer votre email"
+								value="${utilisateurAffiche.email }"
+								required>
+						</c:if>
 					</div>
 				</th>
 			</tr>
@@ -232,14 +234,16 @@
 								name="telephoneFige"
 								id="telephoneFige">${utilisateurAffiche.telephone}</span>
 						</c:if>
-						<input
-							type="text"
-							name="telephone"
-							id="telephone"
-							placeholder="Entrer votre téléphone"
-							value="${utilisateurAffiche.telephone }"
-							required
-							pattern="[0-9]{10}">
+						<c:if test="${!param.modifMdp}">
+							<input
+								type="text"
+								name="telephone"
+								id="telephone"
+								placeholder="Entrer votre téléphone"
+								value="${utilisateurAffiche.telephone }"
+								required
+								pattern="[0-9]{10}">
+						</c:if>
 					</div>
 				</th>
 				<th>
@@ -250,13 +254,15 @@
 								name="rueFige"
 								id="rueFige">${utilisateurAffiche.rue }</span>
 						</c:if>
-						<input
-							type="text"
-							name="rue"
-							id="rue"
-							placeholder="Entrer votre rue"
-							value="${utilisateurAffiche.rue }"
-							required>
+						<c:if test="${!param.modifMdp}">
+							<input
+								type="text"
+								name="rue"
+								id="rue"
+								placeholder="Entrer votre rue"
+								value="${utilisateurAffiche.rue }"
+								required>
+						</c:if>
 					</div>
 				</th>
 			</tr>
@@ -289,13 +295,15 @@
 								name="villeFige"
 								id="villeFige">${utilisateurAffiche.ville }</span>
 						</c:if>
-						<input
-							type="text"
-							name="ville"
-							id="ville"
-							placeholder="Entrer votre ville"
-							value="${utilisateurAffiche.ville }"
-							required>
+						<c:if test="${!param.modifMdp}">
+							<input
+								type="text"
+								name="ville"
+								id="ville"
+								placeholder="Entrer votre ville"
+								value="${utilisateurAffiche.ville }"
+								required>
+						</c:if>
 					</div>
 				</th>
 			</tr>
