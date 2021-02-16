@@ -1,0 +1,20 @@
+@charset "UTF-8";
+h1
+{
+	text-align: center;
+}
+form{
+    display:flex;  
+}
+
+
+div{
+    margin:5px 30px;
+    text-align: left;
+    
+}
+
+div.button{
+    text-align: center;
+    border-radius: 10px;
+}
