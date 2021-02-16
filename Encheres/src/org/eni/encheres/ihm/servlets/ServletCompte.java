@@ -80,9 +80,9 @@ public class ServletCompte extends HttpServlet {
 		}
 
 		else if (suppression != null && suppression) {
-			
+
 			supprimerCompte(utilisateurAffiche);
-			
+
 			request.setAttribute(PARAM_SUPPRESSION, suppression);
 			getServletContext().getRequestDispatcher(SERVLET_CONNEXION).forward(request, response);
 		} else {
@@ -92,7 +92,7 @@ public class ServletCompte extends HttpServlet {
 
 	private void supprimerCompte(Utilisateur utilisateurAffiche) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/**
@@ -128,12 +128,14 @@ public class ServletCompte extends HttpServlet {
 			modifierCompte(request, response, ErreurSaisie, user, pseudo, email, telephone, rue, codePostal, ville,
 					oldMdp, newMdp, confirmation, manager);
 		}
-		
+
 	}
 
 	/**
-	 * Méthode permettant de mettre à jour un compte utilisateur après les contrôles metiers IHM
-	 * (saisie du bon mdp + contrôle des 2 mdp à changer identiques + pseudo et email non existants en base si modif)
+	 * Méthode permettant de mettre à jour un compte utilisateur après les contrôles
+	 * metiers IHM (saisie du bon mdp + contrôle des 2 mdp à changer identiques +
+	 * pseudo et email non existants en base si modif)
+	 * 
 	 * @param request
 	 * @param response
 	 * @param ErreurSaisie
@@ -155,9 +157,8 @@ public class ServletCompte extends HttpServlet {
 	private void modifierCompte(HttpServletRequest request, HttpServletResponse response, boolean ErreurSaisie,
 			Utilisateur user, String pseudo, String email, String telephone, String rue, String codePostal,
 			String ville, String oldMdp, String newMdp, String confirmation, UtilisateurManager manager)
-			throws  ServletException, IOException {
+			throws ServletException, IOException {
 		/*
-		 * TODO
 		 * Creer methode differenciée modifierUtilisateur (admin + user)
 		 */
 
@@ -171,61 +172,64 @@ public class ServletCompte extends HttpServlet {
 			request.setAttribute(ATTR_ERREUR_MDP, true);
 			ErreurSaisie = true;
 		}
-
-
+		System.out.println(request.getAttribute(ATTR_ERREUR_MDP) + "testMdp"); // TODO
 		Utilisateur utilisateurAffiche = null;
-		System.out.println(request.getParameter(PARAM_MODIF_MDP));
-		if (Boolean.parseBoolean(request.getParameter(PARAM_MODIF_MDP))) {
-			try {
-				controlerMdp(newMdp, confirmation);
-				request.setAttribute(ATTR_ERREUR_MDP, false);
-			} catch (MotDePasseException mdpe) {
-				request.setAttribute(ATTR_ERREUR_MDP, true);
-				ErreurSaisie = true;
-			}
-			try {
-				utilisateurAffiche = manager.modifierUtilisateur(user.getPseudo(),user.getNom(), user.getPrenom(), user.getEmail(), user.getTelephone(), user.getRue(),
-						user.getCodePostal(), user.getVille(), newMdp, user.getNoUtilisateur());
-				request.setAttribute(ATTR_ERREUR_INSERTION, false);
-			} catch (BLLException blle) {
-				request.setAttribute(ATTR_ERREUR_INSERTION, true);
-				blle.printStackTrace();
-				ErreurSaisie = true;
-			}
-		} else {
-			//nom et prénoms non modifiables par user donc impossible de les récupérer en paramètres
-			nom = user.getNom();
-			prenom = user.getPrenom();
-			if (!((pseudo.equals(user.getPseudo())) && (email.equals(user.getEmail())))) {
-				if(!pseudo.equals(user.getPseudo()) ) {
-					try {
-						manager.controlePseudoExistant(pseudo);
-						request.setAttribute(ATTR_ERREUR_IDENTIFIANT, false);
-					} catch(BLLException e) {
-					request.setAttribute(ATTR_ERREUR_IDENTIFIANT, true);
+		System.out.println(request.getParameter(PARAM_MODIF_MDP)); // TODO
+		if (!ErreurSaisie) {
+			if (Boolean.parseBoolean(request.getParameter(PARAM_MODIF_MDP))) {
+				try {
+					controlerMdp(newMdp, confirmation);
+					request.setAttribute(ATTR_ERREUR_MDP, false);
+				} catch (MotDePasseException mdpe) {
+					request.setAttribute(ATTR_ERREUR_MDP, true);
 					ErreurSaisie = true;
+				}
+				try {
+					utilisateurAffiche = manager.modifierUtilisateur(user.getPseudo(), user.getNom(), user.getPrenom(),
+							user.getEmail(), user.getTelephone(), user.getRue(), user.getCodePostal(), user.getVille(),
+							newMdp, user.getNoUtilisateur());
+					request.setAttribute(ATTR_ERREUR_INSERTION, false);
+				} catch (BLLException blle) {
+					request.setAttribute(ATTR_ERREUR_INSERTION, true);
+					blle.printStackTrace();
+					ErreurSaisie = true;
+				}
+			} else {
+				// nom et prénoms non modifiables par user donc impossible de les récupérer en
+				// paramètres
+				nom = user.getNom();
+				prenom = user.getPrenom();
+				if (!((pseudo.equals(user.getPseudo())) && (email.equals(user.getEmail())))) {
+					if (!pseudo.equals(user.getPseudo())) {
+						try {
+							manager.controlePseudoExistant(pseudo);
+							request.setAttribute(ATTR_ERREUR_IDENTIFIANT, false);
+						} catch (BLLException e) {
+							request.setAttribute(ATTR_ERREUR_IDENTIFIANT, true);
+							ErreurSaisie = true;
+						}
+					}
+					if (!email.equals(user.getEmail())) {
+						try {
+							manager.controleEmailExistant(email);
+							request.setAttribute(ATTR_ERREUR_IDENTIFIANT, false);
+						} catch (BLLException e) {
+							request.setAttribute(ATTR_ERREUR_IDENTIFIANT, true);
+							ErreurSaisie = true;
+						}
 					}
 				}
-				if(!email.equals(user.getEmail()) ) {
-					try {
-						manager.controleEmailExistant(email);
-						request.setAttribute(ATTR_ERREUR_IDENTIFIANT, false);
-					} catch(BLLException e) {
-					request.setAttribute(ATTR_ERREUR_IDENTIFIANT, true);
+				try {
+					utilisateurAffiche = manager.modifierUtilisateur(pseudo, nom, prenom, email, telephone, rue,
+							codePostal, ville, oldMdp, noUtilisateur);
+					request.setAttribute(ATTR_ERREUR_INSERTION, false);
+				} catch (BLLException blle) {
+					request.setAttribute(ATTR_ERREUR_INSERTION, true);
+					blle.printStackTrace();
 					ErreurSaisie = true;
-					}
 				}
 			}
-			try {
-				utilisateurAffiche = manager.modifierUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal,
-						ville, oldMdp, noUtilisateur);
-				request.setAttribute(ATTR_ERREUR_INSERTION, false);
-			} catch (BLLException blle) {
-				request.setAttribute(ATTR_ERREUR_INSERTION, true);
-				blle.printStackTrace();
-				ErreurSaisie = true;
-			}
-		}//fin modif
+		}
 		if (ErreurSaisie) {
 			request.setAttribute("utilisateurAffiche", request.getSession().getAttribute(SESSION_ATTR_UTILISATEUR));
 			getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);

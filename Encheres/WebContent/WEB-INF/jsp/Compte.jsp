@@ -37,7 +37,7 @@
 <!-- Tests des attributs d'erreur pour changer la couleur de champs en erreur  -->
 <c:if test="${requestScope.erreurIdentifiant == true }">
 	<c:set
-		var="ColorIdentifiant"
+		var="colorIdentifiant"
 		value="red"
 		scope="page" />
 	<c:set
@@ -52,7 +52,7 @@
 
 <c:if test="${requestScope.erreurMdp == true }">
 	<c:set
-		var="ColorMdp"
+		var="colorMdp"
 		value="red"
 		scope="page" />
 	<c:set
@@ -75,12 +75,12 @@
 <!-- Mise en forme -->
 <style type="text/css">
 .ProblemeIdentifiant {
-	color: ${ColorIdentifiant
+	color: ${colorIdentifiant
 }
 
 }
 .ProblemeMdp {
-	color: ${ColorMdp
+	color: ${colorMdp}
 }
 </style>
 </head>
@@ -101,7 +101,7 @@
 		<table>
 			<tr>
 				<th>
-					<div>
+					<div class="ProblemeIdentifiant">
 						<label for="pseudo">Pseudo:</label>
 						<c:if test="${param.modifMdp}">
 							<span
@@ -204,7 +204,7 @@
 					</div>
 				</th>
 				<th>
-					<div>
+					<div class="ProblemeIdentifiant">
 
 						<label for="email">Email:</label>
 
@@ -271,9 +271,7 @@
 					<div>
 						<label for="codePostal">Code Postal:</label>
 						<c:if test="${param.modifMdp}">
-							<span
-								name="codePostalFige"
-								id="codePostalFige">${utilisateurAffiche.codePostal }</span>
+							<span id="codePostalFige">${utilisateurAffiche.codePostal }</span>
 						</c:if>
 						<c:if test="${!param.modifMdp}">
 							<input
@@ -291,9 +289,7 @@
 					<div>
 						<label for="ville">Ville:</label>
 						<c:if test="${param.modifMdp}">
-							<span
-								name="villeFige"
-								id="villeFige">${utilisateurAffiche.ville }</span>
+							<span id="villeFige">${utilisateurAffiche.ville }</span>
 						</c:if>
 						<c:if test="${!param.modifMdp}">
 							<input
