@@ -9,6 +9,7 @@
 <html>
 
 <head>
+<link href="<c:url value="/css/styleCompte.css" />" rel="stylesheet">
 <meta
 	http-equiv="Content-Type"
 	content="text/html; charset=UTF-8">
