@@ -14,7 +14,7 @@
   </servlet-mapping>
   <servlet>
     <servlet-name>JSP_ACCUEIL</servlet-name>
-    <jsp-file>/WEB-INF/jsp/Accueil.jsp</jsp-file>
+    <jsp-file>/WEB-INF/Accueil/Accueil.jsp</jsp-file>
   </servlet>
   <servlet-mapping>
     <servlet-name>JSP_ACCUEIL</servlet-name>
