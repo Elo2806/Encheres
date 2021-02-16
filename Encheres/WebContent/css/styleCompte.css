@@ -1,15 +1,16 @@
 @charset "UTF-8";
-h1
+.titre
 {
 	text-align: center;
 }
 form{
     display:flex;  
+    justify-content:center;
 }
 
 
 div{
-    margin:5px 30px;
+    margin:7px 30px;
     text-align: left;
     
 }
@@ -18,3 +19,4 @@ div.button{
     text-align: center;
     border-radius: 10px;
 }
+

@@ -93,7 +93,7 @@
 	<br>
 	<br>
 
-	<h1>Mon Profil</h1>
+	<h1 class = "titre">Mon Profil</h1>
 
 	<form
 		method="post"
