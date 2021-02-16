@@ -74,7 +74,9 @@
 							type="radio"
 							name="typeFiltre"
 							value="achat"
-							<c:if test="${param.typeFiltre == 'achat'}">checked="checked"</c:if>>
+							onclick="changeType('achat')"
+							<c:if test="${param.typeFiltre == 'achat'}">checked="checked"</c:if>
+							<c:if test="${ empty param.recherche}">checked="checked"</c:if>>
 						<label>Achats</label>
 					</div>
 					<div id="venteid">
@@ -84,7 +86,6 @@
 								id="chktest"
 								type="checkbox"
 								name="chkEncheresOuvertes"
-								onclick="selectType('vente')"
 								<c:if test="${param.chkEncheresOuvertes == 'on'}">checked="checked"</c:if>>
 							<label for="chkEncheresOuvertes">enchères ouvertes</label>
 						</div>
@@ -101,7 +102,6 @@
 								class="achat"
 								type="checkbox"
 								name="chkMesEncheresRemportes"
-								onclick="selectType('achat')"
 								<c:if test="${param.chkMesEncheresRemportes == 'on'}">checked="checked"</c:if>>
 							<label>mes enchères remportées</label>
 						</div>
@@ -113,6 +113,7 @@
 							type="radio"
 							name="typeFiltre"
 							value="vente"
+							onclick="changeType('vente')"
 							<c:if test="${param.typeFiltre == 'vente'}">checked="checked"</c:if>>
 						<label>Ventes</label>
 					</div>
@@ -190,13 +191,14 @@
 
 		</c:forEach>
 	</div>
-	<script src="<c:url value="/Accueil/accueil.js"/>"></script>
-
+	
+	<script src="<c:url value="/js/accueil.js"/>"></script>
+	<!--<script src="<c:url value="/WEB-INF/Accueil/accueil.js"/>"></script> A revoir-->
+	
 	<!-- selection par défaut -->
 	<c:if test="${empty param.recherche}">
 		<script type="text/javascript">
-		alert('test');	
-		selectType('vente');
+			selectType('vente');
 		</script>
 	</c:if>
 </body>
