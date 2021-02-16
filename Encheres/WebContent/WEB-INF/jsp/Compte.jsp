@@ -361,7 +361,7 @@
 					type="hidden"
 					name="modificationCompte"
 					value="true">
-
+					
 				<tr>
 
 					<th>
@@ -382,6 +382,11 @@
 				</tr>
 
 				<c:if test="${param.modifMdp}">
+				<input
+					type="hidden"
+					name="modifMdp"
+					value="true">
+					
 					<tr>
 						<th>
 							<div class="ProblemeMdp">
