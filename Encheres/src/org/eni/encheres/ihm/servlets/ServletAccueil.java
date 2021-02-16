@@ -86,23 +86,15 @@ public class ServletAccueil extends HttpServlet {
 		
 		if(request.getParameter(PARAM_RECHERCHE)!=null) {
 			
-			
-			System.out.println("ok");
-			
 			mapArticleAffiche = creerMapArticlesAffiches(request);
 			
 			//Chargement de l'attribut dans la requete
 			request.setAttribute(ATTR_MAP_ARTICLES_AFFICHES, mapArticleAffiche);
-			
-			
-			Utilisateur utilisateur = (Utilisateur)request.getSession().getAttribute(APP_ATTR_UTILISATEUR);
-			System.out.println(utilisateur.getNoUtilisateur());
-			
+
 			//Envoi de la requete au navigateur
 			getServletContext().getRequestDispatcher(JSP_ACCUEIL).forward(request, response);
 
 		}else{
-			System.out.println("nok");
 			doGet(request, response);
 		}
 		
@@ -145,10 +137,9 @@ public class ServletAccueil extends HttpServlet {
 	
 	
 	/**
-	 * Méthode permettant de
-	 * @param request
-	 * @param mapArticleAffiche
-	 * @return
+	 * Méthode permettant de créer une map des articles remplissant les caractèristique de la recherche
+	 * @param request http request
+	 * @return une map des articles remplissant les caractèristique de la recherche
 	 */
 	private Map<Integer, ArticleVendu> creerMapArticlesAffiches(HttpServletRequest request) {
 		Categorie categorieFiltre;
@@ -157,18 +148,17 @@ public class ServletAccueil extends HttpServlet {
 		Utilisateur utilisateur;
 		
 		// Récupération les paramètres de la requete
-		
 		categorieFiltre = getCategorieFromRequest(request);
 		listFiltres = getListeFiltres(request);
 		utilisateur = (Utilisateur)request.getSession().getAttribute(APP_ATTR_UTILISATEUR);
-		
+		System.out.println("listFiltres :" + listFiltres);//TODO a enlevé
 		//Mise à jour de la map article
 		try {
 			mapArticleAffiche = creerMapArticlesFiltres(utilisateur,categorieFiltre, listFiltres);
 		} catch (FiltreInexistantException fie) {
 			fie.printStackTrace();//TODO voir comment gérer cette exception
 		}
-		
+		System.out.println(mapArticleAffiche);//TODO a enlevé
 		return mapArticleAffiche;
 	}
 
@@ -185,6 +175,7 @@ public class ServletAccueil extends HttpServlet {
 		
 		mapCategorie = (Map<Integer, Categorie>) request.getServletContext().getAttribute(APP_ATTR_MAP_CATEGORIES);
 		categorieFiltre = mapCategorie.get(categorieId);
+		
 		return categorieFiltre;
 	}
 
@@ -200,30 +191,30 @@ public class ServletAccueil extends HttpServlet {
 		typeFiltre = request.getParameter(PARAM_TYPE_FILTRE);
 		
 		if (ACHAT.name().equalsIgnoreCase(typeFiltre)) {
-			encheresOuvertes = Boolean.parseBoolean(request.getParameter(PARAM_ENCHERES_OUVERTES));
+			encheresOuvertes = checkToBoolean(request.getParameter(PARAM_ENCHERES_OUVERTES));
 			if (encheresOuvertes) {
 				listFiltres.add(Filtre.ENCHERE_OUVERTES);
 			}
 
-			encheresEnCours = Boolean.parseBoolean(request.getParameter(PARAM_MES_ENCHERE_EN_COURS));
+			encheresEnCours = checkToBoolean(request.getParameter(PARAM_MES_ENCHERE_EN_COURS));
 			if (encheresEnCours) {
 				listFiltres.add(Filtre.MES_ENCHERES_EN_COURS);
 			}
 
-			encheresRemportes = Boolean.parseBoolean(request.getParameter(PARAM_MES_ENCHERES_REMPORTES));
+			encheresRemportes = checkToBoolean(request.getParameter(PARAM_MES_ENCHERES_REMPORTES));
 			if (encheresRemportes) {
 				listFiltres.add(Filtre.MES_ENCHERES_REMPORTES);
 			}
 		} else if (VENTE.name().equals(typeFiltre)) {
-			ventesEnCours = Boolean.parseBoolean(request.getParameter(PARAM_VENTES_EN_COURS));
+			ventesEnCours = checkToBoolean(request.getParameter(PARAM_VENTES_EN_COURS));
 			if (ventesEnCours) {
 				listFiltres.add(Filtre.VENTES_EN_COURS);
 			}
-			ventesNonDebutes = Boolean.parseBoolean(request.getParameter(PARAM_VENTES_NON_DEBUTES));
+			ventesNonDebutes = checkToBoolean(request.getParameter(PARAM_VENTES_NON_DEBUTES));
 			if (ventesNonDebutes) {
 				listFiltres.add(Filtre.VENTES_NON_DEBUTES);
 			}
-			ventesTerminees = Boolean.parseBoolean(request.getParameter(PARAM_VENTES_TERMINEES));
+			ventesTerminees = checkToBoolean(request.getParameter(PARAM_VENTES_TERMINEES));
 			if (ventesTerminees) {
 				listFiltres.add(Filtre.VENTES_NON_DEBUTES);
 			}
@@ -247,16 +238,23 @@ public class ServletAccueil extends HttpServlet {
 		Map<Integer, ArticleVendu> mapArticlesFiltres = new HashMap<>();
 		Map<Integer, ArticleVendu> articles = (Map<Integer, ArticleVendu>) getServletContext()
 				.getAttribute(APP_ATTR_MAP_ARTICLES);
-		
+			
 		for (ArticleVendu article : articles.values()) {
+			
+			System.out.println("filtre :" + articles);//TODO a enlevé
+			
 			if (categorieFiltre.equals(article.getCategorie())) {
 				boolean ajouterArticle = true;
-
+				
+				System.out.println("articleboo :" + article);//TODO a enlevé
 				for (Filtre filtre : listFiltres) {
+					
 					if (ajouterArticle) {
 						switch (filtre) {
 						case ENCHERE_OUVERTES:
 							ajouterArticle = article.getDateFinEncheres().isAfter(LocalDateTime.now());
+							System.out.println("filtre :" + filtre);//TODO a enlevé
+							System.out.println("resultat :" + ajouterArticle);//TODO a enlevé
 							break;
 						case MES_ENCHERES_EN_COURS:
 							ajouterArticle = article.getDateFinEncheres().isAfter(LocalDateTime.now())
@@ -284,7 +282,6 @@ public class ServletAccueil extends HttpServlet {
 							throw new FiltreInexistantException("Il n'y a aucune methode pour gérer le filtre : " + filtre.name());
 						}
 					}
-
 				}
 				if(ajouterArticle) {
 					mapArticlesFiltres.put(article.getNoArticle(), article);
@@ -295,4 +292,17 @@ public class ServletAccueil extends HttpServlet {
 		return mapArticlesFiltres;
 	}
 
+	/**
+	 * 
+	 * Méthode permettant d'obtenir à partir du resultat d'une checkbox
+	 * @param checkParametre parametre à convertir
+	 * @return vrai si la checkbox est cochée, renvoi faux si le parametre est null.
+	 */
+	public boolean checkToBoolean(String checkParametre) {
+		
+		if(checkParametre == null || !checkParametre.equalsIgnoreCase("on")) {
+			return false;
+		}
+		return true;
+	}
 }
