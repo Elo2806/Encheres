@@ -67,6 +67,15 @@ public interface UtilisateurDAO {
 	 */
 	public Utilisateur update(Utilisateur utilisateurAModifier) throws DALException;
 
+	/**
+	 * 
+	 * Méthode permettant de modifier l'attribut 'supprime' pour gérer l'accès d'un compte
+	 * @param utilisateurAffiche
+	 * @return
+	 * @throws DALException
+	 */
+	public Utilisateur updateSupprime(Utilisateur utilisateurASupprimer) throws DALException;
+
 	
 
 	

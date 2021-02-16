@@ -261,6 +261,22 @@ public class Utilisateur implements Serializable {
 	public void setActif(boolean actif) {
 		this.actif = actif;
 	}
+
+	/**
+	 * Méthode permettant de récupérer supprime
+	 * @return le supprime
+	 */
+	public boolean isSupprime() {
+		return supprime;
+	}
+
+	/**
+	 * Méthode permettant de modifier supprime
+	 * @param supprime le new supprime
+	 */
+	public void setSupprime(boolean supprime) {
+		this.supprime = supprime;
+	}
 	
 	
 	

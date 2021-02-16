@@ -111,6 +111,16 @@ public class UtilisateurManager {
 		return user;
 	}
 	
+	public Utilisateur supprimerCompte(Utilisateur utilisateurAffiche) throws BLLException {
+		try {
+			utilisateurdao.updateSupprime(utilisateurAffiche);
+		} catch (DALException dale) {
+			throw new BLLException("Erreur lors de l'acces à la DAL", dale);
+		}
+		return utilisateurAffiche;
+		
+	}
+	
 	
 
 	/**
@@ -169,5 +179,7 @@ public class UtilisateurManager {
 
 		return utilisateur;
 	}
+
+	
 
 }

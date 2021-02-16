@@ -420,7 +420,7 @@
 				<tr>
 					<th>
 						<div>
-							<input
+							<input name="enregistrer"
 								type="submit"
 								value="Enregistrer" />
 						</div>
@@ -428,9 +428,10 @@
 					<th>
 						<div>
 
-							<a href="<c:url value="/ServletCompte?suppression=true"/>"> <input
-								type="button"
-								value="Supprimer mon compte" /></a>
+							<input
+								name="supprimer"
+								type="submit"
+								value="Supprimer mon compte" />
 						</div>
 					</th>
 				</tr>

@@ -21,6 +21,7 @@ import org.eni.encheres.ihm.exceptions.MotDePasseException;
 @WebServlet("/ServletCompte")
 public class ServletCompte extends HttpServlet {
 
+	private static final String PARAM_SUPPRIMER = "supprimer";
 	private static final String PARAM_MODIFICATION_COMPTE = "modificationCompte";
 	private static final String SESSION_ATTR_UTILISATEUR = "utilisateur";
 	private static final String JSP_PROFIL = "/profil";
@@ -62,13 +63,9 @@ public class ServletCompte extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Boolean creation;
+		
 		Boolean modification;
-		Boolean suppression;
-
-		creation = Boolean.parseBoolean(request.getParameter(PARAM_CREATION));
 		modification = Boolean.parseBoolean(request.getParameter(PARAM_MODIFICATION));
-		suppression = Boolean.parseBoolean(request.getParameter(PARAM_SUPPRESSION));
 
 		Utilisateur utilisateurAffiche = (Utilisateur) request.getSession().getAttribute(SESSION_ATTR_UTILISATEUR);
 		request.setAttribute("utilisateurAffiche", utilisateurAffiche);
@@ -77,23 +74,12 @@ public class ServletCompte extends HttpServlet {
 
 			getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);
 
-		}
-
-		else if (suppression != null && suppression) {
-
-			supprimerCompte(utilisateurAffiche);
-
-			request.setAttribute(PARAM_SUPPRESSION, suppression);
-			getServletContext().getRequestDispatcher(SERVLET_CONNEXION).forward(request, response);
 		} else {
 			getServletContext().getRequestDispatcher(JSP_PROFIL).forward(request, response);
 		}
 	}
 
-	private void supprimerCompte(Utilisateur utilisateurAffiche) {
-		// TODO Auto-generated method stub
-
-	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -104,7 +90,6 @@ public class ServletCompte extends HttpServlet {
 
 		boolean ErreurSaisie = false;
 		request.setCharacterEncoding("UTF-8");
-
 		Utilisateur user = (Utilisateur) request.getSession().getAttribute(SESSION_ATTR_UTILISATEUR);
 
 		String pseudo = request.getParameter(PARAM_PSEUDO);
@@ -124,11 +109,13 @@ public class ServletCompte extends HttpServlet {
 		if (!(Boolean.parseBoolean(request.getParameter(PARAM_MODIFICATION_COMPTE)))) {
 			creerCompte(request, response, ErreurSaisie, pseudo, nom, prenom, email, telephone, rue, codePostal, ville,
 					mdp, confirmation, manager);
+		} else if (request.getParameter(PARAM_SUPPRIMER)!=null) {
+			supprimerCompte(request, response, user);
 		} else {
 			modifierCompte(request, response, ErreurSaisie, user, pseudo, email, telephone, rue, codePostal, ville,
 					oldMdp, newMdp, confirmation, manager);
 		}
-
+		
 	}
 
 	/**
@@ -159,6 +146,7 @@ public class ServletCompte extends HttpServlet {
 			String ville, String oldMdp, String newMdp, String confirmation, UtilisateurManager manager)
 			throws ServletException, IOException {
 		/*
+		 * TODO
 		 * Creer methode differenciée modifierUtilisateur (admin + user)
 		 */
 
@@ -172,23 +160,21 @@ public class ServletCompte extends HttpServlet {
 			request.setAttribute(ATTR_ERREUR_MDP, true);
 			ErreurSaisie = true;
 		}
-		System.out.println(request.getAttribute(ATTR_ERREUR_MDP) + "testMdp"); // TODO
 		Utilisateur utilisateurAffiche = null;
-		System.out.println(request.getParameter(PARAM_MODIF_MDP)); // TODO
 		if (!ErreurSaisie) {
 			if (Boolean.parseBoolean(request.getParameter(PARAM_MODIF_MDP))) {
 				try {
 					controlerMdp(newMdp, confirmation);
+					user.setMotDePasse(newMdp);
 					request.setAttribute(ATTR_ERREUR_MDP, false);
+					
+					utilisateurAffiche = manager.modifierUtilisateur(user.getPseudo(), user.getNom(), user.getPrenom(),
+							user.getEmail(), user.getTelephone(), user.getRue(), user.getCodePostal(), user.getVille(),
+							user.getMotDePasse(), user.getNoUtilisateur());
+					request.setAttribute(ATTR_ERREUR_INSERTION, false);
 				} catch (MotDePasseException mdpe) {
 					request.setAttribute(ATTR_ERREUR_MDP, true);
 					ErreurSaisie = true;
-				}
-				try {
-					utilisateurAffiche = manager.modifierUtilisateur(user.getPseudo(), user.getNom(), user.getPrenom(),
-							user.getEmail(), user.getTelephone(), user.getRue(), user.getCodePostal(), user.getVille(),
-							newMdp, user.getNoUtilisateur());
-					request.setAttribute(ATTR_ERREUR_INSERTION, false);
 				} catch (BLLException blle) {
 					request.setAttribute(ATTR_ERREUR_INSERTION, true);
 					blle.printStackTrace();
@@ -240,7 +226,7 @@ public class ServletCompte extends HttpServlet {
 			request.setAttribute("utilisateurAffiche", utilisateurAffiche);
 			getServletContext().getRequestDispatcher(JSP_PROFIL).forward(request, response);
 		}
-	}// fin méthode
+	}
 
 	/**
 	 * Méthode permettant de créer un nouveau compte après les contrôles metiers IHM
@@ -304,10 +290,50 @@ public class ServletCompte extends HttpServlet {
 		}
 	}
 
+	/**
+	 * 
+	 * Méthode permettant de supprimer un compte (attribut 'supprime'=true dans le système de persistance)
+	 * @param request
+	 * @param response
+	 * @param utilisateurAffiche
+	 * @param suppression
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private void supprimerCompte(HttpServletRequest request, HttpServletResponse response, Utilisateur utilisateurAffiche) throws ServletException, IOException {
+		boolean ErreurSaisie = false;
+		UtilisateurManager manager = UtilisateurManager.getInstance();
+		try {
+			controlerMdp(request.getParameter(PARAM_MDP), utilisateurAffiche.getMotDePasse());
+			request.setAttribute(ATTR_ERREUR_MDP, false);
+			utilisateurAffiche.setSupprime(true);
+			
+			manager.supprimerCompte(utilisateurAffiche);
+			request.setAttribute(ATTR_ERREUR_INSERTION, false);
+		} catch (MotDePasseException mdpe) {
+			request.setAttribute(ATTR_ERREUR_MDP, true);
+			ErreurSaisie = true;
+		} catch (BLLException blle) {
+			request.setAttribute(ATTR_ERREUR_INSERTION, true);
+			blle.printStackTrace();
+			ErreurSaisie = true;
+		}
+		
+		if (ErreurSaisie) {
+			request.setAttribute("utilisateurAffiche", request.getSession().getAttribute(SESSION_ATTR_UTILISATEUR));
+			getServletContext().getRequestDispatcher(JSP_COMPTE).forward(request, response);
+		} else {
+			// Mise à jour de la session utilisateur :
+			request.getSession().setAttribute(SESSION_ATTR_UTILISATEUR, utilisateurAffiche);
+			
+			getServletContext().getRequestDispatcher(SERVLET_CONNEXION).forward(request, response);;
+		}
+	}	
+
 	private void controlerMdp(String mdp, String confirmation) throws MotDePasseException {
 		if (!mdp.equals(confirmation)) {
 			throw new MotDePasseException("La confirmation du mot de passe est différente du mot de passe");
 		}
 	}
-
+	
 }

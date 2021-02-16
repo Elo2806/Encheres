@@ -42,6 +42,7 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 	private static final String SQL_SELECT_BY_PSEUDO = "SELECT no_utilisateur FROM Utilisateurs WHERE pseudo=?";
 	private static final String SQL_CREATE = "INSERT INTO Utilisateurs (pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif) VALUES (?,?,?,?,?,?,?,?,?,?,0,1)";
 	private static final String SQL_UPDATE = "UPDATE Utilisateurs SET pseudo=?,nom=?,prenom=?,email=?,telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=?,credit=?,administrateur=?,actif=? WHERE no_utilisateur=?";
+	private static final String SQL_UPDATE_SUPPRIME = "UPDATE Utilisateurs SET supprime=? WHERE no_utilisateur=?";
 	
 	@Override
 	public Utilisateur create(Utilisateur newUtilisateur) throws DALException {
@@ -256,6 +257,35 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 
 		return modifiedUtilisateur;
 
+	}
+
+	@Override
+	public Utilisateur updateSupprime(Utilisateur utilisateurASupprimer) throws DALException {
+		
+		PreparedStatement pstmt;
+
+		// Connection en base
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			// Traitement de la requete SQL
+			try {
+				pstmt = cnx.prepareStatement(SQL_UPDATE_SUPPRIME);
+				pstmt.setBoolean(1, utilisateurASupprimer.isSupprime());
+				pstmt.setInt(2, utilisateurASupprimer.getNoUtilisateur());
+				pstmt.executeUpdate();
+				
+				pstmt.close();
+			} catch (SQLException sqle) {
+				throw new RequeteSQLException("Erreur lors de la mise à jour en base", sqle);
+			}
+
+		} catch (SQLException sqle) {
+			throw new ConnectionException("Erreur connection", sqle);
+		}
+
+		//Mise à jour de l'utilisateur
+		Utilisateur modifiedUtilisateur = utilisateurASupprimer;
+
+		return modifiedUtilisateur;
 	}
 
 	
