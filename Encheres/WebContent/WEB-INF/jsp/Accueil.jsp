@@ -8,6 +8,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link href="css/styleAccueil.css" rel="stylesheet"/>
 <meta
 	http-equiv="Content-Type"
 	content="text/html; charset=UTF-8">
@@ -19,23 +20,34 @@
 </style>
 </head>
 <body>
-	<%@include file="../jsp/EnTeteEni.jspf"%>
 
+<!-- Section en tête du contenu -->
+<header>
+<!-- Section LOGO -->
+	<%@include file="../jsp/EnTeteEni.jspf"%>
+</header>
+<!-- Section MENU -->
+<main>
+
+<nav>
+<ul>
 	<c:choose>
 		<c:when test="${!empty sessionScope.utilisateur}">
-			<div>
-				<span><a href="<c:url value="/ServletVente"/>">Vendre un article</a></span>
-				<span><a href="<c:url value="/ServletCompte"/>">Mon profil</a></span> <span><a
-					href="<c:url value="/ServletConnexion"/>">Déconnexion</a></span>
-			</div>
+			
+				<span><li><a href="<c:url value="/ServletVente"/>">Vendre un article</a></li></span>
+				<span><li><a href="<c:url value="/ServletCompte"/>">Mon profil</a></li></span> 
+				<span><li><a href="<c:url value="/ServletConnexion"/>">Déconnexion</a></li></span>
+			
 		</c:when>
 		<c:otherwise>
 			<div>
-				<span><a href="<c:url value="/ServletConnexion"/>">S'inscrire -
-						Se connecter</a></span>
+				<span><li><a href="<c:url value="/ServletConnexion"/>">S'inscrire - Se connecter</a></li></span>
 			</div>
 		</c:otherwise>
 	</c:choose>
+	</ul>
+	</nav>
+
 
 	<div>
 		<h1>Liste des enchères</h1>
@@ -160,14 +172,16 @@
 	</form>
 
 	<!-- Liste des enchères  -->
-	<div class="Enchere">
+	<!--<div class="Enchere"> a supprimer si affichage ok-->
+	
+	<section id="encheres">
 
 		<c:forEach
 			var="article"
 			items="${mapArticlesAffiches}">
 
 			<!--  <option value="${article.key}">${categorie.value.libelle}</option> -->
-
+<div class="articles">
 			<div>
 				<img
 					alt="photo objet"
@@ -202,9 +216,10 @@
 						id="pseudoVendeur">${article.value.vendeur.pseudo}</a></span>
 				</div>
 			</div>
-
+</div>
 		</c:forEach>
-	</div>
+	</section>	
+	<!-- </div> a supprimer -->
 
 	<script src="<c:url value="/js/accueil.js"/>"></script>
 	<!--<script src="<c:url value="/WEB-INF/Accueil/accueil.js"/>"></script> A revoir-->
@@ -227,5 +242,6 @@
 			</script>
 		</c:if>
 	</c:if>
+	</main>
 </body>
 </html>

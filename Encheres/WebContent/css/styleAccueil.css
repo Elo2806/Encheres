@@ -1,0 +1,75 @@
+@charset "UTF-8";
+
+/* -------ACCUEIL------- */
+
+/* GENERAL */
+
+h1 {
+    font-family: 'Crete Round', serif;
+}
+
+body {
+    background-image: -moz-radial-gradient(white, lightgray);
+    font-family: Arial, sans-serif;
+}
+
+hr{
+    clear:both;
+    height: 1px;
+    background-color:slategrey;
+    border: none;}
+    
+/* MAIN */    
+
+ul {
+    list-style: none;
+}
+
+main nav ul {
+    clear: both;
+    display:flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+main nav ul :hover {
+    background: linear-gradient(ghostwhite, black);
+}
+
+main nav ul li {
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-right: 20px;
+    float: left;
+    text-align: center;
+    line-height: 50px;
+    width: 200px;
+    background: linear-gradient(indigo, darkred, burlywood);
+    border-radius: 10px;
+}
+
+main nav ul li a {
+    color: ghostwhite;
+    text-decoration: none;
+}
+
+main nav ul li a:hover {
+    color: black;
+    text-decoration: none;
+    background: ghostwhite;
+    border-radius: 3px;
+}
+
+
+#encheres{
+	display:flex;
+	flex-direction: row;
+	justify-content:space-between;
+}
+.articles{
+border-style:solid;
+	background-color: rgba(255, 250, 240, 0.9);
+	border-style:solid;
+	width: 40%;
+	
+}
