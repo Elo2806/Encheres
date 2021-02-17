@@ -19,6 +19,7 @@
 </head>
 <body>
 	<%@include file="EnTeteEni.jspf"%>
+	
 	<section>
 		<form method="post" action="<%=request.getContextPath()%>/ServletConnexion">
 			<div id="identifiants" class="pave">

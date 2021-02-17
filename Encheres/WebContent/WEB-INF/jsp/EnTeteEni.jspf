@@ -1,2 +1,2 @@
-<h1>ENI-Enchères</h1>
+<a href="<%=request.getContextPath()%>/ServletAccueil"><img alt="logo" src="<%=request.getContextPath()%>/images/logoENI.png"></a>
 
