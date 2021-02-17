@@ -7,6 +7,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
 <title>Vente</title>
 
 <!-- Déclaration des variables -->
@@ -93,7 +95,7 @@
 	<div>
 		<img alt="Image de l'objet" src="">
 	</div>
-	<div class="descriptionVente">
+	<div class="descriptionVente" class=>
 		<div>
 
 			<p id="libelleArticle">${requestScope.articleEnVente.nomArticle }</p>

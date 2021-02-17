@@ -25,7 +25,7 @@
 		</div>
 		<div>
 			<label for="categorie">Categorie : </label>
-			<select name="categorie" id="categorie">
+			<select name="categorie" id="categorie" required>
 			<c:forEach var="categorie" items="${mapCategories}">
 				<option value="${categorie.key}">${categorie.value.libelle}</option>
 				</c:forEach>	
@@ -56,18 +56,18 @@
 	
 			<div>
 				<label for="rue">Rue : </label>
-				<input type="text" name="rue" id="rue" value="<c:if test="${!empty param.rue}">${requestScope.rue}</c:if>
+				<input type="text" name="rue" id="rue" required value="<c:if test="${!empty param.rue}">${requestScope.rue}</c:if>
 				                                              <c:if test="${param.rue}">${param.rue}</c:if>"
 				>
 			</div>
 			<div>
 				<label for="codepostal">Code postal : </label>
-				<input type="text" name="codepostal" id="codepostal" value="<c:if test="${!empty param.codepostal}">${requestScope.cp}</c:if>
+				<input type="text" name="codepostal" id="codepostal" required pattern="[0-9]{5}" value="<c:if test="${!empty param.codepostal}">${requestScope.cp}</c:if>
 				                                                            <c:if test="${param.codepostal}">${param.codepostal}</c:if>">
 			</div>
 			<div>
 				<label for="ville">Ville : </label>
-				<input type="text" name="ville" id="ville" value="" value="<c:if test="${!empty param.ville}">${requestScope.ville}</c:if>
+				<input type="text" name="ville" id="ville" required value="<c:if test="${!empty param.ville}">${requestScope.ville}</c:if>
 				                                                           <c:if test="${param.ville}">${param.ville}</c:if>">>
 			</div>
 		</div>
