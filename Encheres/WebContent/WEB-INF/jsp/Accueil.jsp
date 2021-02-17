@@ -176,9 +176,15 @@
 
 			<div>
 				<div>
-					<a
-						href="<c:url value="/ServletEnchere?noArticle=${article.key}"/>"
-						id="libelleArticle">${article.value.nomArticle}</a>
+					<c:choose>
+					<c:when test="${!empty sessionScope.utilisateur}">
+						<a href="<c:url value="/ServletEnchere?noArticle=${article.key}"/>"
+							id="libelleArticle">${article.value.nomArticle}</a>
+					</c:when>
+					<c:otherwise>
+						<span>${article.value.nomArticle}</span>
+					</c:otherwise>
+					</c:choose>
 				</div>
 				<div>
 					Prix : <span id="nbPoints">
