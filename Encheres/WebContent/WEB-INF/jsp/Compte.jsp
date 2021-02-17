@@ -77,8 +77,7 @@
 <!-- Mise en forme -->
 <style type="text/css">
 .ProblemeIdentifiant {
-	color: ${colorIdentifiant
-}
+	color: ${colorIdentifiant}
 
 }
 .ProblemeMdp {

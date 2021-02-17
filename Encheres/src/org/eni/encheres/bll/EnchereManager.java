@@ -36,7 +36,7 @@ public class EnchereManager {
 		return instance;
 	}
 
-	public void encherir(LocalDateTime dateEnchere, Integer montantEnchere, Utilisateur utilisateur, ArticleVendu article) throws BLLException {
+	public void creerEnchere(LocalDateTime dateEnchere, Integer montantEnchere, Utilisateur utilisateur, ArticleVendu article) throws BLLException {
 		Enchere nouvelleEnchere = new Enchere(dateEnchere, montantEnchere, utilisateur, article);
 		try {
 			enchereDao.create(nouvelleEnchere);

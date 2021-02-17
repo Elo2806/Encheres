@@ -1,6 +1,7 @@
 package org.eni.encheres.ihm.servlets;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -15,16 +16,20 @@ import org.eni.encheres.bll.EnchereManager;
 import org.eni.encheres.bll.exceptions.BLLException;
 import org.eni.encheres.bo.ArticleVendu;
 import org.eni.encheres.bo.Utilisateur;
+import org.eni.encheres.ihm.exceptions.MotDePasseException;
 
 /**
  * Servlet implementation class ServletEnchere
  */
 @WebServlet("/ServletEnchere")
 public class ServletEnchere extends HttpServlet {
+	private static final String ATTR_ENCHERE_INSUFFISANTE = "enchereInsuffisante";
 	private static final String PARAM_PROPOSITION = "proposition";
 	private static final String APP_ENCODAGE = "UTF-8";
 	private static final String ATTR_NON_AUTORISE = "nonAutorise";
+	private static final String ATTR_ERREUR_INSERTION = "erreurInsertion";
 	private static final String APP_ATTR_MAP_ARTICLES = "mapArticles";
+	
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -61,28 +66,29 @@ public class ServletEnchere extends HttpServlet {
 		articleEnVente = articlesEnBase.get(idArticle);
 		int meilleureOffre = articleEnVente.getEnchereMax().getMontantEnchere();
 		int miseAPrix = articleEnVente.getPrixInitial();
+		int prixVente = 0;
+		Integer propositionEnchere = Integer.parseInt(request.getParameter(PARAM_PROPOSITION)); 
 		
 		if(meilleureOffre > 0) {
 			
-			int prixVente = meilleureOffre
+			prixVente = meilleureOffre;
 					
 		} else {
-			prixVente = miseAPrix
+			prixVente = miseAPrix;
 					
 		}
 		
-			if(request.getParameter(PARAM_PROPOSITION) > prixVente {
-				manager.encherir(dateEnchere, montantEnchere, utilisateur, article);;	
-			}
-		 
-		
-	
-			
+			if(propositionEnchere > prixVente) {
+				try {
+					manager.creerEnchere(LocalDateTime.now(), propositionEnchere, (Utilisateur)request.getSession().getAttribute("utilisateur"), articleEnVente);
+				} catch (BLLException blle) {
+					request.setAttribute(ATTR_ERREUR_INSERTION, true);
+					blle.printStackTrace();
+				}
 		}else {
-			request.getParameter(PARAM_PROPOSITION) > miseAPrix alors encherir(PARAM_PROPOSITION);
+	
+		request.setAttribute(ATTR_ENCHERE_INSUFFISANTE, true);
 		}
-		
-		
 		
 
 		
