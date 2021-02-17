@@ -1,6 +1,7 @@
 package org.eni.encheres.bo;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -35,6 +36,7 @@ public class Utilisateur implements Serializable {
 		administrateur = false;
 		actif = true;
 		supprime = false;
+		mapEncheres = new HashMap<>();
 	}
 	
 	/**
