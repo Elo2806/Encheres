@@ -57,8 +57,25 @@ public class ArticleVendu implements Serializable{
 		setCategorie(categorie);
 		enchereMax = new Enchere(dateDebutEncheres, 0, vendeur, this);//enchere 
 	}
+	
+	public ArticleVendu (String nomArticle, String description, LocalDateTime dateDebutEncheres,
+			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie,Retrait retrait, int noArticle) {
+		
+	}
+	
+	public static ArticleVendu creerArticle(String nomArticle, String description, LocalDateTime dateDebutEncheres,
+			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie,Retrait retrait, int noArticle) {
 
-
+		ArticleVendu newArticle = new ArticleVendu(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur,
+				categorie);
+		newArticle.setRetrait(retrait);
+		newArticle.setNomArticle(nomArticle);
+		
+		//Création de la liaison bidirectionnelle
+		retrait.setArticle(newArticle);
+		
+		return newArticle;
+	}
 	/**
 	 * Méthode permettant de récupérer noArticle
 	 * @return le noArticle

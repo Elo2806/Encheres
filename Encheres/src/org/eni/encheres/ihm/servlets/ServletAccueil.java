@@ -134,6 +134,7 @@ public class ServletAccueil extends HttpServlet {
 		} catch (BLLException blle) {
 			blle.printStackTrace();// TODO voir si possible de faire mieux en gestion de
 		}
+		System.out.println("articles :" + articles);//TODO a supprimer
 		getServletContext().setAttribute(APP_ATTR_MAP_ARTICLES, articles);
 	}
 	
@@ -240,8 +241,6 @@ public class ServletAccueil extends HttpServlet {
 		Map<Integer, ArticleVendu> mapArticlesFiltres = new HashMap<>();
 		Map<Integer, ArticleVendu> articles = (Map<Integer, ArticleVendu>) getServletContext()
 				.getAttribute(APP_ATTR_MAP_ARTICLES);
-		
-		System.out.println(listFiltres);
 		
 		for (ArticleVendu article : articles.values()) {
 				

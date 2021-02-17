@@ -98,14 +98,16 @@ public abstract class DAOFactory {
 	 * @param dateFinEncheres
 	 * @param vendeur
 	 * @param categorie
+	 * @param noArticle TODO
 	 * @return
 	 */
 	public static ArticleVendu creerArticle(String nomArticle, String description, LocalDateTime dateDebutEncheres,
-			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie,Retrait retrait) {
+			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie,Retrait retrait, int noArticle) {
 
 		ArticleVendu newArticle = new ArticleVendu(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur,
 				categorie);
 		newArticle.setRetrait(retrait);
+		newArticle.setNomArticle(nomArticle);
 		
 		//Création de la liaison bidirectionnelle
 		retrait.setArticle(newArticle);
