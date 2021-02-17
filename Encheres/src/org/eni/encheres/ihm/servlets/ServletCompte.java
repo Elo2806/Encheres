@@ -21,6 +21,7 @@ import org.eni.encheres.ihm.exceptions.MotDePasseException;
 @WebServlet("/ServletCompte")
 public class ServletCompte extends HttpServlet {
 
+	private static final String APP_ENCODAGE = "UTF-8";
 	private static final String SESSION_ATTR_UTILISATEUR = "utilisateur";
 	private static final String JSP_PROFIL = "/profil";
 	private static final String ATTR_ERREUR_INSERTION = "erreurInsertion";
@@ -87,7 +88,7 @@ public class ServletCompte extends HttpServlet {
 			throws ServletException, IOException {
 
 		boolean ErreurSaisie = false;
-		request.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding(APP_ENCODAGE);
 		Utilisateur user = (Utilisateur) request.getSession().getAttribute(SESSION_ATTR_UTILISATEUR);
 
 		String pseudo = request.getParameter(PARAM_PSEUDO);

@@ -24,6 +24,7 @@ import org.eni.encheres.dal.jdbc.ConnectionProvider;
  */
 @WebServlet("/ServletConnexion")
 public class ServletConnexion extends HttpServlet {
+	private static final String APP_ENCODAGE = "UTF-8";
 	private static final long serialVersionUID = 1L;
 	private static final String PARAM_SUPPRIMER = "supprimer";
 
@@ -41,7 +42,7 @@ public class ServletConnexion extends HttpServlet {
 		// // Récupérer le mot de passe de l'utilisateur
 		// // ... et l'insérer dans le champs
 		// }
-		request.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding(APP_ENCODAGE);
 		HttpSession session = request.getSession();
 		if (session.getAttribute("utilisateur") == null) {
 			getServletContext().getRequestDispatcher("/connexion").forward(request, response);
@@ -57,7 +58,7 @@ public class ServletConnexion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding(APP_ENCODAGE);
 	
 			String identifiants = request.getParameter("identifiant");
 			String motDePasse = request.getParameter("motdepasse");

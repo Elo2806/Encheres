@@ -16,6 +16,7 @@ import org.eni.encheres.bo.Utilisateur;
  */
 @WebServlet("/ServletEnchere")
 public class ServletEnchere extends HttpServlet {
+	private static final String APP_ENCODAGE = "UTF-8";
 	private static final String ATTR_NON_AUTORISE = "nonAutorise";
 	private static final long serialVersionUID = 1L;
 
@@ -43,9 +44,9 @@ public class ServletEnchere extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding(APP_ENCODAGE);
 		int offre = Integer.parseInt(request.getParameter("proposition"));
-		System.out.println(request.getParameter("prix"));
+		System.out.println(request.getParameter("prix") + "prix");
 		
 		EnchereManager manager = EnchereManager.getInstance();
 		
