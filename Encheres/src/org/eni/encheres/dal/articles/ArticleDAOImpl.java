@@ -29,6 +29,7 @@ import org.eni.encheres.dal.jdbc.ConnectionProvider;
  */
 public class ArticleDAOImpl implements ArticleDAO {
 
+	
 	private static final String COLL_RET_VILLE = "retraitVille";
 	private static final String COLL_RET_CODE_POSTAL = "retraitCodePostal";
 	private static final String COLL_RET_RUE = "retraitRue";
@@ -65,12 +66,14 @@ public class ArticleDAOImpl implements ArticleDAO {
 			+ " INNER JOIN UTILISATEURS as u ON u.no_utilisateur = e.no_utilisateur "
 			+ " WHERE e.montant_enchere = selectMontantMax.montant_max;";
 	private static final String SQL_FINDALL_ARTICLES = "SELECT art.no_article,nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, art.no_utilisateur, art.no_categorie,uti.pseudo,uti.nom,uti.prenom,uti.email,uti.telephone,uti.rue,uti.code_postal,uti.ville,uti.mot_de_passe,uti.credit,uti.administrateur,uti.actif,cat.libelle,ret.rue as retraitRue, ret.code_postal as retraitCodePostal, ret.ville as retraitVille FROM ARTICLES_VENDUS as art INNER JOIN CATEGORIES as cat ON cat.no_categorie = art.no_categorie INNER JOIN UTILISATEURS as uti ON uti.no_utilisateur = art.no_utilisateur INNER JOIN RETRAITS as ret ON ret.no_article = art.no_article";
+	private static final String SELECT_BY_ID = "SELECT no_article,nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, art.no_utilisateur, art.no_categorie,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif,libelle,ret.rue as retraitRue, ret.code_postal as retraitCodePostal, ret.ville as retraitVille FROM ARTICLES_VENDUS as art INNER JOIN CATEGORIES as cat ON cat.no_categorie = art.no_categorie INNER JOIN UTILISATEURS as uti ON uti.no_utilisateur = art.no_utilisateur INNER JOIN RETRAITS as ret ON ret.no_article = art.no_article WHERE no_article=?";
 	private static final String SQL_INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, no_utilisateur, no_categorie) values (?,?,?,?,?,?,?)";
 	private static final String SQL_INSERT_RETRAIT = "INSERT INTO RETRAITS (no_article,rue,code_postal,ville) VALUES(?,?,?,?)";
 
 	private static final String ERREUR_SQL_RECHERCHE_EN_BASE = "Erreur lors de la recherche en base";
 	private static final String ERREUR_SQL_INSERTION = "Erreur lors de l'insertion en base";
 	private static final String ERREUR_CONNECTION = "Problème de connection";
+	
 
 	@Override
 	public ArticleVendu create(ArticleVendu newArticle) throws DALException {
@@ -145,6 +148,62 @@ public class ArticleDAOImpl implements ArticleDAO {
 	}
 
 	@Override
+	public ArticleVendu SelectArticleById(int idArticle) throws DALException {
+		
+		ArticleVendu articleEnVente;
+		Categorie categorie;
+		Utilisateur utilisateur;
+		Retrait retrait;
+		
+		
+		// Connection en base
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+
+			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ID);
+	 
+			pstmt.setInt(1,idArticle);
+			try {
+				
+				// Execution de la requete
+				ResultSet rs = pstmt.executeQuery();
+
+				if (rs.next()) {
+
+					// Création des instances d'objets java
+					categorie = DAOFactory.creerCategorie(rs.getString(COL_CAT_LIBELLE),
+							rs.getInt(COL_ART_NO_CATEGORIE));
+					utilisateur = DAOFactory.creerUtilisateur(rs.getString(COL_UTIL_PSEUDO), rs.getString(COL_UTIL_NOM),
+							rs.getString(COL_UTIL_PRENOM), rs.getString(COL_UTIL_EMAIL),
+							rs.getString(COL_UTIL_TELEPHONE), rs.getString(COL_UTIL_RUE),
+							rs.getString(COL_UTIL_CODE_POSTAL), rs.getString(COL_UTIL_VILLE),
+							rs.getString(COL_UTIL_MOT_DE_PASSE), rs.getInt(COL_UTIL_CREDIT),
+							rs.getBoolean(COL_UTIL_ADMINISTRATEUR), rs.getInt(COL_UTIL_NO_UTILISATEUR),
+							rs.getBoolean(COL_UTIL_ACTIF));
+					retrait = DAOFactory.creerRetrait(rs.getString(COLL_RET_RUE), rs.getString(COLL_RET_CODE_POSTAL),
+							rs.getString(COLL_RET_VILLE), null);
+					articleEnVente = new Article(rs.getString(COL_ART_NOM_ARTICLE),
+							rs.getString(COL_ART_DESCRIPTION),
+							rs.getTimestamp(COL_ART_DATE_DEBUT_ENCHERES).toLocalDateTime(),
+							rs.getTimestamp(COL_ART_DATE_FIN_ENCHERES).toLocalDateTime(), utilisateur, categorie,retrait, null);
+				}
+
+				rs.close();
+				pstmt.close();
+
+			} catch (SQLException sqle) {
+				pstmt.close();
+				throw new RequeteSQLException(ERREUR_SQL_RECHERCHE_EN_BASE, sqle);
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			throw new ConnectionException(ERREUR_CONNECTION, sqle);
+		}
+
+		return articleEnVente;
+	}	
+	
+	
+	@Override
 	public Map<Integer, ArticleVendu> findAll() throws DALException {
 		ArticleVendu article;
 		Utilisateur utilisateur;
@@ -203,6 +262,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 
 		return mapArticles;
 	}
+	
 
 	@Override
 	public Map<Integer, ArticleVendu> updateEnchereMax(Map<Integer, ArticleVendu> articles) throws DALException {

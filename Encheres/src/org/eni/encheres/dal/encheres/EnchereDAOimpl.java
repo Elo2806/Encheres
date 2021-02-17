@@ -55,5 +55,5 @@ public class EnchereDAOimpl implements EnchereDAO {
 		}
 
 	}
-
+		
 }

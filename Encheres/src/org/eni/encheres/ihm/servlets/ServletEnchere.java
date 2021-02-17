@@ -45,8 +45,12 @@ public class ServletEnchere extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding(APP_ENCODAGE);
-		int offre = Integer.parseInt(request.getParameter("proposition"));
-		System.out.println(request.getParameter("prix") + "prix");
+		int idArticle = Integer.parseInt(request.getParameter("noArticle"));
+		
+		
+		
+		
+		System.out.println(request.getParameter("prix") + "prix");//TODO
 		
 		EnchereManager manager = EnchereManager.getInstance();
 		
