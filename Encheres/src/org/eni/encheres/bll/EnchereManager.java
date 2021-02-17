@@ -36,12 +36,27 @@ public class EnchereManager {
 		return instance;
 	}
 
-	public void creerEnchere(LocalDateTime dateEnchere, Integer montantEnchere, Utilisateur utilisateur, ArticleVendu article) throws BLLException {
+	public Enchere creerEnchere(LocalDateTime dateEnchere, Integer montantEnchere, Utilisateur utilisateur, ArticleVendu article) throws BLLException {
 		Enchere nouvelleEnchere = new Enchere(dateEnchere, montantEnchere, utilisateur, article);
 		try {
 			enchereDao.create(nouvelleEnchere);
-		} catch (DALException e) {
-			throw new BLLException("Erreur lors de l'accès à la DAL");
+		} catch (DALException dale) {
+			throw new BLLException("Erreur lors de l'accès à la DAL", dale);
 		}
+		return nouvelleEnchere;
 	}
+
+	public Enchere modifierEnchere(LocalDateTime now, Integer propositionEnchere, Utilisateur encherisseur,
+			ArticleVendu articleEnVente) throws BLLException {
+		Enchere enchereAModifier = new Enchere(now, propositionEnchere, encherisseur, articleEnVente);
+		try {
+			enchereDao.update(enchereAModifier);
+		} catch (DALException dale) {
+			throw new BLLException("Erreur lors de l'accès à la DAL", dale);
+		}
+		return enchereAModifier;
+		
+	}
+
+	
 }

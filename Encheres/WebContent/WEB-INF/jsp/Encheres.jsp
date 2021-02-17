@@ -107,7 +107,7 @@
 		<input type="hidden" name="noArticle" value="${param.noArticle}">
 			<div class="ProblemeProposition">>
 				<label for="proposition">Ma proposition : </label> <input
-					type="number" name="proposition" id="proposition" value=220
+					type="number" name="proposition" id="proposition" value=${requestScope.meilleureEnchere }
 					style="width: 43px;"> <input type="submit" value="Enchérir">
 			</div>
 		</form>

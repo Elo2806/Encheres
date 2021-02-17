@@ -27,4 +27,6 @@ public interface EnchereDAO {
 	 */
 	void create(Enchere nouvelleEnchere) throws DALException;
 
+	void update(Enchere enchereAModifier) throws DALException;
+
 }

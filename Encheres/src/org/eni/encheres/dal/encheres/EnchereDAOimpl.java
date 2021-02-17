@@ -19,6 +19,7 @@ import org.eni.encheres.dal.jdbc.ConnectionProvider;
  */
 public class EnchereDAOimpl implements EnchereDAO {
 
+	private static final String SQL_UPDATE_ENCHERE = "UPDATE ENCHERES set date_enchere=?, montant_enchere=? WHERE no_utilisateur=?, no_article=?";
 	private static final String SQL_INSERT_ENCHERE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) values (?,?,?,?)";
 
 	@Override
@@ -54,6 +55,42 @@ public class EnchereDAOimpl implements EnchereDAO {
 			throw new ConnectionException("Problème de connection", sqle);
 		}
 
+	}
+
+	@Override
+	public void update(Enchere enchereAModifier) throws DALException {
+		Enchere modifiedEnchere = null;
+		// Connection en base
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+			PreparedStatement pstmt = null;
+
+			// Traitement de la requete SQL
+			try {
+				pstmt = cnx.prepareStatement(SQL_UPDATE_ENCHERE);
+
+				// Valorisation des parametres du PreparedStatement
+				pstmt.setTimestamp(1, Timestamp.valueOf(enchereAModifier.getDateEnchere()));
+				pstmt.setInt(2, enchereAModifier.getMontantEnchere());
+				pstmt.setInt(3, enchereAModifier.getUtilisateur().getNoUtilisateur());
+				pstmt.setInt(4, enchereAModifier.getArticle().getNoArticle());
+
+				// Execution de la requete
+				pstmt.executeUpdate();
+
+			} catch (SQLException sqle) {
+				throw new RequeteSQLException("Erreur lors de l'insertion en base", sqle);
+			} finally {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+			}
+
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			throw new ConnectionException("Problème de connection", sqle);
+			
+		}
+		
 	}
 		
 }
