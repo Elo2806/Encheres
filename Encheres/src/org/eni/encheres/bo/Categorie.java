@@ -19,14 +19,19 @@ public class Categorie implements Serializable {
 	 */
 	public Categorie() {
 	}
+	
 	/**
 	 * Constructeur
-	 * @param noCategorie
 	 * @param libelle
 	 */
 	public Categorie(String libelle) {
 		this();
 		setLibelle(libelle);
+	}
+	
+	public Categorie(String libelle,Integer noCategorie) {
+		this(libelle);
+		setNoCategorie(noCategorie);
 	}
 	
 	// Getters et Setters

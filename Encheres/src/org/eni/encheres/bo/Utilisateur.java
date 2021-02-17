@@ -63,17 +63,11 @@ public class Utilisateur implements Serializable {
 		setAdministrateur(administrateur);
 	}
 	
-	
-	/* Méthode test
-	 * 
-	 */
-	//TODO à enlever
-	@Override
-	public String toString() {
-		return "Utilisateur [noUtilisateur=" + noUtilisateur + ", pseudo=" + pseudo + ", nom=" + nom + ", prenom="
-				+ prenom + ", email=" + email + ", telephone=" + telephone + ", rue=" + rue + ", codePostal="
-				+ codePostal + ", ville=" + ville + ", motDePasse=" + motDePasse + ", credit=" + credit
-				+ ", administrateur=" + administrateur + ", actif=" + actif + "]";
+	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
+			String codePostal, String ville, String motDePasse, Integer credit, boolean administrateur, int noUtilisateur, boolean actif ) {
+		this(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
+		setNoUtilisateur(noUtilisateur);
+		setActif(actif);
 	}
 
 	// Getters et Setters

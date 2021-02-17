@@ -150,7 +150,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 	@Override
 	public ArticleVendu SelectArticleById(int idArticle) throws DALException {
 		
-		ArticleVendu articleEnVente;
+		ArticleVendu articleEnVente=null;
 		Categorie categorie;
 		Utilisateur utilisateur;
 		Retrait retrait;
@@ -170,21 +170,21 @@ public class ArticleDAOImpl implements ArticleDAO {
 				if (rs.next()) {
 
 					// Création des instances d'objets java
-					categorie = DAOFactory.creerCategorie(rs.getString(COL_CAT_LIBELLE),
+					categorie = new Categorie(rs.getString(COL_CAT_LIBELLE),
 							rs.getInt(COL_ART_NO_CATEGORIE));
-					utilisateur = DAOFactory.creerUtilisateur(rs.getString(COL_UTIL_PSEUDO), rs.getString(COL_UTIL_NOM),
+					utilisateur = new Utilisateur(rs.getString(COL_UTIL_PSEUDO), rs.getString(COL_UTIL_NOM),
 							rs.getString(COL_UTIL_PRENOM), rs.getString(COL_UTIL_EMAIL),
 							rs.getString(COL_UTIL_TELEPHONE), rs.getString(COL_UTIL_RUE),
 							rs.getString(COL_UTIL_CODE_POSTAL), rs.getString(COL_UTIL_VILLE),
 							rs.getString(COL_UTIL_MOT_DE_PASSE), rs.getInt(COL_UTIL_CREDIT),
 							rs.getBoolean(COL_UTIL_ADMINISTRATEUR), rs.getInt(COL_UTIL_NO_UTILISATEUR),
 							rs.getBoolean(COL_UTIL_ACTIF));
-					retrait = DAOFactory.creerRetrait(rs.getString(COLL_RET_RUE), rs.getString(COLL_RET_CODE_POSTAL),
+					retrait = new Retrait(rs.getString(COLL_RET_RUE), rs.getString(COLL_RET_CODE_POSTAL),
 							rs.getString(COLL_RET_VILLE), null);
-					articleEnVente = new Article(rs.getString(COL_ART_NOM_ARTICLE),
+					articleEnVente = new ArticleVendu(rs.getString(COL_ART_NOM_ARTICLE),
 							rs.getString(COL_ART_DESCRIPTION),
 							rs.getTimestamp(COL_ART_DATE_DEBUT_ENCHERES).toLocalDateTime(),
-							rs.getTimestamp(COL_ART_DATE_FIN_ENCHERES).toLocalDateTime(), utilisateur, categorie,retrait, null);
+							rs.getTimestamp(COL_ART_DATE_FIN_ENCHERES).toLocalDateTime(), utilisateur, categorie,retrait,rs.getInt(COL_ART_NO_CATEGORIE) );
 				}
 
 				rs.close();
@@ -223,22 +223,22 @@ public class ArticleDAOImpl implements ArticleDAO {
 				while (rs.next()) {
 
 					// Création des instances d'objets java
-					categorie = DAOFactory.creerCategorie(rs.getString(COL_CAT_LIBELLE),
+					categorie = new Categorie(rs.getString(COL_CAT_LIBELLE),
 							rs.getInt(COL_ART_NO_CATEGORIE));
-					utilisateur = DAOFactory.creerUtilisateur(rs.getString(COL_UTIL_PSEUDO), rs.getString(COL_UTIL_NOM),
+					utilisateur = new Utilisateur(rs.getString(COL_UTIL_PSEUDO), rs.getString(COL_UTIL_NOM),
 							rs.getString(COL_UTIL_PRENOM), rs.getString(COL_UTIL_EMAIL),
 							rs.getString(COL_UTIL_TELEPHONE), rs.getString(COL_UTIL_RUE),
 							rs.getString(COL_UTIL_CODE_POSTAL), rs.getString(COL_UTIL_VILLE),
 							rs.getString(COL_UTIL_MOT_DE_PASSE), rs.getInt(COL_UTIL_CREDIT),
 							rs.getBoolean(COL_UTIL_ADMINISTRATEUR), rs.getInt(COL_UTIL_NO_UTILISATEUR),
 							rs.getBoolean(COL_UTIL_ACTIF));
-					retrait = DAOFactory.creerRetrait(rs.getString(COLL_RET_RUE), rs.getString(COLL_RET_CODE_POSTAL),
+					retrait = new Retrait(rs.getString(COLL_RET_RUE), rs.getString(COLL_RET_CODE_POSTAL),
 							rs.getString(COLL_RET_VILLE), null);
-					article = DAOFactory.creerArticle(rs.getString(COL_ART_NOM_ARTICLE),
+					article = new ArticleVendu(rs.getString(COL_ART_NOM_ARTICLE),
 							rs.getString(COL_ART_DESCRIPTION),
 							rs.getTimestamp(COL_ART_DATE_DEBUT_ENCHERES).toLocalDateTime(),
 							rs.getTimestamp(COL_ART_DATE_FIN_ENCHERES).toLocalDateTime(), utilisateur, categorie,
-							retrait, null);
+							retrait, rs.getInt(COL_ART_NO_CATEGORIE));
 					
 					System.out.println("articles nom :" + article.getNomArticle());//TODO a supprimer
 					System.out.println("articles no :" + rs.getInt(COL_UTIL_NO_UTILISATEUR));//TODO a supprimer
@@ -282,7 +282,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 
 				while (rs.next()) {
 					article = articles.get(rs.getInt(COL_ART_NO_ARTICLE));
-					utilisateur = DAOFactory.creerUtilisateur(rs.getString(COL_UTIL_PSEUDO), rs.getString(COL_UTIL_NOM),
+					utilisateur = new Utilisateur(rs.getString(COL_UTIL_PSEUDO), rs.getString(COL_UTIL_NOM),
 							rs.getString(COL_UTIL_PRENOM), rs.getString(COL_UTIL_EMAIL),
 							rs.getString(COL_UTIL_TELEPHONE), rs.getString(COL_UTIL_RUE),
 							rs.getString(COL_UTIL_CODE_POSTAL), rs.getString(COL_UTIL_VILLE),
@@ -290,7 +290,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 							rs.getBoolean(COL_UTIL_ADMINISTRATEUR), rs.getInt(COL_UTIL_NO_UTILISATEUR),
 							rs.getBoolean(COL_UTIL_ACTIF));
 
-					enchereMax = DAOFactory.creerEnchere(rs.getTimestamp(COL_ENCH_DATE_ENCHERE).toLocalDateTime(),
+					enchereMax = new Enchere(rs.getTimestamp(COL_ENCH_DATE_ENCHERE).toLocalDateTime(),
 							rs.getInt(COL_ENCH_MONTANT_ENCHERE), utilisateur, article);// FIXME tester la convertion
 					article.setEnchereMax(enchereMax);
 

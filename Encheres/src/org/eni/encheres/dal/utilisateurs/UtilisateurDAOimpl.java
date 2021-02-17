@@ -189,7 +189,7 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 				boolean actif = rs.getBoolean(COL_ACTIF);
 				
 				if ((pIdentifiant.equals(pseudo))||(pIdentifiant.equals(email))){
-					utilisateur = DAOFactory.creerUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur, noUtilisateur, actif);
+					utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur, noUtilisateur, actif);
 					break;
 				}
 				

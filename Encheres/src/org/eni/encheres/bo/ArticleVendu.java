@@ -58,24 +58,30 @@ public class ArticleVendu implements Serializable{
 		enchereMax = new Enchere(dateDebutEncheres, 0, vendeur, this);//enchere 
 	}
 	
+	/**
+	 * 
+	 * Constructeur complet de l'objet
+	 * 
+	 * @param nomArticle
+	 * @param description
+	 * @param dateDebutEncheres
+	 * @param dateFinEncheres
+	 * @param vendeur
+	 * @param categorie
+	 * @param retrait
+	 * @param noArticle
+	 */
 	public ArticleVendu (String nomArticle, String description, LocalDateTime dateDebutEncheres,
 			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie,Retrait retrait, int noArticle) {
-		
-	}
-	
-	public static ArticleVendu creerArticle(String nomArticle, String description, LocalDateTime dateDebutEncheres,
-			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie,Retrait retrait, int noArticle) {
-
-		ArticleVendu newArticle = new ArticleVendu(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur,
+		this(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur,
 				categorie);
-		newArticle.setRetrait(retrait);
-		newArticle.setNomArticle(nomArticle);
+		setRetrait(retrait);
+		setNoArticle(noArticle);
 		
 		//Création de la liaison bidirectionnelle
-		retrait.setArticle(newArticle);
-		
-		return newArticle;
+		retrait.setArticle(this);
 	}
+	
 	/**
 	 * Méthode permettant de récupérer noArticle
 	 * @return le noArticle
