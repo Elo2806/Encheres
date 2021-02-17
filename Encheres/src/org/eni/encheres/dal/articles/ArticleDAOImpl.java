@@ -63,8 +63,8 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static final String SQL_INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, no_utilisateur, no_categorie) values (?,?,?,?,?,?,?)";
 
 	@Override
-	public void create(ArticleVendu newArticle) throws DALException {
-
+	public ArticleVendu create(ArticleVendu newArticle) throws DALException {
+		ArticleVendu updatedArticle=null;
 		// Connection en base
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
@@ -100,6 +100,9 @@ public class ArticleDAOImpl implements ArticleDAO {
 			sqle.printStackTrace();
 			throw new ConnectionException("Problème de connection", sqle);
 		}
+		updatedArticle = newArticle;
+		
+		return updatedArticle;
 
 	}
 

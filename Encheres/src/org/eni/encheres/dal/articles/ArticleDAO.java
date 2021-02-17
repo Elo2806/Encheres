@@ -23,7 +23,7 @@ public interface ArticleDAO {
 	 * @return newArticle avec noArticle mis à jour
 	 * @throws DALException si un problème survient lors de l'insertion en base
 	 */
-	void create(ArticleVendu newArticle) throws DALException;
+	ArticleVendu create(ArticleVendu newArticle) throws DALException;
 
 	/**
 	 * 

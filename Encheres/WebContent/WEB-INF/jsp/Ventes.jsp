@@ -34,45 +34,48 @@
 		</div>
 		<div>
 			<label for="photo">Photo de l'article : </label>
-			<input type="button" value="UPLOADER" name="photo" id="photo">
+			<input type="button" value="UPLOADER" name="photo" id="photo"  value="${param.photo}">
 		</div>
 		<div>
 			<label for="prixdepart">Mise à prix : </label>
 			<input type="number"
-				name="prixdepart" id="prixdepart" required>
+				name="prixdepart" id="prixdepart" required value="${param.prixdepart}">
 		</div>
 		<div>
 			<label for="datedebut">Début de l'enchère : </label>
 			<input
-				type="date" name="datedebut" id="datedebut" required>
-				<input type="time" name="heuredebut" id="heuredebut" required>
+				type="date" name="datedebut" id="datedebut" required value="${param.datedebut}">
+			<input type="time" name="heuredebut" id="heuredebut" required value="${param.heuredebut}">
 		</div>
 		<div>
 			<label for="datefin">Fin de l'enchère : </label>
-			<input type="date"
-				name="datefin" id="datefin" required>
-				<input type="time" name="heurefin" id="heurefin" required>
+			<input type="date" name="datefin" id="datefin" required value="${param.datefin}">
+			<input type="time" name="heurefin" id="heurefin" required value="${param.heurefin}">
 		</div>
 		<div id="retrait">Retrait
 	
 			<div>
 				<label for="rue">Rue : </label>
-				<input type="text" name="rue" id="rue" value="${requestScope.rue}">
+				<input type="text" name="rue" id="rue" value="<c:if test="${!empty param.rue}">${requestScope.rue}</c:if>
+				                                              <c:if test="${param.rue}">${param.rue}</c:if>"
+				>
 			</div>
 			<div>
 				<label for="codepostal">Code postal : </label>
-				<input type="text" name="codepostal" id="codepostal" value="${requestScope.cp}">
+				<input type="text" name="codepostal" id="codepostal" value="<c:if test="${!empty param.codepostal}">${requestScope.cp}</c:if>
+				                                                            <c:if test="${param.codepostal}">${param.codepostal}</c:if>">
 			</div>
 			<div>
 				<label for="ville">Ville : </label>
-				<input type="text" name="ville" id="ville" value="${requestScope.ville}">
+				<input type="text" name="ville" id="ville" value="" value="<c:if test="${!empty param.ville}">${requestScope.ville}</c:if>
+				                                                           <c:if test="${param.ville}">${param.ville}</c:if>">>
 			</div>
 		</div>
 		<div>
 			<button type="submit" value="Enregistrer">Enregistrer</button>
 		<a href="<c:url value="/accueil"/>">	<button type="button" value="Annuler">Annuler</button></a>
 			
-		<c:if test="${requestScope.booleen}">
+		<c:if test="${requestScope.venteCree}">
 			<input onclick="" type="button" name="supprimer" id="supprimer" value="Annuler la vente">
 		</c:if>
 		</div>
