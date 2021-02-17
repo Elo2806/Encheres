@@ -5,6 +5,7 @@
 
 
 <head>
+<link href="<c:url value="/css/styleProfil.css" />" rel="stylesheet">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Profil</title>
 </head>
@@ -13,12 +14,12 @@
 
 <%@include file ="EnTeteEni.jspf"%>
 
-  <form action=>
-        <div>    <label for="pseudo">Pseudo:</label>
-        <span name="pseudo" id="pseudo">${utilisateurAffiche.pseudo}</span></div>
+  <form action="" method="get">
+        <div class="intitule">    <label for="pseudo">Pseudo:</label></div>
+        <div class="donnee"><span name="pseudo" id="pseudo">${utilisateurAffiche.pseudo}</span></div>
         
-        <div>    <label for="nom">Nom:</label>
-        <span name="nom" id="nom" >${utilisateurAffiche.nom}</span></div>
+        <div class="intitule">    <label for="nom">Nom:</label></div>
+        <div class="donnee"><span name="nom" id="nom" >${utilisateurAffiche.nom}</span></div>
         
            <div>    <label for="prenom">Prénom:</label>
         <span name="prenom" id="prenom">${utilisateurAffiche.prenom}</span></div>
