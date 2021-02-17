@@ -116,6 +116,7 @@ public class ServletEnchere extends HttpServlet {
 			}
 			if(!erreur) {
 				System.out.println(meilleureEnchere);
+				encheres.put(idArticle, enchereRetournee);
 				request.setAttribute(ATTR_BRAVO, true);
 				request.setAttribute(ATTR_ARTICLE_EN_VENTE, articleEnVente);
 				request.setAttribute(ATTR_MEILLEURE_ENCHERE, meilleureEnchere);
@@ -137,8 +138,6 @@ public class ServletEnchere extends HttpServlet {
 		ArticleVendu articleEnVente = null;
 		Map<Integer,ArticleVendu> articlesEnBase = (Map<Integer,ArticleVendu>)getServletContext().getAttribute(APP_ATTR_MAP_ARTICLES);
 		int idArticle = Integer.parseInt(request.getParameter("noArticle"));
-		System.out.println(idArticle + " id article en methode déterminerMont...ServletEnchere"); // TODO
-		System.out.println(articlesEnBase + " liste articles en methode déterminerMont...ServletEnchere"); // TODO
 		articleEnVente = articlesEnBase.get(idArticle);
 		
 		int meilleureOffre = articleEnVente.getEnchereMax().getMontantEnchere();
