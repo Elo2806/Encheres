@@ -48,13 +48,22 @@ public interface ArticleDAO {
 
 	/**
 	 * 
-	 * Méthode permettant de mettre a jour 
+	 * Méthode permettant de mettre a jour l'enchere max d'une map d'articles
 	 * 
 	 * @param articles
 	 * @return
 	 * @throws DALException 
 	 */
 	Map<Integer, ArticleVendu> updateEnchereMax(Map<Integer, ArticleVendu> articles) throws DALException;
+
+	/**
+	 * 
+	 * Méthode permettant de modifier un article dans le systeme de persistance
+	 * @param updatedArticle
+	 * @throws DALException 
+	 */
+	void update(ArticleVendu updatedArticle) throws DALException;
+	
 
 	
 }

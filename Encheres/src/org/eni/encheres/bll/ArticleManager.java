@@ -52,7 +52,7 @@ public class ArticleManager {
 	 * @param ville
 	 * @param codePostal
 	 * @param rue
-	 * @throws BLLException
+	 * @throws BLLException si probleme lors du passage en DAL
 	 */
 	public ArticleVendu ajouterArticle(String nomArticle, String description, LocalDateTime dateDebutEncheres,
 			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie, int prixInitial, String rue,
@@ -76,7 +76,7 @@ public class ArticleManager {
 	 * numero d'article
 	 * 
 	 * @return
-	 * @throws BLLException
+	 * @throws BLLException si probleme lors du passage en DAL
 	 */
 	public Map<Integer, ArticleVendu> getMapArticles() throws BLLException {
 		Map<Integer, ArticleVendu> articles;
@@ -88,6 +88,20 @@ public class ArticleManager {
 		}
 
 		return articles;
+	}
+	
+	/**
+	 * 
+	 * Méthode permettant de modifier un article dans le systeme de persistance
+	 * @param updatedArticle
+	 * @throws BLLException si probleme lors du passage en DAL
+	 */
+	public void modifierArticle(ArticleVendu updatedArticle) throws BLLException {
+		try {
+			articleDao.update(updatedArticle);
+		} catch (DALException dale) {
+			throw new BLLException(ERREUR_DAL, dale);
+		}
 	}
 
 }

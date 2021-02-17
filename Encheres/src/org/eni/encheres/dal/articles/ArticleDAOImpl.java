@@ -16,7 +16,6 @@ import org.eni.encheres.bo.Categorie;
 import org.eni.encheres.bo.Enchere;
 import org.eni.encheres.bo.Retrait;
 import org.eni.encheres.bo.Utilisateur;
-import org.eni.encheres.dal.DAOFactory;
 import org.eni.encheres.dal.exceptions.ConnectionException;
 import org.eni.encheres.dal.exceptions.DALException;
 import org.eni.encheres.dal.exceptions.RequeteSQLException;
@@ -28,7 +27,6 @@ import org.eni.encheres.dal.jdbc.ConnectionProvider;
  *         Modifié le: 17 févr. 2021 par Taharqa
  */
 public class ArticleDAOImpl implements ArticleDAO {
-
 	
 	private static final String COL_ART_PRIX_INITIAL = "prix_initial";
 	private static final String COLL_RET_VILLE = "retraitVille";
@@ -70,12 +68,13 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static final String SELECT_BY_ID = "SELECT prix_initial,no_article,nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, art.no_utilisateur, art.no_categorie,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif,libelle,ret.rue as retraitRue, ret.code_postal as retraitCodePostal, ret.ville as retraitVille FROM ARTICLES_VENDUS as art INNER JOIN CATEGORIES as cat ON cat.no_categorie = art.no_categorie INNER JOIN UTILISATEURS as uti ON uti.no_utilisateur = art.no_utilisateur INNER JOIN RETRAITS as ret ON ret.no_article = art.no_article WHERE no_article=?";
 	private static final String SQL_INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, no_utilisateur, no_categorie) values (?,?,?,?,?,?,?)";
 	private static final String SQL_INSERT_RETRAIT = "INSERT INTO RETRAITS (no_article,rue,code_postal,ville) VALUES(?,?,?,?)";
+	private static final String SQL_UPDATE = "UPDATE ARTICLES_VENDUS SET nom_article=?, description=?, date_debut_encheres=?, date_fin_encheres=?, prix_initial=?, no_utilisateur=?, no_categorie=? WHERE no_article=?";
 
 	private static final String ERREUR_SQL_RECHERCHE_EN_BASE = "Erreur lors de la recherche en base";
 	private static final String ERREUR_SQL_INSERTION = "Erreur lors de l'insertion en base";
 	private static final String ERREUR_CONNECTION = "Problème de connection";
+	private static final String ERREUR_SQL_UPDATE = "Erreur lors de la modification en base";
 	
-
 	@Override
 	public ArticleVendu create(ArticleVendu newArticle) throws DALException {
 		ArticleVendu updatedArticle = null;
@@ -83,10 +82,10 @@ public class ArticleDAOImpl implements ArticleDAO {
 		// Connection en base
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			try {
-				//Création de la transaction SQL
+				// Création de la transaction SQL
 				cnx.setAutoCommit(false);
-				
-				//Creation du prepareStatement
+
+				// Creation du prepareStatement
 				PreparedStatement pstmt = cnx.prepareStatement(SQL_INSERT_ARTICLE,
 						PreparedStatement.RETURN_GENERATED_KEYS);
 
@@ -122,19 +121,19 @@ public class ArticleDAOImpl implements ArticleDAO {
 
 				// Execution de la requete
 				pstmt.executeUpdate();
-				
+
 				// Clôture des objets
 				rs.close();
 				pstmt.close();
-				
-				//Confirmation de la transaction
+
+				// Confirmation de la transaction
 				cnx.commit();
 			} catch (SQLException sqle) {
-				//Annulation de la transaction
+				// Annulation de la transaction
 				cnx.rollback();
 				throw new RequeteSQLException(ERREUR_SQL_INSERTION, sqle);
 			} finally {
-				//fin de la transaction
+				// fin de la transaction
 				cnx.setAutoCommit(true);
 			}
 		} catch (SQLException sqle) {
@@ -148,7 +147,6 @@ public class ArticleDAOImpl implements ArticleDAO {
 
 	}
 
-	
 	@Override
 	public Map<Integer, ArticleVendu> findAll() throws DALException {
 		ArticleVendu article;
@@ -165,10 +163,9 @@ public class ArticleDAOImpl implements ArticleDAO {
 				// Execution de la requete
 				ResultSet rs = pstmt.executeQuery();
 				while (rs.next()) {
-					
+
 					// Création des instances d'objets java
-					categorie = new Categorie(rs.getString(COL_CAT_LIBELLE),
-							rs.getInt(COL_ART_NO_CATEGORIE));
+					categorie = new Categorie(rs.getString(COL_CAT_LIBELLE), rs.getInt(COL_ART_NO_CATEGORIE));
 					utilisateur = new Utilisateur(rs.getString(COL_UTIL_PSEUDO), rs.getString(COL_UTIL_NOM),
 							rs.getString(COL_UTIL_PRENOM), rs.getString(COL_UTIL_EMAIL),
 							rs.getString(COL_UTIL_TELEPHONE), rs.getString(COL_UTIL_RUE),
@@ -178,12 +175,11 @@ public class ArticleDAOImpl implements ArticleDAO {
 							rs.getBoolean(COL_UTIL_ACTIF));
 					retrait = new Retrait(rs.getString(COLL_RET_RUE), rs.getString(COLL_RET_CODE_POSTAL),
 							rs.getString(COLL_RET_VILLE), null);
-					article = new ArticleVendu(rs.getString(COL_ART_NOM_ARTICLE),
-							rs.getString(COL_ART_DESCRIPTION),
+					article = new ArticleVendu(rs.getString(COL_ART_NOM_ARTICLE), rs.getString(COL_ART_DESCRIPTION),
 							rs.getTimestamp(COL_ART_DATE_DEBUT_ENCHERES).toLocalDateTime(),
 							rs.getTimestamp(COL_ART_DATE_FIN_ENCHERES).toLocalDateTime(), utilisateur, categorie,
 							retrait, rs.getInt(COL_ART_NO_ARTICLE), rs.getInt(COL_ART_PRIX_INITIAL));
-					
+
 					// Ajout de l'article à la map
 					mapArticles.put(article.getNoArticle(), article);
 				}
@@ -199,12 +195,11 @@ public class ArticleDAOImpl implements ArticleDAO {
 			sqle.printStackTrace();
 			throw new ConnectionException(ERREUR_CONNECTION, sqle);
 		}
-		
+
 		mapArticles = updateEnchereMax(mapArticles);
-		
+
 		return mapArticles;
 	}
-	
 
 	@Override
 	public Map<Integer, ArticleVendu> updateEnchereMax(Map<Integer, ArticleVendu> articles) throws DALException {
@@ -253,6 +248,38 @@ public class ArticleDAOImpl implements ArticleDAO {
 		mapArticles = articles;
 
 		return mapArticles;
+	}
+
+	@Override
+	public void update(ArticleVendu updatedArticle) throws DALException {
+		// Connection en base
+		try (Connection cnx = ConnectionProvider.getConnection()) {
+
+			PreparedStatement pstmt = cnx.prepareStatement(SQL_UPDATE);
+
+			try {
+				// Valorisation des parametres du PreparedStatement pour l'article
+				pstmt.setString(1, updatedArticle.getNomArticle());
+				pstmt.setString(2, updatedArticle.getDescription());
+				pstmt.setTimestamp(3, Timestamp.valueOf(updatedArticle.getDateDebutEncheres()));
+				pstmt.setTimestamp(4, Timestamp.valueOf(updatedArticle.getDateFinEncheres()));
+				pstmt.setInt(5, updatedArticle.getPrixInitial());
+				pstmt.setInt(6, updatedArticle.getVendeur().getNoUtilisateur());
+				pstmt.setInt(7, updatedArticle.getCategorie().getNoCategorie());
+				pstmt.setInt(8, updatedArticle.getNoArticle());
+
+				// Execution de la requete
+				pstmt.executeUpdate();
+				pstmt.close();
+
+			} catch (SQLException sqle) {
+				pstmt.close();
+				throw new RequeteSQLException(ERREUR_SQL_UPDATE, sqle);
+			}
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			throw new ConnectionException(ERREUR_CONNECTION, sqle);
+		}
 	}
 
 }

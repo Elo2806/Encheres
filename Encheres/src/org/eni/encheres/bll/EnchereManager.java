@@ -57,6 +57,26 @@ public class EnchereManager {
 		return enchereAModifier;
 		
 	}
+	/**
+	 * 
+	 * Méthode permettant de vérifier l'etat de l'enchere d'un article et modifier l'article en fonction du resultat
+	 * @param articleAVerifier
+	 * @throws BLLException si un probleme survient lors de la modification de l'article dans ArticleManager
+	 */
+	public void verifierEtatEnchere(ArticleVendu articleAVerifier) throws BLLException {
+		ArticleVendu updatedArticle = articleAVerifier;
+		ArticleManager manager;
+		
+		if(LocalDateTime.now().isAfter(articleAVerifier.getDateFinEncheres())) {
+			manager = ArticleManager.getInstance();
+			if(!updatedArticle.getEnchereMax().getMontantEnchere().equals(0)) {
+				updatedArticle.setPrixVente(updatedArticle.getEnchereMax().getMontantEnchere());
+				updatedArticle.setAcheteur(updatedArticle.getEnchereMax().getUtilisateur());
+				manager.modifierArticle(updatedArticle);
 
+			}
+			
+		}
+	}
 	
 }
