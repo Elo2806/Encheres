@@ -21,7 +21,7 @@ import org.eni.encheres.dal.exceptions.DALException;
 public class ArticleManager {
 
 	private static final String ERREUR_DAL = "Erreur lors du traitement en DAL";
-	
+
 	private static ArticleManager instance;
 	private ArticleDAO articleDao;
 
@@ -49,18 +49,19 @@ public class ArticleManager {
 	 * @param dateFinEncheres
 	 * @param vendeur
 	 * @param categorie
-	 * @param ville 
-	 * @param codePostal 
-	 * @param rue 
+	 * @param ville
+	 * @param codePostal
+	 * @param rue
 	 * @throws BLLException
 	 */
 	public ArticleVendu ajouterArticle(String nomArticle, String description, LocalDateTime dateDebutEncheres,
-			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie, int prixInitial, String rue, String codePostal, String ville) throws BLLException {
+			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie, int prixInitial, String rue,
+			String codePostal, String ville) throws BLLException {
 
-		Retrait nouveauRetrait = new Retrait(rue,codePostal,ville,null);
-		ArticleVendu nouvelArticle = new ArticleVendu(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur,
-				categorie, nouveauRetrait, prixInitial);
-		
+		Retrait nouveauRetrait = new Retrait(rue, codePostal, ville, null);
+		ArticleVendu nouvelArticle = new ArticleVendu(nomArticle, description, dateDebutEncheres, dateFinEncheres,
+				vendeur, categorie, nouveauRetrait, prixInitial);
+
 		try {
 			nouvelArticle = this.articleDao.create(nouvelArticle);
 		} catch (DALException dale) {
@@ -68,28 +69,42 @@ public class ArticleManager {
 		}
 		return nouvelArticle;
 	}
-	
+
 	/**
 	 * 
-	 * Méthode permettant de récupérer la map des articles en fonction de leur numero d'article
+	 * Méthode permettant de récupérer la map des articles en fonction de leur
+	 * numero d'article
+	 * 
 	 * @return
 	 * @throws BLLException
 	 */
 	public Map<Integer, ArticleVendu> getMapArticles() throws BLLException {
-		 Map<Integer, ArticleVendu> articles;
-		 
-		 try {
+		Map<Integer, ArticleVendu> articles;
+
+		try {
 			articles = articleDao.findAll();
 		} catch (DALException dale) {
-			throw new BLLException(ERREUR_DAL,dale);
+			throw new BLLException(ERREUR_DAL, dale);
 		}
-		 
+
 		return articles;
 	}
-	
-	public ArticleVendu recupererArticle(int idArticle) {
-		ArticleVendu articleRecupere = articleDao.selectArticleById(idArticle);
-		
-		return ;
 
+	/**
+	 * 
+	 * Méthode permettant de récupere un article en fonction de son numero d'article
+	 * @param idArticle
+	 * @return
+	 * @throws BLLException
+	 */
+	public ArticleVendu recupererArticle(int idArticle) throws BLLException {
+		ArticleVendu articleRecupere;
+		try {
+			articleRecupere = articleDao.selectArticleById(idArticle);
+		} catch (DALException dale) {
+			throw new BLLException(ERREUR_DAL, dale);
+		}
+
+		return articleRecupere;
+	}
 }

@@ -1,6 +1,8 @@
 package org.eni.encheres.ihm.servlets;
 
 import java.io.IOException;
+import java.util.Map;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +12,8 @@ import javax.swing.JOptionPane;
 
 import org.eni.encheres.bll.ArticleManager;
 import org.eni.encheres.bll.EnchereManager;
+import org.eni.encheres.bll.exceptions.BLLException;
+import org.eni.encheres.bo.ArticleVendu;
 import org.eni.encheres.bo.Utilisateur;
 
 /**
@@ -17,8 +21,10 @@ import org.eni.encheres.bo.Utilisateur;
  */
 @WebServlet("/ServletEnchere")
 public class ServletEnchere extends HttpServlet {
+	private static final String PARAM_PROPOSITION = "proposition";
 	private static final String APP_ENCODAGE = "UTF-8";
 	private static final String ATTR_NON_AUTORISE = "nonAutorise";
+	private static final String APP_ATTR_MAP_ARTICLES = "mapArticles";
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -46,11 +52,39 @@ public class ServletEnchere extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding(APP_ENCODAGE);
-		EnchereManager managerEnchere = EnchereManager.getInstance();
-		ArticleManager managerArticle = ArticleManager.getInstance();
+		EnchereManager manager = EnchereManager.getInstance();
+
+		ArticleVendu articleEnVente = null;
 		int idArticle = Integer.parseInt(request.getParameter("noArticle"));
-		ArticleVendu articleEnVente = managerArticle.recupererArticle(idArticle);
-		managerArticle.
+		Map<Integer,ArticleVendu> articlesEnBase = (Map<Integer,ArticleVendu>)getServletContext().getAttribute(APP_ATTR_MAP_ARTICLES);
+		
+		articleEnVente = articlesEnBase.get(idArticle);
+		int meilleureOffre = articleEnVente.getEnchereMax().getMontantEnchere();
+		int miseAPrix = articleEnVente.getPrixInitial();
+		
+		if(meilleureOffre > 0) {
+			
+			int prixVente = meilleureOffre
+					
+		} else {
+			prixVente = miseAPrix
+					
+		}
+		
+			if(request.getParameter(PARAM_PROPOSITION) > prixVente {
+				manager.encherir(dateEnchere, montantEnchere, utilisateur, article);;	
+			}
+		 
+		
+	
+			
+		}else {
+			request.getParameter(PARAM_PROPOSITION) > miseAPrix alors encherir(PARAM_PROPOSITION);
+		}
+		
+		
+		
+
 		
 		
 		
