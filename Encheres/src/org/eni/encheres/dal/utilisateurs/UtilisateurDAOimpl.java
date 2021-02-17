@@ -205,7 +205,7 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 				}
 				
 				mapEnchere = utilisateur.getMapEncheres();
-						
+				/*		
 				pstmt = cnx.prepareStatement("SELECT no_utilisateur, no_article, date_enchere, montant_enchere "
 						                   + "FROM ENCHERES INNER JOIN ARTICLES_VENDUS"
 						                   + "WHERE no_utilisateur=?");
@@ -220,7 +220,7 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 				while (rs.next()) {
 					Enchere enchere = new Enchere(rs.getTimestamp("date_enchere"), rs.getInt("montant_enchere"), utilisateur, article);
 					
-				}
+				}*/
 				
 				//Validation de la transaction
 				cnx.commit();
