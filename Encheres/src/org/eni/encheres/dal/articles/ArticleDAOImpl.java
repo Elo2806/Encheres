@@ -67,7 +67,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static final String SQL_FINDALL_ARTICLES = "SELECT no_article,nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, art.no_utilisateur, art.no_categorie,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif,libelle,ret.rue as retraitRue, ret.code_postal as retraitCodePostal, ret.ville as retraitVille "
 			+ " FROM ARTICLES_VENDUS as art INNER JOIN CATEGORIES as cat ON cat.no_categorie = art.no_categorie"
 			+ " INNER JOIN UTILISATEURS as uti ON uti.no_utilisateur = art.no_utilisateur"
-			+ " INNER JOIN RETRAIT as ret ON ret.no_article = art.no_article";
+			+ " INNER JOIN RETRAITS as ret ON ret.no_article = art.no_article";
 	private static final String SQL_INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, no_utilisateur, no_categorie) values (?,?,?,?,?,?,?)";
 	private static final String SQL_INSERT_RETRAIT = "INSERT INTO RETRAITS (no_article,rue,code_postal,ville) VALUES(?,?,?,?)";
 

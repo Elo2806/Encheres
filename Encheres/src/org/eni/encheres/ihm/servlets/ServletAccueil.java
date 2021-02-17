@@ -30,6 +30,7 @@ import org.eni.encheres.ihm.exceptions.FiltreInexistantException;
 @WebServlet("/ServletAccueil")
 public class ServletAccueil extends HttpServlet {
 	
+	private static final String APP_ENCODAGE = "UTF-8";
 	private static final String APP_ATTR_UTILISATEUR = "utilisateur";
 	private static final String APP_ATTR_MAP_ARTICLES = "mapArticles";
 	private static final String APP_ATTR_MAP_CATEGORIES = "mapCategories";
@@ -84,7 +85,7 @@ public class ServletAccueil extends HttpServlet {
 		Map<Integer, ArticleVendu> mapArticleAffiche = new HashMap<>();
 		
 		// Encodage de la reponse http en utf-8
-		request.setCharacterEncoding("UTF-8");
+		request.setCharacterEncoding(APP_ENCODAGE);
 		
 		if(request.getParameter(PARAM_RECHERCHE)!=null) {
 			
