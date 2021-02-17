@@ -23,6 +23,15 @@
 	var="erreur"
 	value="false"
 	scope="page" />
+<c:set
+	var="textReussite"
+	value="Super\n"
+	scope="page"/>
+<c:set
+	var="reussite"
+	value="false"
+	scope="page" />
+
 	
 
 <!-- Tests des attributs d'erreur pour changer la couleur de champs en erreur  -->
@@ -40,12 +49,33 @@
 		value="true"
 		scope="page" />
 </c:if>
+<c:if test="${requestScope.bravo == true }">
+	<c:set
+		var="colorProposition"
+		value="black"
+		scope="page" />
+	<c:set
+		var="textReussite"
+		value="${textReussite} Votre enchère est prise en compte"
+		scope="page" />
+	<c:set
+		var="reussite"
+		value="true"
+		scope="page" />
+</c:if>
 <c:if test="${erreur == 'true' }">
 	<script type="text/javascript">
 		var txt = '${textErreur}';
 		alert(txt);
 	</script>
 </c:if>
+<c:if test="${reussite == 'true' }">
+	<script type="text/javascript">
+		var txt = '${textReussite}';
+		alert(txt);
+	</script>
+</c:if>
+
 
 <!-- Mise en forme -->
 <style type="text/css">
@@ -66,42 +96,42 @@
 	<div class="descriptionVente">
 		<div>
 
-			<p id="libelleArticle">PC Gamer pour travailler</p>
+			<p id="libelleArticle">${requestScope.articleEnVente.nomArticle }</p>
 		</div>
 		<div>
 			<p>Description :</p>
-			<span id="descriptionArticle">BLA BLA BLA BLA BLA</span>
+			<span id="descriptionArticle">${requestScope.articleEnVente.description}</span>
 		</div>
 		<div>
 			<p>
-				Categorie : <span id="CategorieArticle">Informatique</span>
+				Categorie : <span id="CategorieArticle">${requestScope.articleEnVente.categorie.libelle}</span>
 			</p>
 		</div>
 		<div>
 			<p>
-				Meilleur offre : <span id="nbPointsMeilleur">210</span> pts par <span
-					id="pseudoMeilleur">Bob</span>
+				Meilleur offre : <span id="nbPointsMeilleur">${requestScope.articleEnVente.enchereMax.montantEnchere}</span> pts par <span
+					id="pseudoMeilleur">${requestScope.articleEnVente.enchereMax.utilisateur.pseudo}</span>
 			</p>
 		</div>
 		<div>
 			<p>
-				Mise à prix : <span id="prix">185</span> points
+				Mise à prix : <span id="prix">${requestScope.articleEnVente.prixInitial}</span> points
 			</p>
 		</div>
 		<div>
 			<p>
-				Fin de l'enchere <span id="dateFin">09/10/2018</span>
+				Fin de l'enchere <span id="dateFin">${requestScope.articleEnVente.dateFinEncheres}</span>
 			</p>
 		</div>
 		<div>
 			<span>Retrait : </span>
 			<div id="Adresse">
-				<span>10 allée des Alouettes</span><br> <span id="codePostal">44800</span>
-				<span id="ville">Saint Herblain</span>
+				<span>${requestScope.articleEnVente.retrait.rue}</span><br> <span id="codePostal">${requestScope.articleEnVente.retrait.codePostal}</span>
+				<span id="ville">${requestScope.articleEnVente.retrait.ville}</span>
 			</div>
 		</div>
 		<div>
-			<p>Vendeur : <span id="vendeur">jojo44</span></p>
+			<p>Vendeur : <span id="vendeur">${requestScope.articleEnVente.vendeur.pseudo}</span></p>
 		</div>
 		<form method="post" action="<c:url value="/ServletEnchere"/>">
 		<input type="hidden" name="noArticle" value="${param.noArticle}">

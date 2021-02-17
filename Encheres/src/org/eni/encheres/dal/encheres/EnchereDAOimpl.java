@@ -19,7 +19,7 @@ import org.eni.encheres.dal.jdbc.ConnectionProvider;
  */
 public class EnchereDAOimpl implements EnchereDAO {
 
-	private static final String SQL_UPDATE_ENCHERE = "UPDATE ENCHERES set date_enchere=?, montant_enchere=? WHERE no_utilisateur=?, no_article=?";
+	private static final String SQL_UPDATE_ENCHERE = "UPDATE Encheres SET date_enchere=?,montant_enchere=? WHERE no_utilisateur=? AND no_article=?";
 	private static final String SQL_INSERT_ENCHERE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) values (?,?,?,?)";
 
 	@Override

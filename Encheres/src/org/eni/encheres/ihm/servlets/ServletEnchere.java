@@ -26,6 +26,8 @@ import org.eni.encheres.ihm.exceptions.MotDePasseException;
 @WebServlet("/ServletEnchere")
 public class ServletEnchere extends HttpServlet {
 	private static final String ATTR_MEILLEURE_ENCHERE = "meilleureEnchere";
+	private static final String ATTR_ARTICLE_EN_VENTE = "articleEnVente";
+	private static final String ATTR_BRAVO = "bravo";
 	private static final String ATTR_ENCHERE_INSUFFISANTE = "enchereInsuffisante";
 	private static final String PARAM_PROPOSITION = "proposition";
 	private static final String APP_ENCODAGE = "UTF-8";
@@ -43,10 +45,13 @@ public class ServletEnchere extends HttpServlet {
 			throws ServletException, IOException {
 		
 		Utilisateur encherisseur = (Utilisateur) request.getSession().getAttribute("utilisateur");
-		
+		int idArticle = Integer.parseInt(request.getParameter("noArticle"));
+		Map<Integer,ArticleVendu> articlesEnBase = (Map<Integer,ArticleVendu>)getServletContext().getAttribute(APP_ATTR_MAP_ARTICLES);
+		ArticleVendu articleEnVente = articlesEnBase.get(idArticle);
 		int meilleureEnchere = determinerMontantEnchereADepasser(request);
 		// Si l'utilisateur est autorisé (compte actif ou non)
 		if (encherisseur.isActif()) {
+			request.setAttribute(ATTR_ARTICLE_EN_VENTE, articleEnVente);
 			request.setAttribute(ATTR_MEILLEURE_ENCHERE, meilleureEnchere);
 			getServletContext().getRequestDispatcher("/enchere").forward(request, response);
 		} else {
@@ -74,7 +79,6 @@ public class ServletEnchere extends HttpServlet {
 //		int idArticle = Integer.parseInt(request.getParameter("noArticle"));
 //		ArticleVendu articleEnVente = null;
 		Map<Integer,ArticleVendu> articlesEnBase = (Map<Integer,ArticleVendu>)getServletContext().getAttribute(APP_ATTR_MAP_ARTICLES);
-//		
 		ArticleVendu articleEnVente = articlesEnBase.get(idArticle);
 //		int meilleureOffre = articleEnVente.getEnchereMax().getMontantEnchere();
 //		int miseAPrix = articleEnVente.getPrixInitial();
@@ -112,7 +116,9 @@ public class ServletEnchere extends HttpServlet {
 			}
 			if(!erreur) {
 				System.out.println(meilleureEnchere);
-				request.setAttribute(ATTR_MEILLEURE_ENCHERE, enchereRetournee.getMontantEnchere());
+				request.setAttribute(ATTR_BRAVO, true);
+				request.setAttribute(ATTR_ARTICLE_EN_VENTE, articleEnVente);
+				request.setAttribute(ATTR_MEILLEURE_ENCHERE, meilleureEnchere);
 				articleEnVente.setEnchereMax(enchereRetournee);
 			}
 			
@@ -153,5 +159,9 @@ public class ServletEnchere extends HttpServlet {
 		super.destroy();
 	}
 	
-	
+	@Override
+	public void init() throws ServletException {
+		System.out.println("Servlet init");
+		super.init();
+	}
 }
