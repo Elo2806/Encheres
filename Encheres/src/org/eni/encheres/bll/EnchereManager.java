@@ -63,7 +63,7 @@ public class EnchereManager {
 	 * @param articleAVerifier
 	 * @throws BLLException si un probleme survient lors de la modification de l'article dans ArticleManager
 	 */
-	public void verifierEtatEnchere(ArticleVendu articleAVerifier) throws BLLException {
+	public void DeterminerVainqueurEnchere(ArticleVendu articleAVerifier) throws BLLException {
 		ArticleVendu updatedArticle = articleAVerifier;
 		ArticleManager manager;
 		
