@@ -29,8 +29,7 @@ import org.eni.encheres.ihm.exceptions.FiltreInexistantException;
  */
 @WebServlet("/ServletAccueil")
 public class ServletAccueil extends HttpServlet {
-	private static final String PARAM_RECHERCHE_TEXTE = "rechercheTexte";
-	private static final String PARAM_RECHERCHE = "recherche";
+	
 	private static final String APP_ATTR_UTILISATEUR = "utilisateur";
 	private static final String APP_ATTR_MAP_ARTICLES = "mapArticles";
 	private static final String APP_ATTR_MAP_CATEGORIES = "mapCategories";
@@ -45,6 +44,8 @@ public class ServletAccueil extends HttpServlet {
 	private static final String PARAM_ENCHERES_OUVERTES = "chkEncheresOuvertes";
 	private static final String PARAM_TYPE_FILTRE = "typeFiltre";
 	private static final String PARAM_CATEGORIE_FILTRE = "categorieFiltre";
+	private static final String PARAM_RECHERCHE_TEXTE = "rechercheTexte";
+	private static final String PARAM_RECHERCHE = "recherche";
 	
 	private static final String JSP_ACCUEIL = "/accueil";
 	

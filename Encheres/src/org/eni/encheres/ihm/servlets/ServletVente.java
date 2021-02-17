@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -19,7 +18,6 @@ import org.eni.encheres.bll.exceptions.BLLException;
 import org.eni.encheres.bo.ArticleVendu;
 import org.eni.encheres.bo.Categorie;
 import org.eni.encheres.bo.Utilisateur;
-import org.eni.encheres.dal.exceptions.DALException;
 
 
 /**
@@ -27,9 +25,23 @@ import org.eni.encheres.dal.exceptions.DALException;
  */
 @WebServlet("/ServletVente")
 public class ServletVente extends HttpServlet {
-	private static final String PARAM_VILLE = "ville";
+	
+	private static final String APP_ATTR_MAP_ARTICLES = "mapArticles";
+	private static final String APP_MAP_CATEGORIES = "mapCategories";
+	
+	private static final String SERVLET_ACCUEIL = "/ServletAccueil";
+	private static final String JSP_VENTE = "/vente";
+	
+	private static final String SESSION_ATTR_UTILISATEUR = "utilisateur";
+	
+	private static final String ATTR_VILLE = "ville";
+	private static final String ATTR_CODE_POSTAL = "cp";
+	private static final String ATTR_RUE = "rue";
+	private static final String ATTR_VENTE_CREE = "venteCree";
+	
+	private static final String PARAM_VILLE = ATTR_VILLE;
 	private static final String PARAM_CODEPOSTAL = "codepostal";
-	private static final String PARAM_RUE = "rue";
+	private static final String PARAM_RUE = ATTR_RUE;
 	private static final String PARAM_DATEFIN = "datefin";
 	private static final String PARAM_HEUREFIN = "heurefin";
 	private static final String PARAM_DATEDEBUT = "datedebut";
@@ -38,7 +50,9 @@ public class ServletVente extends HttpServlet {
 	private static final String PARAM_CATEGORIE = "categorie";
 	private static final String PARAM_DESCRIPTION = "description";
 	private static final String PARAM_ARTICLE = "article";
+	
 	private static final long serialVersionUID = 1L;
+	private static final String APP_ENCODAGE = "UTF-8";
 	private static final String FORMAT_DATE = "yyyy-MM-dd";
 	private static final String FORMAT_HEURE = "HH:mm";
 
@@ -57,11 +71,11 @@ public class ServletVente extends HttpServlet {
 			String codePostal = vendeur.getCodePostal();
 			String ville = vendeur.getVille();
 			// Mettre ces variables en attribut dans request
-			request.setAttribute("rue", rue);
-			request.setAttribute("cp", codePostal);
-			request.setAttribute("ville", ville);
+			request.setAttribute(ATTR_RUE, rue);
+			request.setAttribute(ATTR_CODE_POSTAL, codePostal);
+			request.setAttribute(ATTR_VILLE, ville);
 
-			getServletContext().getRequestDispatcher("/vente").forward(request, response);
+			getServletContext().getRequestDispatcher(JSP_VENTE).forward(request, response);
 		}
 		// TODO cas si vendeur inactif
 	}
@@ -72,60 +86,67 @@ public class ServletVente extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setCharacterEncoding("UTF-8");
-		Utilisateur vendeur = (Utilisateur) request.getSession().getAttribute("utilisateur");
-		// récupérer les paramètres
-		String article = request.getParameter(PARAM_ARTICLE);
-		String description = request.getParameter(PARAM_DESCRIPTION);
 		
-		Categorie categorieArticle = null;
-		
-		int pCategorie = Integer.parseInt(request.getParameter(PARAM_CATEGORIE));
-
-		Map<Integer, Categorie> listeCategorie = (Map<Integer, Categorie>) getServletContext().getAttribute("mapCategories");
-		categorieArticle = listeCategorie.get(pCategorie);
-		
-//		List<Categorie> listeCategorie = (List<Categorie>) getServletContext().getAttribute("listeCategories");
-//		for (Categorie categorieEnCours : listeCategorie) {
-//			if (pCategorie== categorieEnCours.getNoCategorie()) {
-//				categorieArticle = categorieEnCours;
-//				break;
-//			}
-//		}
-
-		Integer prixdepart = Integer.parseInt(request.getParameter(PARAM_PRIXDEPART));
-		
-		LocalDate pDateDebut = LocalDate.parse(request.getParameter(PARAM_DATEDEBUT),
-				DateTimeFormatter.ofPattern(FORMAT_DATE));
-		
-		LocalTime pHeureDebut = LocalTime.parse(request.getParameter(PARAM_HEUREDEBUT),
-				DateTimeFormatter.ofPattern(FORMAT_HEURE));
-		
-		LocalDate pDateFin = LocalDate.parse(request.getParameter(PARAM_DATEFIN),
-				DateTimeFormatter.ofPattern(FORMAT_DATE));
-		LocalTime pHeureFin = LocalTime.parse(request.getParameter(PARAM_HEUREFIN),
-				DateTimeFormatter.ofPattern(FORMAT_HEURE));
-
-		LocalDateTime dateDebut = LocalDateTime.of(pDateDebut, pHeureDebut);
-		LocalDateTime dateFin = LocalDateTime.of(pDateFin, pHeureFin);
-		
-		// Besoin si différent de l'adresse du vendeur :
-		String rue = request.getParameter(PARAM_RUE);
-		String codePostal = request.getParameter(PARAM_CODEPOSTAL);
-		String ville = request.getParameter(PARAM_VILLE);
-		
-
+		boolean erreurInsertion = false,venteCree = false;
+		Integer pCategorie,prixdepart;
+		String article ,description,rue,codePostal,ville;
+		LocalDate pDateDebut,pDateFin;
+		LocalTime pHeureDebut,pHeureFin;
+		LocalDateTime dateDebut, dateFin;
+		Map<Integer, Categorie> mapCategorie;
+		Map<Integer, ArticleVendu> mapArticles;
+		ArticleVendu nouvelArticle=null;
+		Categorie categorieArticle;
+		Utilisateur vendeur;
 		ArticleManager manager = ArticleManager.getInstance();
+		
+		request.setCharacterEncoding(APP_ENCODAGE);
+		
+		//Recuperer parametres généraux
+		vendeur = (Utilisateur) request.getSession().getAttribute(SESSION_ATTR_UTILISATEUR);
+		mapCategorie = (Map<Integer, Categorie>) getServletContext().getAttribute(APP_MAP_CATEGORIES);
+		mapArticles = (Map<Integer, ArticleVendu>) getServletContext().getAttribute(APP_ATTR_MAP_ARTICLES);
+		
+		// récupérer les paramètres a partir de la requete http
+		article = request.getParameter(PARAM_ARTICLE);
+		description = request.getParameter(PARAM_DESCRIPTION);
+		pCategorie= Integer.parseInt(request.getParameter(PARAM_CATEGORIE));
+		prixdepart = Integer.parseInt(request.getParameter(PARAM_PRIXDEPART));
+		pDateDebut = LocalDate.parse(request.getParameter(PARAM_DATEDEBUT),
+				DateTimeFormatter.ofPattern(FORMAT_DATE));
+		 pHeureDebut = LocalTime.parse(request.getParameter(PARAM_HEUREDEBUT),
+				DateTimeFormatter.ofPattern(FORMAT_HEURE));
+		pDateFin = LocalDate.parse(request.getParameter(PARAM_DATEFIN),
+				DateTimeFormatter.ofPattern(FORMAT_DATE));
+		pHeureFin = LocalTime.parse(request.getParameter(PARAM_HEUREFIN),
+				DateTimeFormatter.ofPattern(FORMAT_HEURE));
+		// Besoin si différent de l'adresse du vendeur :
+		rue = request.getParameter(PARAM_RUE);
+		codePostal = request.getParameter(PARAM_CODEPOSTAL);
+		ville = request.getParameter(PARAM_VILLE);
+		
+		// Creation des objets java à partir des parametres de la requete
+		categorieArticle = mapCategorie.get(pCategorie);
+		dateDebut = LocalDateTime.of(pDateDebut, pHeureDebut);
+		dateFin = LocalDateTime.of(pDateFin, pHeureFin);
+		
 		try {
-			manager.ajouterArticle(article, description, dateDebut, dateFin, vendeur, categorieArticle, prixdepart);
+			nouvelArticle = manager.ajouterArticle(article, description, dateDebut, dateFin, vendeur, categorieArticle, prixdepart,rue,codePostal,ville);
 		} catch (BLLException e) {
 			e.printStackTrace();
+			erreurInsertion = true;
 		}
 
 		// si tout s'est bien passé :
-		Boolean venteCree = true;
-		request.setAttribute("booleen", venteCree);
-		getServletContext().getRequestDispatcher("/ServletAccueil").forward(request, response);
+		if(!erreurInsertion) {
+			mapArticles.put(nouvelArticle.getNoArticle(), nouvelArticle);
+			venteCree = true;
+			request.setAttribute(ATTR_VENTE_CREE, venteCree);
+			getServletContext().getRequestDispatcher(SERVLET_ACCUEIL).forward(request, response);
+		}else {
+			getServletContext().getRequestDispatcher(JSP_VENTE).forward(request, response);
+		}
+		
 	}
 
 }

@@ -26,6 +26,7 @@ public class ArticleVendu implements Serializable{
 	private Utilisateur acheteur;
 	private Categorie categorie;
 	private Enchere enchereMax;
+	private Retrait retrait;
 	
 	/**
 	 *Construteur
@@ -216,7 +217,23 @@ public class ArticleVendu implements Serializable{
 	public void setEnchereMax(Enchere penchereMax) {
 		enchereMax = penchereMax;
 	}
-	
-	
-	
+
+
+	/**
+	 * Méthode permettant de récupérer retrait
+	 * @return le retrait
+	 */
+	public Retrait getRetrait() {
+		return retrait;
+	}
+
+
+	/**
+	 * Méthode permettant de modifier retrait
+	 * @param retrait new retrait
+	 */
+	public void setRetrait(Retrait retrait) {
+		this.retrait = retrait;
+	}
+
 }
