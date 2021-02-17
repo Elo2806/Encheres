@@ -216,13 +216,11 @@ public class ArticleDAOImpl implements ArticleDAO {
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
 			PreparedStatement pstmt = cnx.prepareStatement(SQL_FINDALL_ARTICLES);
-
 			try {
 				// Execution de la requete
 				ResultSet rs = pstmt.executeQuery();
-
 				while (rs.next()) {
-
+					
 					// Création des instances d'objets java
 					categorie = new Categorie(rs.getString(COL_CAT_LIBELLE),
 							rs.getInt(COL_ART_NO_CATEGORIE));
@@ -239,10 +237,8 @@ public class ArticleDAOImpl implements ArticleDAO {
 							rs.getString(COL_ART_DESCRIPTION),
 							rs.getTimestamp(COL_ART_DATE_DEBUT_ENCHERES).toLocalDateTime(),
 							rs.getTimestamp(COL_ART_DATE_FIN_ENCHERES).toLocalDateTime(), utilisateur, categorie,
-							retrait, rs.getInt(COL_ART_NO_CATEGORIE), rs.getInt(COL_ART_PRIX_INITIAL));
+							retrait, rs.getInt(COL_ART_NO_ARTICLE), rs.getInt(COL_ART_PRIX_INITIAL));
 					
-					System.out.println("articles nom :" + article.getNomArticle());//TODO a supprimer
-					System.out.println("articles no :" + rs.getInt(COL_UTIL_NO_UTILISATEUR));//TODO a supprimer
 					// Ajout de l'article à la map
 					mapArticles.put(article.getNoArticle(), article);
 				}
@@ -258,9 +254,9 @@ public class ArticleDAOImpl implements ArticleDAO {
 			sqle.printStackTrace();
 			throw new ConnectionException(ERREUR_CONNECTION, sqle);
 		}
-		System.out.println("articles dao :" + mapArticles);//TODO a supprimer
+		
 		mapArticles = updateEnchereMax(mapArticles);
-
+		
 		return mapArticles;
 	}
 	

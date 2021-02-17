@@ -181,7 +181,10 @@
 						id="libelleArticle">${article.value.nomArticle}</a>
 				</div>
 				<div>
-					Prix : <span id="nbPoints">${article.value.enchereMax.montantEnchere}</span>
+					Prix : <span id="nbPoints">
+								<c:if test="${article.value.enchereMax.montantEnchere > 0} ">${article.value.enchereMax.montantEnchere}</c:if> 
+								<c:if test="${article.value.enchereMax.montantEnchere == 0}">${article.value.prixInitial}</c:if>
+						   </span>
 					points
 				</div>
 				<div>

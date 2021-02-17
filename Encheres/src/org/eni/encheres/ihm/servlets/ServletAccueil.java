@@ -128,13 +128,13 @@ public class ServletAccueil extends HttpServlet {
 	private void updateArticles() {
 		Map<Integer, ArticleVendu> articles = new HashMap<>();
 		ArticleManager manager = ArticleManager.getInstance();
-
+		
 		try {
 			articles = manager.getMapArticles();
 		} catch (BLLException blle) {
 			blle.printStackTrace();// TODO voir si possible de faire mieux en gestion de
 		}
-		System.out.println("articles :" + articles);//TODO a supprimer
+		
 		getServletContext().setAttribute(APP_ATTR_MAP_ARTICLES, articles);
 	}
 	
@@ -163,6 +163,7 @@ public class ServletAccueil extends HttpServlet {
 		} catch (FiltreInexistantException fie) {
 			fie.printStackTrace();//TODO voir comment gérer cette exception
 		}
+		
 		return mapArticleAffiche;
 	}
 
@@ -246,7 +247,6 @@ public class ServletAccueil extends HttpServlet {
 				
 			if (categorieFiltre.getNoCategorie() == article.getCategorie().getNoCategorie()) {
 				boolean ajouterArticle = true;
-				
 				if(texteRecherche!=null && !article.getNomArticle().toLowerCase().contains(texteRecherche.toLowerCase())) {
 					ajouterArticle = false;
 				}else {
@@ -294,6 +294,7 @@ public class ServletAccueil extends HttpServlet {
 			}
 
 		}
+		
 		return mapArticlesFiltres;
 	}
 
