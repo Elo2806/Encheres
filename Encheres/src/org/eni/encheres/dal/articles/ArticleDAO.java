@@ -56,14 +56,6 @@ public interface ArticleDAO {
 	 */
 	Map<Integer, ArticleVendu> updateEnchereMax(Map<Integer, ArticleVendu> articles) throws DALException;
 
-	/**
-	 * 
-	 * Méthode permettant de récupérer un article en fonction de son id
-	 * @param idArticle
-	 * @return l'article recherché
-	 * @throws DALException
-	 */
-	ArticleVendu selectArticleById(int idArticle) throws DALException;
 	
 }
 

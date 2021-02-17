@@ -90,21 +90,4 @@ public class ArticleManager {
 		return articles;
 	}
 
-	/**
-	 * 
-	 * Méthode permettant de récupere un article en fonction de son numero d'article
-	 * @param idArticle
-	 * @return
-	 * @throws BLLException
-	 */
-	public ArticleVendu recupererArticle(int idArticle) throws BLLException {
-		ArticleVendu articleRecupere;
-		try {
-			articleRecupere = articleDao.selectArticleById(idArticle);
-		} catch (DALException dale) {
-			throw new BLLException(ERREUR_DAL, dale);
-		}
-
-		return articleRecupere;
-	}
 }

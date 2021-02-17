@@ -70,34 +70,22 @@ public class ServletEnchere extends HttpServlet {
 		Integer propositionEnchere = Integer.parseInt(request.getParameter(PARAM_PROPOSITION)); 
 		
 		if(meilleureOffre > 0) {
-			
 			prixVente = meilleureOffre;
-					
 		} else {
 			prixVente = miseAPrix;
-					
 		}
 		
-			if(propositionEnchere > prixVente) {
-				try {
-					manager.creerEnchere(LocalDateTime.now(), propositionEnchere, (Utilisateur)request.getSession().getAttribute("utilisateur"), articleEnVente);
-				} catch (BLLException blle) {
-					request.setAttribute(ATTR_ERREUR_INSERTION, true);
-					blle.printStackTrace();
-				}
-		}else {
+		if(propositionEnchere > prixVente) {
+			try {
+				manager.creerEnchere(LocalDateTime.now(), propositionEnchere, (Utilisateur)request.getSession().getAttribute("utilisateur"), articleEnVente);
+			} catch (BLLException blle) {
+				request.setAttribute(ATTR_ERREUR_INSERTION, true);
+				blle.printStackTrace();
+			}
+		} else {
 	
 		request.setAttribute(ATTR_ENCHERE_INSUFFISANTE, true);
 		}
-		
-
-		
-		
-		
-		
-		System.out.println(request.getParameter("prix") + "prix");//TODO
-		
-		
 		
 
 		
