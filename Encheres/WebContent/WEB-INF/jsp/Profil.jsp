@@ -5,7 +5,7 @@
 
 
 <head>
-<link href="<c:url value='/css/styleProfil.css' />" rel="stylesheet"/>
+<link href="css/styleProfil.css" rel="stylesheet"/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Profil</title>
 </head>
@@ -40,11 +40,12 @@
          <div>    <label for="ville">Ville:</label>
         <span id="ville">${utilisateurAffiche.ville}</span></div>
         
-        </form>
-        
-        <a href="${pageContext.request.contextPath}/ServletCompte?modification=true"><input type="button" value="Modifier"/></a>
+ <a href="${pageContext.request.contextPath}/ServletCompte?modification=true"><input type="button" value="Modifier"/></a>
          <a href="${pageContext.request.contextPath}/ServletAccueil"><input type="button" value="Accueil"/></a>
         
+        </form>
+        
+       
 </div>
 
 </body>
