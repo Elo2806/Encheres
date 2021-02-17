@@ -1,10 +1,6 @@
 package org.eni.encheres.ihm.servlets;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,8 +12,6 @@ import javax.servlet.http.HttpSession;
 import org.eni.encheres.bll.UtilisateurManager;
 import org.eni.encheres.bll.exceptions.BLLException;
 import org.eni.encheres.bo.Utilisateur;
-import org.eni.encheres.dal.exceptions.ConnectionException;
-import org.eni.encheres.dal.jdbc.ConnectionProvider;
 
 /**
  * Servlet implementation class ServletConnexion
@@ -26,7 +20,6 @@ import org.eni.encheres.dal.jdbc.ConnectionProvider;
 public class ServletConnexion extends HttpServlet {
 	private static final String APP_ENCODAGE = "UTF-8";
 	private static final long serialVersionUID = 1L;
-	private static final String PARAM_SUPPRIMER = "supprimer";
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse

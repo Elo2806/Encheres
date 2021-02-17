@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,7 +70,7 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 	private static final String SQL_SELECT_ENCHERES_BY_USER = "SELECT enc.no_utilisateur, enc.no_article, enc.date_enchere, enc.montant_enchere, art.nom_article,art.description,art.date_debut_encheres,art.date_fin_encheres,art.prix_initial,art.prix_vente,art.no_categorie,cat.libelle "
             + "FROM ENCHERES as enc INNER JOIN ARTICLES_VENDUS as art ON art.no_article =  enc.no_article "
             + 					  "INNER JOIN CATEGORIES as cat ON cat.no_categorie = art.no_categorie "
-            + "WHERE enc.no_utilisateur=? ";
+            + "WHERE enc.no_utilisateur=? AND art.date_fin_encheres > ?";
 	
 	@Override
 	public Utilisateur create(Utilisateur newUtilisateur) throws DALException {
@@ -233,13 +235,13 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 				
 				// Valorisation des paramètres du PreparedStatement
 				pstmt.setInt(1, utilisateur.getNoUtilisateur());
+				pstmt.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
 				
 				// Execution de la requete
 				rs = pstmt.executeQuery();
 				
 				// Récupération des encheres de l'utilisateur en cours
 				while (rs.next()) {
-					System.out.println("enchere article "+ rs.getString(COL_ART_NOM_ARTICLE) );//TODO SUpprimer
 					Categorie categorie = new Categorie(rs.getString(COL_CAT_LIBELLE),rs.getInt(COL_ART_NO_CATEGORIE));
 					ArticleVendu article = new ArticleVendu(rs.getString(COL_ART_NOM_ARTICLE), rs.getString(COL_ART_DESCRIPTION), rs.getTimestamp(COL_ART_DATE_DEBUT_ENCHERES).toLocalDateTime(), rs.getTimestamp(COL_ART_DATE_FIN_ENCHERES).toLocalDateTime(),null, categorie,rs.getInt(COLL_ART_NO_ARTICLE));//vendeur a null pour limiter la taille de l'objet
 					Enchere enchere = new Enchere(rs.getTimestamp(COL_ENC_DATE_ENCHERE).toLocalDateTime(), rs.getInt(COL_ENC_MONTANT_ENCHERE), utilisateur, article);
