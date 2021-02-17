@@ -30,6 +30,7 @@ import org.eni.encheres.dal.jdbc.ConnectionProvider;
 public class ArticleDAOImpl implements ArticleDAO {
 
 	
+	private static final String COL_ART_PRIX_INITIAL = "prix_initial";
 	private static final String COLL_RET_VILLE = "retraitVille";
 	private static final String COLL_RET_CODE_POSTAL = "retraitCodePostal";
 	private static final String COLL_RET_RUE = "retraitRue";
@@ -65,8 +66,8 @@ public class ArticleDAOImpl implements ArticleDAO {
 			+ " FROM ENCHERES GROUP BY no_article) as selectMontantMax ON e.no_article = selectMontantMax.no_article "
 			+ " INNER JOIN UTILISATEURS as u ON u.no_utilisateur = e.no_utilisateur "
 			+ " WHERE e.montant_enchere = selectMontantMax.montant_max;";
-	private static final String SQL_FINDALL_ARTICLES = "SELECT art.no_article,nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, art.no_utilisateur, art.no_categorie,uti.pseudo,uti.nom,uti.prenom,uti.email,uti.telephone,uti.rue,uti.code_postal,uti.ville,uti.mot_de_passe,uti.credit,uti.administrateur,uti.actif,cat.libelle,ret.rue as retraitRue, ret.code_postal as retraitCodePostal, ret.ville as retraitVille FROM ARTICLES_VENDUS as art INNER JOIN CATEGORIES as cat ON cat.no_categorie = art.no_categorie INNER JOIN UTILISATEURS as uti ON uti.no_utilisateur = art.no_utilisateur INNER JOIN RETRAITS as ret ON ret.no_article = art.no_article";
-	private static final String SELECT_BY_ID = "SELECT no_article,nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, art.no_utilisateur, art.no_categorie,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif,libelle,ret.rue as retraitRue, ret.code_postal as retraitCodePostal, ret.ville as retraitVille FROM ARTICLES_VENDUS as art INNER JOIN CATEGORIES as cat ON cat.no_categorie = art.no_categorie INNER JOIN UTILISATEURS as uti ON uti.no_utilisateur = art.no_utilisateur INNER JOIN RETRAITS as ret ON ret.no_article = art.no_article WHERE no_article=?";
+	private static final String SQL_FINDALL_ARTICLES = "SELECT art.prix_initial,art.no_article,nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, art.no_utilisateur, art.no_categorie,uti.pseudo,uti.nom,uti.prenom,uti.email,uti.telephone,uti.rue,uti.code_postal,uti.ville,uti.mot_de_passe,uti.credit,uti.administrateur,uti.actif,cat.libelle,ret.rue as retraitRue, ret.code_postal as retraitCodePostal, ret.ville as retraitVille FROM ARTICLES_VENDUS as art INNER JOIN CATEGORIES as cat ON cat.no_categorie = art.no_categorie INNER JOIN UTILISATEURS as uti ON uti.no_utilisateur = art.no_utilisateur INNER JOIN RETRAITS as ret ON ret.no_article = art.no_article";
+	private static final String SELECT_BY_ID = "SELECT prix_initial,no_article,nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, art.no_utilisateur, art.no_categorie,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif,libelle,ret.rue as retraitRue, ret.code_postal as retraitCodePostal, ret.ville as retraitVille FROM ARTICLES_VENDUS as art INNER JOIN CATEGORIES as cat ON cat.no_categorie = art.no_categorie INNER JOIN UTILISATEURS as uti ON uti.no_utilisateur = art.no_utilisateur INNER JOIN RETRAITS as ret ON ret.no_article = art.no_article WHERE no_article=?";
 	private static final String SQL_INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, no_utilisateur, no_categorie) values (?,?,?,?,?,?,?)";
 	private static final String SQL_INSERT_RETRAIT = "INSERT INTO RETRAITS (no_article,rue,code_postal,ville) VALUES(?,?,?,?)";
 
@@ -184,7 +185,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 					articleEnVente = new ArticleVendu(rs.getString(COL_ART_NOM_ARTICLE),
 							rs.getString(COL_ART_DESCRIPTION),
 							rs.getTimestamp(COL_ART_DATE_DEBUT_ENCHERES).toLocalDateTime(),
-							rs.getTimestamp(COL_ART_DATE_FIN_ENCHERES).toLocalDateTime(), utilisateur, categorie,retrait,rs.getInt(COL_ART_NO_CATEGORIE) );
+							rs.getTimestamp(COL_ART_DATE_FIN_ENCHERES).toLocalDateTime(), utilisateur, categorie,retrait,rs.getInt(COL_ART_NO_CATEGORIE), rs.getInt(COL_ART_PRIX_INITIAL) );
 				}
 
 				rs.close();
@@ -238,7 +239,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 							rs.getString(COL_ART_DESCRIPTION),
 							rs.getTimestamp(COL_ART_DATE_DEBUT_ENCHERES).toLocalDateTime(),
 							rs.getTimestamp(COL_ART_DATE_FIN_ENCHERES).toLocalDateTime(), utilisateur, categorie,
-							retrait, rs.getInt(COL_ART_NO_CATEGORIE));
+							retrait, rs.getInt(COL_ART_NO_CATEGORIE), rs.getInt(COL_ART_PRIX_INITIAL));
 					
 					System.out.println("articles nom :" + article.getNomArticle());//TODO a supprimer
 					System.out.println("articles no :" + rs.getInt(COL_UTIL_NO_UTILISATEUR));//TODO a supprimer

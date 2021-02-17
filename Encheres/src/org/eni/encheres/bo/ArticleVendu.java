@@ -60,6 +60,31 @@ public class ArticleVendu implements Serializable{
 	
 	/**
 	 * 
+	 * Constructeur l'objet sans le noArticle
+	 * 
+	 * @param nomArticle
+	 * @param description
+	 * @param dateDebutEncheres
+	 * @param dateFinEncheres
+	 * @param vendeur
+	 * @param categorie
+	 * @param retrait
+	 * @param noArticle
+	 * @param Integer TODO
+	 */
+	public ArticleVendu (String nomArticle, String description, LocalDateTime dateDebutEncheres,
+			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie,Retrait retrait, Integer prixInitial ) {
+		this(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur,
+				categorie);
+		setRetrait(retrait);
+		setPrixInitial(prixInitial);
+		
+		//Création de la liaison bidirectionnelle
+		retrait.setArticle(this);
+	}
+	
+	/**
+	 * 
 	 * Constructeur complet de l'objet
 	 * 
 	 * @param nomArticle
@@ -70,13 +95,15 @@ public class ArticleVendu implements Serializable{
 	 * @param categorie
 	 * @param retrait
 	 * @param noArticle
+	 * @param Integer TODO
 	 */
 	public ArticleVendu (String nomArticle, String description, LocalDateTime dateDebutEncheres,
-			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie,Retrait retrait, int noArticle) {
+			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie,Retrait retrait, int noArticle, Integer prixInitial ) {
 		this(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur,
 				categorie);
 		setRetrait(retrait);
 		setNoArticle(noArticle);
+		setPrixInitial(prixInitial);
 		
 		//Création de la liaison bidirectionnelle
 		retrait.setArticle(this);

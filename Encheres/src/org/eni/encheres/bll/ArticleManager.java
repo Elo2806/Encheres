@@ -57,8 +57,8 @@ public class ArticleManager {
 	public ArticleVendu ajouterArticle(String nomArticle, String description, LocalDateTime dateDebutEncheres,
 			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie, int prixInitial, String rue, String codePostal, String ville) throws BLLException {
 
-		Retrait nouveauRetrait = creerRetrait(rue,codePostal,ville,null);
-		ArticleVendu nouvelArticle = creerArticle(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur,
+		Retrait nouveauRetrait = new Retrait(rue,codePostal,ville,null);
+		ArticleVendu nouvelArticle = new ArticleVendu(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur,
 				categorie, nouveauRetrait, prixInitial);
 		
 		try {
@@ -87,46 +87,5 @@ public class ArticleManager {
 		return articles;
 	}
 	
-	
-	/**
-	 * 
-	 * Méthode permettant de créer un objet Retrait à partir des paramètres
-	 * @param rue
-	 * @param codePostal
-	 * @param ville
-	 * @param article
-	 * @return
-	 */
-	private Retrait creerRetrait(String rue, String codePostal, String ville, ArticleVendu article) {
-		Retrait nouveauRetrait = new Retrait(rue, codePostal, ville, article);
-		return nouveauRetrait;
-	}
-
-	/**
-	 * 
-	 * Méthode permettant de créer un objet Article à partir des paramètres
-	 * 
-	 * @param nomArticle
-	 * @param description
-	 * @param dateDebutEncheres
-	 * @param dateFinEncheres
-	 * @param vendeur
-	 * @param categorie
-	 * @param retrait 
-	 * @param prixInitial 
-	 * @return
-	 */
-	public ArticleVendu creerArticle(String nomArticle, String description, LocalDateTime dateDebutEncheres,
-			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie, Retrait retrait, Integer prixInitial) {
-
-		ArticleVendu newArticle = new ArticleVendu(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur,
-				categorie);
-		newArticle.setRetrait(retrait);
-		newArticle.setPrixInitial(prixInitial);
-		//Création de la liaison bidirectionnelle
-		retrait.setArticle(newArticle);
-		
-		return newArticle;
-	}
 
 }
