@@ -109,6 +109,25 @@ public class ArticleVendu implements Serializable{
 		retrait.setArticle(this);
 	}
 	
+
+	/**
+	 * 
+	 * Constructeur pour créer un article léger 
+	 * @param nomArticle
+	 * @param description
+	 * @param dateDebutEncheres
+	 * @param dateFinEncheres
+	 * @param vendeur
+	 * @param categorie
+	 * @param noArticle
+	 */
+	public ArticleVendu(String nomArticle, String description, LocalDateTime dateDebutEncheres, LocalDateTime dateFinEncheres,Utilisateur vendeur,
+			Categorie categorie, int noArticle) {
+		this(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur, categorie);
+		setNoArticle(noArticle);
+	}
+
+
 	/**
 	 * Méthode permettant de récupérer noArticle
 	 * @return le noArticle

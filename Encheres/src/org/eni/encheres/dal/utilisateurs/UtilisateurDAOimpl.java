@@ -28,6 +28,7 @@ import org.eni.encheres.dal.jdbc.ConnectionProvider;
  */
 public class UtilisateurDAOimpl implements UtilisateurDAO {
 
+	private static final String COLL_ART_NO_ARTICLE = "no_article";
 	private static final String ERREUR_SQL_INSERT = "Erreur lors de l'insertion en base";
 	private static final String ERREUR_SQL_SELECT = "Erreur lors des selections en base";
 	private static final String ERREUR_UTILISATEUR_INEXISTANT = "L'utilisateur n'existe pas";
@@ -238,8 +239,9 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 				
 				// Récupération des encheres de l'utilisateur en cours
 				while (rs.next()) {
+					System.out.println("enchere article "+ rs.getString(COL_ART_NOM_ARTICLE) );//TODO SUpprimer
 					Categorie categorie = new Categorie(rs.getString(COL_CAT_LIBELLE),rs.getInt(COL_ART_NO_CATEGORIE));
-					ArticleVendu article = new ArticleVendu(rs.getString(COL_ART_NOM_ARTICLE), rs.getString(COL_ART_DESCRIPTION), rs.getTimestamp(COL_ART_DATE_DEBUT_ENCHERES).toLocalDateTime(), rs.getTimestamp(COL_ART_DATE_FIN_ENCHERES).toLocalDateTime(), null, categorie);//vendeur a null pour limiter la taille de l'objet
+					ArticleVendu article = new ArticleVendu(rs.getString(COL_ART_NOM_ARTICLE), rs.getString(COL_ART_DESCRIPTION), rs.getTimestamp(COL_ART_DATE_DEBUT_ENCHERES).toLocalDateTime(), rs.getTimestamp(COL_ART_DATE_FIN_ENCHERES).toLocalDateTime(),null, categorie,rs.getInt(COLL_ART_NO_ARTICLE));//vendeur a null pour limiter la taille de l'objet
 					Enchere enchere = new Enchere(rs.getTimestamp(COL_ENC_DATE_ENCHERE).toLocalDateTime(), rs.getInt(COL_ENC_MONTANT_ENCHERE), utilisateur, article);
 					mapEnchere.put(article.getNoArticle(), enchere);
 				}

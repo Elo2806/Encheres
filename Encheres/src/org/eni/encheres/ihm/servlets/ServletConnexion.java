@@ -77,7 +77,7 @@ public class ServletConnexion extends HttpServlet {
 			
 			HttpSession session = request.getSession();
 			session.setAttribute("utilisateur", utilisateur);
-			
+			System.out.println("nb encheres :" + utilisateur.getMapEncheres().size());//TODO supprimer
 	
 			// Si les identifiant/mot de passe ok et si attribut 'supprime"=false :
 				getServletContext().getRequestDispatcher("/ServletAccueil").forward(request, response);
