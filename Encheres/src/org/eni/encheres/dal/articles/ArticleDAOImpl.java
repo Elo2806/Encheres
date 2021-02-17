@@ -149,7 +149,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 	}
 
 	@Override
-	public ArticleVendu SelectArticleById(int idArticle) throws DALException {
+	public ArticleVendu selectArticleById(int idArticle) throws DALException {
 		
 		ArticleVendu articleEnVente=null;
 		Categorie categorie;

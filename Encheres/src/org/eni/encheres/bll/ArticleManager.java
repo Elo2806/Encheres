@@ -87,5 +87,9 @@ public class ArticleManager {
 		return articles;
 	}
 	
+	public ArticleVendu recupererArticle(int idArticle) {
+		ArticleVendu articleRecupere = articleDao.selectArticleById(idArticle);
+		
+		return ;
 
 }

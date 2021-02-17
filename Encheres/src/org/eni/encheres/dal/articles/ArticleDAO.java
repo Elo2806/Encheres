@@ -63,7 +63,7 @@ public interface ArticleDAO {
 	 * @return l'article recherché
 	 * @throws DALException
 	 */
-	ArticleVendu SelectArticleById(int idArticle) throws DALException;
+	ArticleVendu selectArticleById(int idArticle) throws DALException;
 	
 }
 
