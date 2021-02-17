@@ -104,6 +104,7 @@
 			<p>Vendeur : <span id="vendeur">jojo44</span></p>
 		</div>
 		<form method="post" action="<c:url value="/ServletEnchere"/>">
+		<input type="hidden" name="noArticle" value="${param.noArticle}">
 			<div class="ProblemeProposition">>
 				<label for="proposition">Ma proposition : </label> <input
 					type="number" name="proposition" id="proposition" value=220

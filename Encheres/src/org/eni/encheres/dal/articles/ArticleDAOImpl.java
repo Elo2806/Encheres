@@ -148,61 +148,6 @@ public class ArticleDAOImpl implements ArticleDAO {
 
 	}
 
-	@Override
-	public ArticleVendu selectArticleById(int idArticle) throws DALException {
-		
-		ArticleVendu articleEnVente=null;
-		Categorie categorie;
-		Utilisateur utilisateur;
-		Retrait retrait;
-		
-		
-		// Connection en base
-		try (Connection cnx = ConnectionProvider.getConnection()) {
-
-			PreparedStatement pstmt = cnx.prepareStatement(SELECT_BY_ID);
-	 
-			pstmt.setInt(1,idArticle);
-			try {
-				
-				// Execution de la requete
-				ResultSet rs = pstmt.executeQuery();
-
-				if (rs.next()) {
-
-					// Création des instances d'objets java
-					categorie = new Categorie(rs.getString(COL_CAT_LIBELLE),
-							rs.getInt(COL_ART_NO_CATEGORIE));
-					utilisateur = new Utilisateur(rs.getString(COL_UTIL_PSEUDO), rs.getString(COL_UTIL_NOM),
-							rs.getString(COL_UTIL_PRENOM), rs.getString(COL_UTIL_EMAIL),
-							rs.getString(COL_UTIL_TELEPHONE), rs.getString(COL_UTIL_RUE),
-							rs.getString(COL_UTIL_CODE_POSTAL), rs.getString(COL_UTIL_VILLE),
-							rs.getString(COL_UTIL_MOT_DE_PASSE), rs.getInt(COL_UTIL_CREDIT),
-							rs.getBoolean(COL_UTIL_ADMINISTRATEUR), rs.getInt(COL_UTIL_NO_UTILISATEUR),
-							rs.getBoolean(COL_UTIL_ACTIF));
-					retrait = new Retrait(rs.getString(COLL_RET_RUE), rs.getString(COLL_RET_CODE_POSTAL),
-							rs.getString(COLL_RET_VILLE), null);
-					articleEnVente = new ArticleVendu(rs.getString(COL_ART_NOM_ARTICLE),
-							rs.getString(COL_ART_DESCRIPTION),
-							rs.getTimestamp(COL_ART_DATE_DEBUT_ENCHERES).toLocalDateTime(),
-							rs.getTimestamp(COL_ART_DATE_FIN_ENCHERES).toLocalDateTime(), utilisateur, categorie,retrait,rs.getInt(COL_ART_NO_CATEGORIE), rs.getInt(COL_ART_PRIX_INITIAL) );
-				}
-
-				rs.close();
-				pstmt.close();
-
-			} catch (SQLException sqle) {
-				pstmt.close();
-				throw new RequeteSQLException(ERREUR_SQL_RECHERCHE_EN_BASE, sqle);
-			}
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-			throw new ConnectionException(ERREUR_CONNECTION, sqle);
-		}
-
-		return articleEnVente;
-	}	
-	
 	
 	@Override
 	public Map<Integer, ArticleVendu> findAll() throws DALException {
