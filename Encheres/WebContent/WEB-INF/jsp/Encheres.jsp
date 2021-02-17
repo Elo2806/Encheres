@@ -31,7 +31,7 @@
 		<div>
 			<p>
 				Meilleur offre : <span id="nbPointsMeilleur">210</span> pts par <span
-					id="pseudoMeilleur" name="nbPointsMeilleur">Bob</span>
+					id="pseudoMeilleur">Bob</span>
 			</p>
 		</div>
 		<div>
@@ -52,9 +52,9 @@
 			</div>
 		</div>
 		<div>
-			<p>Vendeur : <span name="vendeur" id="vendeur">jojo44</span></p>
+			<p>Vendeur : <span id="vendeur">jojo44</span></p>
 		</div>
-		<form action="">
+		<form method="post" action="<c:url value="/ServletEnchere"/>">
 			<div>
 				<label for="proposition">Ma proposition : </label> <input
 					type="number" name="proposition" id="proposition" value=220

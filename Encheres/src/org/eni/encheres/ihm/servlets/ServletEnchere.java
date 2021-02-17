@@ -6,8 +6,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.JOptionPane;
 
-import org.eni.encheres.bo.ArticleVendu;
+import org.eni.encheres.bll.EnchereManager;
 import org.eni.encheres.bo.Utilisateur;
 
 /**
@@ -15,6 +16,7 @@ import org.eni.encheres.bo.Utilisateur;
  */
 @WebServlet("/ServletEnchere")
 public class ServletEnchere extends HttpServlet {
+	private static final String ATTR_NON_AUTORISE = "nonAutorise";
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -27,8 +29,12 @@ public class ServletEnchere extends HttpServlet {
 		// Si l'utilisateur est autorisé (compte actif ou non)
 		if (encherisseur.isActif()) {
 			getServletContext().getRequestDispatcher("/enchere").forward(request, response);
+		} else {
+			request.setAttribute(ATTR_NON_AUTORISE, true);
+			JOptionPane.showMessageDialog(null, "Vous n'êtes pas autorisé");
+			getServletContext().getRequestDispatcher("/accueil").forward(request, response);
 		}
-//TODO cas si encherisseur inactif
+
 	}
 
 	/**
@@ -38,6 +44,12 @@ public class ServletEnchere extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
+		int offre = Integer.parseInt(request.getParameter("proposition"));
+		System.out.println(request.getParameter("prix"));
+		
+		EnchereManager manager = EnchereManager.getInstance();
+		
+//		manager.encherir(dateEnchere, montantEnchere, utilisateur, article);
 		// permet d'enchérir sur un article
 		getServletContext().getRequestDispatcher("/enchere").forward(request, response);
 	}
