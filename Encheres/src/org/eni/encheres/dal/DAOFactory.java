@@ -3,11 +3,12 @@
  */
 package org.eni.encheres.dal;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.eni.encheres.bo.ArticleVendu;
 import org.eni.encheres.bo.Categorie;
+import org.eni.encheres.bo.Enchere;
+import org.eni.encheres.bo.Retrait;
 import org.eni.encheres.bo.Utilisateur;
 import org.eni.encheres.dal.articles.ArticleDAO;
 import org.eni.encheres.dal.articles.ArticleDAOImpl;
@@ -100,11 +101,48 @@ public abstract class DAOFactory {
 	 * @return
 	 */
 	public static ArticleVendu creerArticle(String nomArticle, String description, LocalDateTime dateDebutEncheres,
-			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie) {
+			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie,Retrait retrait) {
 
 		ArticleVendu newArticle = new ArticleVendu(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur,
 				categorie);
-
+		newArticle.setRetrait(retrait);
 		return newArticle;
+	}
+	/**
+	 * 
+	 * Méthode permettant de créer une instance Enchere à partir des paramètres
+	 * @param dateEnchere
+	 * @param montantEnchere
+	 * @param utilisateur
+	 * @param article
+	 * @return
+	 */
+	public static Enchere creerEnchere(LocalDateTime dateEnchere, Integer montantEnchere, Utilisateur utilisateur, ArticleVendu article) {
+		
+		Enchere newEnchere = new Enchere(dateEnchere, montantEnchere, utilisateur, article);
+		return newEnchere;
+		
+	}
+	
+	/**
+	 * 
+	 * Méthode permettant de créer une instance Retrait à partir des paramètres
+	 * @param rue
+	 * @param codePostal
+	 * @param ville
+	 * @param article
+	 * @return
+	 */
+	public static Retrait creerRetrait(String rue, String codePostal, String ville, ArticleVendu article) {
+		Retrait newRetrait = new Retrait(rue, codePostal, ville, article);
+		return newRetrait;
+	}
+	
+	public static Categorie creerCategorie(String libelle,Integer noCategorie) {
+		Categorie newCategorie = new Categorie(libelle);
+		newCategorie.setNoCategorie(noCategorie);
+		
+		return newCategorie;
+		
 	}
 }
