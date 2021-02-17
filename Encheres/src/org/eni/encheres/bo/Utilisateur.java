@@ -1,6 +1,7 @@
 package org.eni.encheres.bo;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * Classe modélisant un utilisateur
@@ -23,6 +24,7 @@ public class Utilisateur implements Serializable {
 	private Boolean administrateur;
 	private Boolean actif;
 	private Boolean supprime;
+	private Map<Integer,Enchere> mapEncheres;
 	
 	// Constructeurs
 	/**
@@ -330,8 +332,22 @@ public class Utilisateur implements Serializable {
 	public void setSupprime(boolean supprime) {
 		this.supprime = supprime;
 	}
-	
-	
-	
+
+	/**
+	 * Méthode permettant de récupérer mapEncheres
+	 * @return le mapEncheres
+	 */
+	public Map<Integer, Enchere> getMapEncheres() {
+		return mapEncheres;
+	}
+
+	/**
+	 * Méthode permettant de modifier mapEncheres
+	 * @param mapEncheres new mapEncheres
+	 */
+	public void setMapEncheres(Map<Integer, Enchere> mapEncheres) {
+		this.mapEncheres = mapEncheres;
+	}
+
 	
 }
