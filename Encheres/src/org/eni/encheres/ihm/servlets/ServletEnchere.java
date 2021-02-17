@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.JOptionPane;
 
+import org.eni.encheres.bll.ArticleManager;
 import org.eni.encheres.bll.EnchereManager;
 import org.eni.encheres.bo.Utilisateur;
 
@@ -45,14 +46,20 @@ public class ServletEnchere extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.setCharacterEncoding(APP_ENCODAGE);
+		EnchereManager managerEnchere = EnchereManager.getInstance();
+		ArticleManager managerArticle = ArticleManager.getInstance();
 		int idArticle = Integer.parseInt(request.getParameter("noArticle"));
+		ArticleVendu articleEnVente = managerArticle.recupererArticle(idArticle);
+		managerArticle.
 		
 		
 		
 		
 		System.out.println(request.getParameter("prix") + "prix");//TODO
 		
-		EnchereManager manager = EnchereManager.getInstance();
+		
+		
+
 		
 //		manager.encherir(dateEnchere, montantEnchere, utilisateur, article);
 		// permet d'enchérir sur un article
