@@ -20,21 +20,69 @@ public class Utilisateur implements Serializable {
 	private String ville;
 	private String motDePasse;
 	private Integer credit;
-	private boolean administrateur;
-	private boolean actif;
-	private boolean supprime;
+	private Boolean administrateur;
+	private Boolean actif;
+	private Boolean supprime;
 	
 	// Constructeurs
 	/**
 	 * Constructeur vide par défaut
 	 */
 	public Utilisateur() {
+		credit = 0;
+		administrateur = false;
 		actif = true;
 		supprime = false;
 	}
 	
 	/**
-	 * Constructeur
+	 * 
+	 * Constructeur pour la saisie utilisateur (création)
+	 * @param pseudo
+	 * @param nom
+	 * @param prenom
+	 * @param email
+	 * @param telephone
+	 * @param rue
+	 * @param codePostal
+	 * @param ville
+	 * @param motDePasse
+	 */
+	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
+			String codePostal, String ville, String motDePasse) {
+		this();
+		setPseudo(pseudo);
+		setNom(nom);
+		setPrenom(prenom);
+		setEmail(email);
+		setTelephone(telephone);
+		setRue(rue);
+		setCodePostal(codePostal);
+		setVille(ville);
+		setMotDePasse(motDePasse);
+	}
+	
+	/**
+	 * 
+	 * Constructeur pour la saisie utilisateur (modification)
+	 * @param pseudo
+	 * @param nom
+	 * @param prenom
+	 * @param email
+	 * @param telephone
+	 * @param rue
+	 * @param codePostal
+	 * @param ville
+	 * @param motDePasse
+	 */
+	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
+			String codePostal, String ville, String motDePasse, Integer noUtilisateur) {
+		this(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse);
+		setNoUtilisateur(noUtilisateur);
+	}
+	
+	/**
+	 * Constructeur initial
 	 * @param pseudo
 	 * @param nom
 	 * @param prenom
@@ -49,26 +97,37 @@ public class Utilisateur implements Serializable {
 	 */
 	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
 			String codePostal, String ville, String motDePasse, Integer credit, boolean administrateur) {
-		this();
-		setPseudo(pseudo);
-		setNom(nom);
-		setPrenom(prenom);
-		setEmail(email);
-		setTelephone(telephone);
-		setRue(rue);
-		setCodePostal(codePostal);
-		setVille(ville);
-		setMotDePasse(motDePasse);
+		this(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse);
 		setCredit(credit);
 		setAdministrateur(administrateur);
 	}
 	
+	/**
+	 * 
+	 * Constructeur de l'utilisateur a la sortie du systeme de persistance
+	 * @param pseudo
+	 * @param nom
+	 * @param prenom
+	 * @param email
+	 * @param telephone
+	 * @param rue
+	 * @param codePostal
+	 * @param ville
+	 * @param motDePasse
+	 * @param credit
+	 * @param administrateur
+	 * @param noUtilisateur
+	 * @param actif
+	 */
 	public Utilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
 			String codePostal, String ville, String motDePasse, Integer credit, boolean administrateur, int noUtilisateur, boolean actif ) {
 		this(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, credit, administrateur);
 		setNoUtilisateur(noUtilisateur);
 		setActif(actif);
 	}
+
+	
+
 
 	// Getters et Setters
 	/**

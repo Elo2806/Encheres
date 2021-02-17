@@ -29,7 +29,7 @@ public class UtilisateurManager {
 
 	public void ajouterUtilisateur(String pseudo, String nom, String prenom, String email, String telephone, String rue,
 			String codePostal, String ville, String motDePasse) throws BLLException {
-		Utilisateur nouvelUtilisateur = creerUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville,
+		Utilisateur nouvelUtilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville,
 				motDePasse);
 
 		try {
@@ -59,7 +59,7 @@ public class UtilisateurManager {
 	 */
 	public Utilisateur modifierUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
 			String rue, String codePostal, String ville, String motDePasse, Integer noUtilisateur) throws BLLException {
-		Utilisateur user = creerUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, noUtilisateur);
+		Utilisateur user = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, noUtilisateur);
 		try {
 			utilisateurdao.update(user);
 		} catch (DALException dale) {
@@ -68,48 +68,6 @@ public class UtilisateurManager {
 		return user;
 	}
 
-	/**
-	 * 
-	 * Méthode permettant de créer une instance d'utilisateur avec noUtilisateur récupéré
-	 * @param pseudo
-	 * @param nom
-	 * @param prenom
-	 * @param email
-	 * @param telephone
-	 * @param rue
-	 * @param codePostal
-	 * @param ville
-	 * @param motDePasse
-	 * @param noUtilisateur
-	 * @return
-	 */
-	private Utilisateur creerUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, String codePostal, String ville, String motDePasse, Integer noUtilisateur) {
-		Utilisateur user = creerUtilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse);
-		user.setNoUtilisateur(noUtilisateur);
-		return user;
-	}
-
-	/**
-	 * 
-	 * Méthode permettant de créer une instance d'utilisateur  
-	 * @param pseudo
-	 * @param nom
-	 * @param prenom
-	 * @param email
-	 * @param telephone
-	 * @param rue
-	 * @param codePostal
-	 * @param ville
-	 * @param motDePasse
-	 * @return
-	 */
-	private Utilisateur creerUtilisateur(String pseudo, String nom, String prenom, String email, String telephone,
-			String rue, String codePostal, String ville, String motDePasse) {
-		Utilisateur user = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville, motDePasse, 0,
-				false);
-		return user;
-	}
 	
 	public Utilisateur supprimerCompte(Utilisateur utilisateurAffiche) throws BLLException {
 		try {
@@ -120,8 +78,6 @@ public class UtilisateurManager {
 		return utilisateurAffiche;
 		
 	}
-	
-	
 
 	/**
 	 * 
@@ -179,7 +135,5 @@ public class UtilisateurManager {
 
 		return utilisateur;
 	}
-
-	
 
 }

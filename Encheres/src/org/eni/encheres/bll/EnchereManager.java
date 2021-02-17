@@ -3,7 +3,7 @@
  */
 package org.eni.encheres.bll;
 
-import java.time.LocalDate;
+
 import java.time.LocalDateTime;
 
 import org.eni.encheres.bll.exceptions.BLLException;
@@ -37,18 +37,11 @@ public class EnchereManager {
 	}
 
 	public void encherir(LocalDateTime dateEnchere, Integer montantEnchere, Utilisateur utilisateur, ArticleVendu article) throws BLLException {
-		Enchere nouvelleEnchere = creerEnchere(dateEnchere, montantEnchere, utilisateur, article);
+		Enchere nouvelleEnchere = new Enchere(dateEnchere, montantEnchere, utilisateur, article);
 		try {
 			enchereDao.create(nouvelleEnchere);
 		} catch (DALException e) {
 			throw new BLLException("Erreur lors de l'accès à la DAL");
 		}
-	}
-
-	
-	public Enchere creerEnchere(LocalDateTime dateEnchere, Integer montantEnchere, Utilisateur utilisateur,
-			ArticleVendu article) {
-		Enchere newEnchere = new Enchere(dateEnchere, montantEnchere, utilisateur, article);
-		return newEnchere;
 	}
 }
