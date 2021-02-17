@@ -191,7 +191,7 @@
 			<div>
 				<div>
 					<c:choose>
-					<c:when test="${!empty sessionScope.utilisateur}">
+					<c:when test="${(!empty sessionScope.utilisateur) and (sessionScope.utilisateur.actif eq 'true')}">
 						<a href="<c:url value="/ServletEnchere?noArticle=${article.key}"/>"
 							id="libelleArticle">${article.value.nomArticle}</a>
 					</c:when>
@@ -211,9 +211,7 @@
 					Fin de l'enchère : <span id="dateFinEnchere">${article.value.dateFinEncheres}</span>
 				</div>
 				<div>
-					Vendeur : <span><a
-						href="<c:url value="/ServletProfil"/>"
-						id="pseudoVendeur">${article.value.vendeur.pseudo}</a></span>
+					Vendeur : <span>${article.value.vendeur.pseudo}</span>
 				</div>
 			</div>
 </div>
