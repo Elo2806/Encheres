@@ -20,6 +20,8 @@ import org.eni.encheres.dal.exceptions.DALException;
  */
 public class ArticleManager {
 
+	private static final String ERREUR_DAL = "Erreur lors du traitement en DAL";
+	
 	private static ArticleManager instance;
 	private ArticleDAO articleDao;
 
@@ -55,18 +57,36 @@ public class ArticleManager {
 	public ArticleVendu ajouterArticle(String nomArticle, String description, LocalDateTime dateDebutEncheres,
 			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie, int prixInitial, String rue, String codePostal, String ville) throws BLLException {
 
+		Retrait nouveauRetrait = creerRetrait(rue,codePostal,ville,null);
 		ArticleVendu nouvelArticle = creerArticle(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur,
-				categorie);
-		Retrait nouveauRetrait = creerRetrait(rue,codePostal,ville,nouvelArticle);
-		nouvelArticle.setRetrait(nouveauRetrait);
-		nouvelArticle.setPrixInitial(prixInitial);
+				categorie, nouveauRetrait, prixInitial);
+		
 		try {
 			nouvelArticle = this.articleDao.create(nouvelArticle);
 		} catch (DALException dale) {
-			throw new BLLException("Erreur lors de l'acces à la DAL", dale);
+			throw new BLLException(ERREUR_DAL, dale);
 		}
 		return nouvelArticle;
 	}
+	
+	/**
+	 * 
+	 * Méthode permettant de récupérer la map des articles en fonction de leur numero d'article
+	 * @return
+	 * @throws BLLException
+	 */
+	public Map<Integer, ArticleVendu> getMapArticles() throws BLLException {
+		 Map<Integer, ArticleVendu> articles;
+		 
+		 try {
+			articles = articleDao.findAll();
+		} catch (DALException dale) {
+			throw new BLLException(ERREUR_DAL,dale);
+		}
+		 
+		return articles;
+	}
+	
 	
 	/**
 	 * 
@@ -92,33 +112,21 @@ public class ArticleManager {
 	 * @param dateFinEncheres
 	 * @param vendeur
 	 * @param categorie
+	 * @param retrait 
+	 * @param prixInitial 
 	 * @return
 	 */
 	public ArticleVendu creerArticle(String nomArticle, String description, LocalDateTime dateDebutEncheres,
-			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie) {
+			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie, Retrait retrait, Integer prixInitial) {
 
 		ArticleVendu newArticle = new ArticleVendu(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur,
 				categorie);
-
+		newArticle.setRetrait(retrait);
+		newArticle.setPrixInitial(prixInitial);
+		//Création de la liaison bidirectionnelle
+		retrait.setArticle(newArticle);
+		
 		return newArticle;
-	}
-
-	/**
-	 * 
-	 * Méthode permettant de récupérer la map des articles en fonction de leur numero d'article
-	 * @return
-	 * @throws BLLException
-	 */
-	public Map<Integer, ArticleVendu> getMapArticles() throws BLLException {
-		 Map<Integer, ArticleVendu> articles;
-		 
-		 try {
-			articles = articleDao.findAll();
-		} catch (DALException dale) {
-			throw new BLLException("Erreur lors du traitement en DAL",dale);
-		}
-		 
-		return articles;
 	}
 
 }

@@ -168,9 +168,6 @@ public class ArticleDAOImpl implements ArticleDAO {
 							rs.getString(COL_ART_DESCRIPTION), rs.getTimestamp(COL_ART_DATE_DEBUT_ENCHERES).toLocalDateTime(),
 							rs.getTimestamp(COL_ART_DATE_FIN_ENCHERES).toLocalDateTime(), utilisateur, categorie,retrait);		
 					
-					//Création de la liaison bidirectionnelle
-					retrait.setArticle(article);
-					
 					//Ajout de l'article à la map
 					mapArticles.put(article.getNoArticle(), article);
 				}

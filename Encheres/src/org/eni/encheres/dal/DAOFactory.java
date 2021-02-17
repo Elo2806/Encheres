@@ -106,6 +106,10 @@ public abstract class DAOFactory {
 		ArticleVendu newArticle = new ArticleVendu(nomArticle, description, dateDebutEncheres, dateFinEncheres, vendeur,
 				categorie);
 		newArticle.setRetrait(retrait);
+		
+		//Création de la liaison bidirectionnelle
+		retrait.setArticle(newArticle);
+		
 		return newArticle;
 	}
 	/**
