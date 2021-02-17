@@ -3,13 +3,15 @@
  */
 package org.eni.encheres.bo;
 
+import java.io.Serializable;
+
 /**
  * 
  * @author Taharqa
  * Créé le: 9 févr. 2021
  * Mofifié le: 9 févr. 2021
  */
-public class Retrait {
+public class Retrait implements Serializable {
 
 	private String rue;
 	private String codePostal;

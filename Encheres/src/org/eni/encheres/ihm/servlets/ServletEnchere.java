@@ -80,6 +80,7 @@ public class ServletEnchere extends HttpServlet {
 //		ArticleVendu articleEnVente = null;
 		Map<Integer,ArticleVendu> articlesEnBase = (Map<Integer,ArticleVendu>)getServletContext().getAttribute(APP_ATTR_MAP_ARTICLES);
 		ArticleVendu articleEnVente = articlesEnBase.get(idArticle);
+		System.out.println("articl en vente : " + articleEnVente);//TODO
 //		int meilleureOffre = articleEnVente.getEnchereMax().getMontantEnchere();
 //		int miseAPrix = articleEnVente.getPrixInitial();
 //		int prixVente = 0;
@@ -92,7 +93,7 @@ public class ServletEnchere extends HttpServlet {
 //		}
 		Integer propositionEnchere = Integer.parseInt(request.getParameter(PARAM_PROPOSITION));
 		Map<Integer, Enchere> encheres = (Map<Integer, Enchere>)((Utilisateur)request.getSession().getAttribute("utilisateur")).getMapEncheres();
-		System.out.println(encheres);
+		System.out.println(encheres+ "enchere1"); // TODO
 		if(propositionEnchere > meilleureEnchere) {
 			
 			System.out.println(encheres.get(idArticle) + " : dans liste encheres"); // TODO
@@ -115,8 +116,9 @@ public class ServletEnchere extends HttpServlet {
 				}
 			}
 			if(!erreur) {
-				System.out.println(meilleureEnchere);
+				meilleureEnchere = propositionEnchere;
 				encheres.put(idArticle, enchereRetournee);
+				System.out.println(encheres+ "enchere2");
 				request.setAttribute(ATTR_BRAVO, true);
 				request.setAttribute(ATTR_ARTICLE_EN_VENTE, articleEnVente);
 				request.setAttribute(ATTR_MEILLEURE_ENCHERE, meilleureEnchere);
@@ -124,6 +126,7 @@ public class ServletEnchere extends HttpServlet {
 			}
 			
 		} else {
+			request.setAttribute(ATTR_MEILLEURE_ENCHERE, meilleureEnchere);
 			request.setAttribute(ATTR_ENCHERE_INSUFFISANTE, true);
 		}
 		
@@ -157,7 +160,7 @@ public class ServletEnchere extends HttpServlet {
 		System.out.println("Servlet détruite");
 		super.destroy();
 	}
-	
+	// TODO à supprimer :
 	@Override
 	public void init() throws ServletException {
 		System.out.println("Servlet init");
