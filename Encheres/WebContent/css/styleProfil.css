@@ -1,12 +1,10 @@
 @charset "UTF-8";
 
-.titre
-{
-	text-align: center;
-}
 
-form{
-float:center
+
+.content{
+display:flex;
+justify-content:center;
 }
 
 div.intitule{
