@@ -62,7 +62,6 @@ public class ServletConnexion extends HttpServlet {
 			try {
 				utilisateur = manager.rechercherUtilisateur(identifiants, motDePasse);
 			} catch (BLLException blle) {
-				blle.printStackTrace();
 				// Si les identifiant/mot de passe pas existants :
 				request.setAttribute("erreurIdentifiant", true);
 				getServletContext().getRequestDispatcher("/connexion").forward(request, response);
@@ -70,10 +69,9 @@ public class ServletConnexion extends HttpServlet {
 			
 			HttpSession session = request.getSession();
 			session.setAttribute("utilisateur", utilisateur);
-			System.out.println("nb encheres :" + utilisateur.getMapEncheres().size());//TODO supprimer
 	
 			// Si les identifiant/mot de passe ok et si attribut 'supprime"=false :
-				getServletContext().getRequestDispatcher("/ServletAccueil").forward(request, response);
+			getServletContext().getRequestDispatcher("/ServletAccueil").forward(request, response);
 			
 	}
 

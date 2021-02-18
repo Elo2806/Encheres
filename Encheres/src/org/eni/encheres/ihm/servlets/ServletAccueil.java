@@ -196,31 +196,31 @@ public class ServletAccueil extends HttpServlet {
 		
 		if (ACHAT.name().equalsIgnoreCase(typeFiltre)) {
 			encheresOuvertes = checkToBoolean(request.getParameter(PARAM_ENCHERES_OUVERTES));
-			if (encheresOuvertes) {
+			if (!encheresOuvertes) {
 				listFiltres.add(Filtre.ENCHERE_OUVERTES);
 			}
 
 			encheresEnCours = checkToBoolean(request.getParameter(PARAM_MES_ENCHERE_EN_COURS));
-			if (encheresEnCours) {
+			if (!encheresEnCours) {
 				listFiltres.add(Filtre.MES_ENCHERES_EN_COURS);
 			}
 
 			encheresRemportes = checkToBoolean(request.getParameter(PARAM_MES_ENCHERES_REMPORTES));
-			if (encheresRemportes) {
+			if (!encheresRemportes) {
 				listFiltres.add(Filtre.MES_ENCHERES_REMPORTES);
 			}
 		} else if (VENTE.name().equalsIgnoreCase(typeFiltre)) {
 			ventesEnCours = checkToBoolean(request.getParameter(PARAM_VENTES_EN_COURS));
-			if (ventesEnCours) {
+			if (!ventesEnCours) {
 				listFiltres.add(Filtre.VENTES_EN_COURS);
 			}
 			ventesNonDebutes = checkToBoolean(request.getParameter(PARAM_VENTES_NON_DEBUTES));
-			if (ventesNonDebutes) {
+			if (!ventesNonDebutes) {
 				listFiltres.add(Filtre.VENTES_NON_DEBUTES);
 			}
 			ventesTerminees = checkToBoolean(request.getParameter(PARAM_VENTES_TERMINEES));
-			if (ventesTerminees) {
-				listFiltres.add(Filtre.VENTES_NON_DEBUTES);
+			if (!ventesTerminees) {
+				listFiltres.add(Filtre.VENTES_TERMINEES);
 			}
 
 		}
@@ -242,7 +242,7 @@ public class ServletAccueil extends HttpServlet {
 		Map<Integer, ArticleVendu> mapArticlesFiltres = new HashMap<>();
 		Map<Integer, ArticleVendu> articles = (Map<Integer, ArticleVendu>) getServletContext()
 				.getAttribute(APP_ATTR_MAP_ARTICLES);
-		
+		System.out.println("filtres"+ listFiltres);//TODO Suprimer
 		for (ArticleVendu article : articles.values()) {
 				
 			if (categorieFiltre.getNoCategorie() == article.getCategorie().getNoCategorie()) {
@@ -258,8 +258,8 @@ public class ServletAccueil extends HttpServlet {
 								break;
 							case MES_ENCHERES_EN_COURS:
 								ajouterArticle = article.getDateFinEncheres().isAfter(LocalDateTime.now())
-										      && article.getDateDebutEncheres().isBefore(LocalDateTime.now());
-								//&& article.getAcheteur().getNoUtilisateur().equals(utilisateur.getNoUtilisateur()); //TODO a revoir
+										      && article.getDateDebutEncheres().isBefore(LocalDateTime.now())
+										      && utilisateur.getMapEncheres().containsKey(article.getNoArticle());
 								break;
 							case MES_ENCHERES_REMPORTES:
 								if(article.getAcheteur() !=null) {

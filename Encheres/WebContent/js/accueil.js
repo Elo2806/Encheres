@@ -6,7 +6,10 @@ function changeType(type) {
 		if(!elements[i].disabled){
 			elements[i].checked = false;
 		}
-		elements[i].disabled = !elements[i].disabled
+		elements[i].disabled = !elements[i].disabled;
+		//elements[i].checked = !elements[i].checked;
+		elements[i].checked = true;
+		console.log(elements[i].checked);
 	}
 }
 
