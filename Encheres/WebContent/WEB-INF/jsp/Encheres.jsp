@@ -137,7 +137,7 @@
 					
 						<div class="container">
 							<div class="row">
-								<div class="col-12">
+								<div class="col-2">
 									<p id="libelleArticle">${requestScope.articleEnVente.nomArticle }</p>
 								</div>
 							</div>
@@ -217,7 +217,7 @@
 								<div class="col-8">
 									<div id="Adresse">
 										<span>${requestScope.articleEnVente.retrait.rue}</span><br>
-										<span id="codePostal">${requestScope.articleEnVente.retrait.codePostal}</span>
+										<span id="codePostal">${requestScope.articleEnVente.retrait.codePostal}</span><br>
 										<span id="ville">${requestScope.articleEnVente.retrait.ville}</span>
 									</div>
 								</div>
@@ -237,10 +237,10 @@
 						</div>
 						<br>
 
-<div class="container">
+						<div class="container">
 							<div class="row">
 							
-								<div class="col-12">
+								
 						<c:choose>
 							<c:when test="${empty requestScope.venteTerminee}">
 								<form
@@ -258,6 +258,7 @@
 											value=${requestScope.meilleureEnchere }> 
 											<input
 											type="submit"
+											class="btn btn-primary btn-lg"
 											value="Enchérir">
 									</div>
 								</form>
@@ -276,31 +277,46 @@
 										type="submit"
 										value="Retrait Effectué">
 								</form>
+								<br>
 							</c:when>
 							<c:when test="${!empty requestScope.vainqueur}">
-								<div>
-									<p>
-										Tel : <span id="vendeurTelephone">${requestScope.articleEnVente.vendeur.telephone}</span>
-									</p>
+							
+								<div class="container">
+								<div class="row">
+								<div class="col-4">
+									<p>Tel :</p> 
+								</div> 
+								<div class="col-8">
+								<span id="vendeurTelephone">${requestScope.articleEnVente.vendeur.telephone}</span>
 								</div>
-								<div>
-									<p>
-										Mail : <span id="vendeurEmail">${requestScope.articleEnVente.vendeur.email}</span>
-									</p>
 								</div>
-								<a href="/accueil"><input
+								</div>
+								<br>
+								
+								<div class="container">
+								<div class="row">
+								<div class="col-4">
+									<p>Mail : </p>
+									</div><div class="col-8">
+								<span id="vendeurEmail">${requestScope.articleEnVente.vendeur.email}</span>
+									</div>
+									</div>
+								</div>
+								<br>
+								<a href=<c:url value="/accueil"/>"><input
 									type="button"
+									class="btn btn-primary btn-lg"
 									value="Back"></a>
 							</c:when>
 							<c:otherwise>
-								<a href="/accueil"><input
+								<a href=<c:url value="/accueil"/>"><input
 									type="button"
 									value="Back"></a>
 							</c:otherwise>
 						</c:choose>
 						</div>
 						</div>
-						</div>
+						
 						
 						
 					</div>
