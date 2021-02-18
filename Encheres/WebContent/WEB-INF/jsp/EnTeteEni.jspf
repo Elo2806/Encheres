@@ -1,2 +1,2 @@
-<a href="<%=request.getContextPath()%>/ServletAccueil"><img alt="logo" src="<%=request.getContextPath()%>/images/logoENI.png"></a>
+<a href="<%=request.getContextPath()%>/ServletAccueil"><img alt="logo" class="rounded" src="<%=request.getContextPath()%>/images/logoENI.png"></a>
 

@@ -48,7 +48,7 @@
 		</c:when>
 		<c:otherwise>
 			<div>
-				<span><li><a href="<c:url value="/ServletConnexion"/>">Se connecter - S'inscrire </a></li></span>
+				<span class="connexion"><li><a href="<c:url value="/ServletConnexion"/>">Se connecter - S'inscrire </a></li></span>
 			</div>
 		</c:otherwise>
 	</c:choose>
@@ -90,8 +90,7 @@
 			</select>
 		</div>
 		<br>
-		<hr>
-		<br>
+	
 
 		<!-- Attribut en plus lors de la connection -->
 		<c:if test="${!empty sessionScope.utilisateur}">
@@ -194,7 +193,9 @@
 </div>	</div>
 				</div>	
 	</form>
-
+	<br>
+	<hr>
+		<br>
 	<!-- Liste des enchères  -->
 	
 	<section id="encheres">
@@ -206,15 +207,18 @@
 			items="${mapArticlesAffiches}">
 
 			<!--  <option value="${article.key}">${categorie.value.libelle}</option> -->
-			<div id="block1" class="col-md-6 col-lg-4">
+			<div id="block1" class="col-lg-6">
 <div class="articles">
-			<div>
-				<img
+<div class="container">
+  <div class="row"> 
+    <div class="col-6">
+			
+				<img class="picture-left"
 					alt="photo objet"
-					src="">
+					src="images/ecommerce-navigation.png">
 			</div>
-
-			<div>
+<div class="col-6">
+			<div  class="paragraph-right" >
 				<div>
 					<c:choose>
 					<c:when test="${(!empty sessionScope.utilisateur) and (sessionScope.utilisateur.actif eq 'true')}">
@@ -241,7 +245,7 @@
 				</div>
 			</div>
 
-</div></div>
+</div></div></div></div></div>
 		</c:forEach>
 		</div>
 		

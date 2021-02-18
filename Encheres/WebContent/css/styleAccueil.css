@@ -35,6 +35,12 @@ ul {
     list-style: none;
 }
 
+
+
+img.picture-left {
+  width : 100%;
+}
+
 main nav ul {
     clear: both;
     display:flex;
@@ -86,6 +92,10 @@ border-style:solid;
 
 #libelleArticle{
 	font-weight: bold;
+}
+
+#photo{
+	width:10 px;
 }
 #nbPoints{
 	color: #ff7a00;
