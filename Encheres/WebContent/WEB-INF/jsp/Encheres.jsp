@@ -303,14 +303,15 @@
 									</div>
 								</div>
 								<br>
-								<a href=<c:url value="/accueil"/>"><input
+								<a href="<c:url value="/accueil"/>"><input
 									type="button"
 									class="btn btn-primary btn-lg"
 									value="Back"></a>
 							</c:when>
 							<c:otherwise>
-								<a href=<c:url value="/accueil"/>"><input
+								<a href="<c:url value="/accueil"/>"><input
 									type="button"
+									class="btn btn-primary btn-lg"
 									value="Back"></a>
 							</c:otherwise>
 						</c:choose>
