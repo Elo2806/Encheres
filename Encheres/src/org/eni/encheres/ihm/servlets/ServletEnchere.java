@@ -2,7 +2,6 @@ package org.eni.encheres.ihm.servlets;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
@@ -10,15 +9,12 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.JOptionPane;
 
-import org.eni.encheres.bll.ArticleManager;
 import org.eni.encheres.bll.EnchereManager;
 import org.eni.encheres.bll.exceptions.BLLException;
 import org.eni.encheres.bo.ArticleVendu;
 import org.eni.encheres.bo.Enchere;
 import org.eni.encheres.bo.Utilisateur;
-import org.eni.encheres.ihm.exceptions.MotDePasseException;
 
 /**
  * Servlet implementation class ServletEnchere
@@ -229,18 +225,5 @@ public class ServletEnchere extends HttpServlet {
 			meilleureEnchere = miseAPrix;
 		}
 		return meilleureEnchere;
-	}
-	
-	// TODO à supprimer :
-	@Override
-	public void destroy() {
-		System.out.println("Servlet détruite");
-		super.destroy();
-	}
-	// TODO à supprimer :
-	@Override
-	public void init() throws ServletException {
-		System.out.println("Servlet init");
-		super.init();
 	}
 }

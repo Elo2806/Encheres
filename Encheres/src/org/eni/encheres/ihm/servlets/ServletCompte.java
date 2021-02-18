@@ -146,8 +146,8 @@ public class ServletCompte extends HttpServlet {
 			String ville, String oldMdp, String newMdp, String confirmation, UtilisateurManager manager)
 			throws ServletException, IOException {
 		/*
-		 * TODO
-		 * Creer methode differenciée modifierUtilisateur (admin + user)
+		 * 
+		 *TODO Creer methode differenciée modifierUtilisateur (admin + user) pour nom et prenom
 		 */
 
 		String nom;
