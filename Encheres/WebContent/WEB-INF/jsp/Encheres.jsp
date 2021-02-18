@@ -132,7 +132,7 @@
 						src="images/ecommerce-navigation.png">
 				</div>
 				
-				<div class="col-6">
+				<div class="col-6" id="encadre">
 					<div class="descriptionVente">
 					
 						<div class="container">
