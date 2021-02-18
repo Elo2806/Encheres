@@ -118,7 +118,7 @@ public class ServletAccueil extends HttpServlet {
 			mapCategories = manager.getCategories();
 			categories.addAll(mapCategories.values());
 		} catch (BLLException blle) {
-			blle.printStackTrace();// TODO voir si possible de faire mieux en gestion de
+			blle.printStackTrace();
 		}
 		getServletContext().setAttribute(APP_ATTR_MAP_CATEGORIES, mapCategories);
 	}
@@ -137,7 +137,7 @@ public class ServletAccueil extends HttpServlet {
 		try {
 			articles = articleManager.getMapArticles();
 		} catch (BLLException blle) {
-			blle.printStackTrace();// TODO voir si possible de faire mieux en gestion de
+			blle.printStackTrace();
 		}
 		
 		//Mise à jour des acheteurs de la liste d'articles
@@ -173,7 +173,7 @@ public class ServletAccueil extends HttpServlet {
 		try {
 			mapArticleAffiche = creerMapArticlesFiltres(utilisateur, categorieFiltre, listFiltres, texteRecherche);
 		} catch (FiltreInexistantException fie) {
-			fie.printStackTrace();// TODO voir comment gérer cette exception
+			fie.printStackTrace();
 		}
 
 		return mapArticleAffiche;
