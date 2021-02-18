@@ -1,5 +1,26 @@
 @charset "UTF-8";
-.pave{
+.logo{
+	width: 25%;
+}
+
+.blockConnection{
+	background-color: rgba(255, 250, 240, 0.9);
+	border-style:solid;
+	margin-top: 50px;
+	padding: 30px;
+    margin: 30px 0;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: indigo;
+    
+}
+.pageConnection{
+	display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+/* .pave{
 	display:flex;
 	justify-content: space-between;
 	width: 30%;
@@ -68,4 +89,4 @@
 	border-radius: 10px;
 
  
-	}
+	} */
