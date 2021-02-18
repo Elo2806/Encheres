@@ -329,7 +329,7 @@
 					<th>
 						<div>
 
-							<a href="<%=request.getContextPath()%>"> <input
+							<a href="<c:url value="/ServletAccueil"/>"> <input
 								type="button"
 								value="Annuler" /></a>
 						</div>

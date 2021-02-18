@@ -26,7 +26,7 @@
 		</div>
 		<div>
 			<label for="description">Description : </label>
-			<textarea name="description" row="10" cols="30" id="description" required></textarea>
+			<textarea name="description" rows="10" cols="30" id="description" required></textarea>
 	 
 		</div>
 		<div>

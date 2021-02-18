@@ -25,7 +25,7 @@
 	<%@include file="EnTeteEni.jspf"%>
 	
 	<section>
-		<form method="post" action="<%=request.getContextPath()%>/ServletConnexion">
+		<form method="post" action="<c:url value="/ServletConnexion"/>">
 			<div id="identifiants" class="pave">
 				<div class="intitule">
 					<label for="identifiant" class="element">Identifiant : </label>
@@ -46,7 +46,7 @@
 			</div>
 		</form>
 		
-		<a href="<%=request.getContextPath()%>/ServletCompte?creation=true&modification=true" id="lien_creer_compte" class="pave"><button name="creer" id="creer_compte">Creer un compte</button></a>
+		<a href="<c:url value="/ServletCompte?creation=true&modification=true"/>" id="lien_creer_compte" class="pave"><button name="creer" id="creer_compte">Creer un compte</button></a>
 	</section>
 	
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
