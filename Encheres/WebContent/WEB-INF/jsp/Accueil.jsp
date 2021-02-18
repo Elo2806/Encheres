@@ -5,6 +5,8 @@
 <%@ taglib
 	prefix="c"
 	uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -271,6 +273,7 @@
 												</span> points
 											</div>
 											<div>
+			
 												Fin de l'enchère : <span id="dateFinEnchere">${article.value.dateFinEncheres}</span>
 											</div>
 											<div>
