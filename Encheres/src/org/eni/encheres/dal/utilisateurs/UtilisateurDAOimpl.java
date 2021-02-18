@@ -229,7 +229,9 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 					}
 				}
 				
-				mapEnchere = utilisateur.getMapEncheres();
+				if(utilisateur != null) 
+				
+				{mapEnchere = utilisateur.getMapEncheres();
 						
 				pstmt = cnx.prepareStatement(SQL_SELECT_ENCHERES_BY_USER);
 				
@@ -250,6 +252,7 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 				
 				//Validation de la transaction
 				cnx.commit();
+				}
 				
 				rs.close();
 				pstmt.close();
