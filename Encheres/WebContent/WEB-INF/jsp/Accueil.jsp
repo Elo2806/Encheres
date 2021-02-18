@@ -8,7 +8,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <link href="css/styleAccueil.css" rel="stylesheet"/>
+<link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Crete+Round&display=swap" rel="stylesheet">
 <meta
 	http-equiv="Content-Type"
 	content="text/html; charset=UTF-8">
@@ -20,7 +26,7 @@
 </style>
 </head>
 <body>
-
+<div class="container" style="margin-top: 30px;">
 <!-- Section en tête du contenu -->
 <header>
 <!-- Section LOGO -->
@@ -41,7 +47,7 @@
 		</c:when>
 		<c:otherwise>
 			<div>
-				<span><li><a href="<c:url value="/ServletConnexion"/>">S'inscrire - Se connecter</a></li></span>
+				<span><li><a href="<c:url value="/ServletConnexion"/>">Se connecter - S'inscrire </a></li></span>
 			</div>
 		</c:otherwise>
 	</c:choose>
@@ -64,9 +70,11 @@
 				name="rechercheTexte"
 				type="search"
 				placeholder="Le nom de l'article contient"
+				class="col-md-6 col-lg-4"
 				value="<c:if test="${!empty param.rechercheTexte}">${param.rechercheTexte}</c:if>" 
 			/>
 		</div>
+		<br>
 		<div>
 			<label for="categorieFiltre">Categorie : </label>
 			<select
@@ -80,11 +88,20 @@
 				</c:forEach>
 			</select>
 		</div>
+		<br>
+		<hr>
+		<br>
 
 		<!-- Attribut en plus lors de la connection -->
 		<c:if test="${!empty sessionScope.utilisateur}">
 			<div id="Filtres">
 				<div>
+				
+				
+				<div class="container">
+	<div class="row">
+	<div id="radio1" class="col-md-6 col-lg-4">
+	
 					<div>
 						<input
 							type="radio"
@@ -123,7 +140,8 @@
 						</div>
 					</div>
 				</div>
-				<div>
+				
+				<div id="radio2" class="col-md-6 col-lg-4">
 					<div>
 						<input
 							type="radio"
@@ -159,28 +177,35 @@
 							<label>ventes terminées</label>
 						</div>
 					</div>
-				</div>
-			</div>
+					</div>
+					
+			
+			
 		</c:if>
-
+<div id="submit" class="col-md-6 col-lg-4">
 		<div>
-			<input
+			<button class="btn btn-primary btn-lg"
 				type="submit"
-				value="Rechercher" />
+				value="Rechercher" />Rechercher</button>
 		</div>
+</div>
 
+</div>	</div>
+				</div>	
 	</form>
 
 	<!-- Liste des enchères  -->
-	<!--<div class="Enchere"> a supprimer si affichage ok-->
 	
 	<section id="encheres">
+	<div class="container">
+	<div class="row">
 
 		<c:forEach
 			var="article"
 			items="${mapArticlesAffiches}">
 
 			<!--  <option value="${article.key}">${categorie.value.libelle}</option> -->
+			<div id="block1" class="col-md-6 col-lg-4">
 <div class="articles">
 			<div>
 				<img
@@ -214,10 +239,13 @@
 					Vendeur : <span>${article.value.vendeur.pseudo}</span>
 				</div>
 			</div>
-</div>
+
+</div></div>
 		</c:forEach>
+		</div>
+		
+		</div>
 	</section>	
-	<!-- </div> a supprimer -->
 
 	<script src="<c:url value="/js/accueil.js"/>"></script>
 	<!--<script src="<c:url value="/WEB-INF/Accueil/accueil.js"/>"></script> A revoir-->
@@ -240,6 +268,24 @@
 			</script>
 		</c:if>
 	</c:if>
+	 </div>
 	</main>
+	
+	
+	 <footer>
+	 <div class="container">
+	 <hr>
+        <!-- pied de page -->
+        <div id="footer-author">
+            <!-- auteur -->
+            <a href="mailto:contact@eni-ecole.fr" title="Si vous désirez nous écrire">ENI ECOLE</a>
+        </div>
+        <div id="footer-copyright">
+            <!-- copyright -->
+            <a href="http://www.eni-ecole.fr" title="Eni ECOLE " target="_blank">Copyright&copy; ENI ECOLE Informatique </a>
+        </div>
+        </div>
+    </footer>
+ 
 </body>
 </html>

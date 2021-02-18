@@ -6,6 +6,12 @@
 
 h1 {
     font-family: 'Crete Round', serif;
+    text-align:center;
+    margin-top: 50px; 
+}
+
+h3{
+margin-top: 30px;	
 }
 
 body {
@@ -18,7 +24,11 @@ hr{
     height: 1px;
     background-color:slategrey;
     border: none;}
-    
+
+
+footer{
+	margin-bottom: 50px;
+}    
 /* MAIN */    
 
 ul {
@@ -34,12 +44,13 @@ main nav ul {
 
 main nav ul :hover {
     background: linear-gradient(ghostwhite, black);
+    border-radius: 10px;
 }
 
 main nav ul li {
     text-transform: uppercase;
     font-weight: bold;
-    margin-right: 20px;
+    margin: 0 20px;
     float: left;
     text-align: center;
     line-height: 50px;
@@ -57,19 +68,27 @@ main nav ul li a:hover {
     color: black;
     text-decoration: none;
     background: ghostwhite;
-    border-radius: 3px;
 }
 
 
-#encheres{
-	display:flex;
-	flex-direction: row;
-	justify-content:space-between;
-}
 .articles{
 border-style:solid;
 	background-color: rgba(255, 250, 240, 0.9);
 	border-style:solid;
-	width: 40%;
+	margin-top: 50px;
+	padding: 30px;
+    margin: 30px 0;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: indigo;
+	
+}
+
+#libelleArticle{
+	font-weight: bold;
+}
+#nbPoints{
+	color: #ff7a00;
+    font-weight: bold;
 	
 }

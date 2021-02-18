@@ -9,11 +9,15 @@
 <html>
 
 <head>
-<link href="<c:url value='/css/styleCompte.css' />" rel="stylesheet"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<link href="css/styleCompte.css" rel="stylesheet"/>
 <meta
 	http-equiv="Content-Type"
 	content="text/html; charset=UTF-8">
-<title>Creer Compte</title>
+<title>Compte</title>
 
 
 
@@ -400,7 +404,7 @@
 									type="password"
 									name="confirmation"
 									id="confirmation"
-									placeholder="Veuillez confirmer votre nouveau mot de passe"
+									placeholder="Confirmer votre nouveau mot de passe"
 									required>
 							</div>
 						</th>

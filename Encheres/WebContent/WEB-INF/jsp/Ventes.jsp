@@ -4,10 +4,16 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<link href="css/styleVente.css" rel="stylesheet"/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Enchère</title>
 </head>
 <body>
+<div class="container">
 	<%@include file="EnTeteEni.jspf"%>
 <!-- image à insérer dynamiquement -->
 	<img alt="photo article" src="">
@@ -68,7 +74,7 @@
 			<div>
 				<label for="ville">Ville : </label>
 				<input type="text" name="ville" id="ville" required value="<c:if test="${!empty param.ville}">${requestScope.ville}</c:if>
-				                                                           <c:if test="${param.ville}">${param.ville}</c:if>">>
+				                                                           <c:if test="${param.ville}">${param.ville}</c:if>">
 			</div>
 		</div>
 		<div>
@@ -81,6 +87,6 @@
 		</div>
 	</form>
 
-
+</div>
 </body>
 </html>

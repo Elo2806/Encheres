@@ -6,8 +6,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<link href="css/styleProfil.css" rel="stylesheet"/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
 
 <title>Vente</title>
 
@@ -88,6 +93,7 @@
 
 </head>
 <body>
+<div class="container">
 	<%@include file="EnTeteEni.jspf"%>
 	<div>
 		<h2>Détail vente</h2>
@@ -137,13 +143,13 @@
 		</div>
 		<form method="post" action="<c:url value="/ServletEnchere"/>">
 		<input type="hidden" name="noArticle" value="${param.noArticle}">
-			<div class="ProblemeProposition">>
-				<label for="proposition">Ma proposition : </label> <input
+			<div class="ProblemeProposition">
+				<label for="proposition"> Ma proposition : </label> <input
 					type="number" name="proposition" id="proposition" value=${requestScope.meilleureEnchere }
 					style="width: 43px;"> <input type="submit" value="Enchérir">
 			</div>
 		</form>
 	</div>
-
+</div>
 </body>
 </html>
