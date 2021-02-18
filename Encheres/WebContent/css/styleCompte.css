@@ -16,12 +16,32 @@ form{
     justify-content:center;
 }
 
-div.btn_submit{
-    text-align: center;
-    border-radius: 10px;
-    padding:20px 50px 20px 50px;
-    justify-content: space-between;
-}
+div{​​
+margin:7px 30px;
+text-align: left;
+
+}​​
+label{​​
+width:120px;
+
+}​​
+input{​​
+width:200px;
+}​​
+
+
+
+div.btn_submit{​​
+text-align: center;
+border-radius: 10px;
+padding:20px 50px 20px 50px;
+justify-content: space-between;
+}​​
+
+.lienMdp{​​
+border-style:solid;
+text-align:center;
+}​​
 
 
 
