@@ -14,11 +14,9 @@
 <link
 	rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
 <link
-	href="css/styleProfil.css"
+	href="css/styleAccueil.css"
 	rel="stylesheet" />
 <meta
 	http-equiv="Content-Type"
@@ -105,127 +103,151 @@
 
 </head>
 <body>
-	<div class="container">
+<div class="container" style="margin-top: 30px;">
 		<%@include file="EnTeteEni.jspf"%>
 		<div>
+		<div class="container">
 			<c:choose>
 				<c:when test="${empty requestScope.venteTerminee}">
-					<h2>Détail vente</h2>
+					<h1>Détail vente</h1>
 				</c:when>
 				<c:when test="${empty requestScope.vainqueur}">
 					<h2>Vous avez remporté la vente</h2>
 				</c:when>
 				<c:otherwise>
-					<h2>${requestScope.articleEnVente.enchereMax.utilisateur.pseudo} a
-						remporté l'enchere</h2>
+					<h2>${requestScope.articleEnVente.enchereMax.utilisateur.pseudo}
+						a remporté l'enchere</h2>
 				</c:otherwise>
 			</c:choose>
 		</div>
-		<div>
-			<img
-				alt="Image de l'objet"
-				src="">
-		</div>
-		<div
-			class="descriptionVente"
-			class=>
-			<div>
+		
+			<div class="row">
+				<div class="col-6">
 
-				<p id="libelleArticle">${requestScope.articleEnVente.nomArticle }</p>
-			</div>
-			<div>
-				<p>Description :</p>
-				<span id="descriptionArticle">${requestScope.articleEnVente.description}</span>
-			</div>
-			<div>
-				<p>
-					Categorie : <span id="CategorieArticle">${requestScope.articleEnVente.categorie.libelle}</span>
-				</p>
-			</div>
-			<div>
-				<p>
-					Meilleur offre : <span id="nbPointsMeilleur">${requestScope.articleEnVente.enchereMax.montantEnchere}</span>
-					pts par <span id="pseudoMeilleur">${requestScope.articleEnVente.enchereMax.utilisateur.pseudo}</span>
-				</p>
-			</div>
-			<div>
-				<p>
-					Mise à prix : <span id="prix">${requestScope.articleEnVente.prixInitial}</span>
-					points
-				</p>
-			</div>
-			<div>
-				<p>
-					Fin de l'enchere <span id="dateFin">${requestScope.articleEnVente.dateFinEncheres}</span>
-				</p>
-			</div>
-			<div>
-				<span>Retrait : </span>
-				<div id="Adresse">
-					<span>${requestScope.articleEnVente.retrait.rue}</span><br> <span
-						id="codePostal">${requestScope.articleEnVente.retrait.codePostal}</span> <span
-						id="ville">${requestScope.articleEnVente.retrait.ville}</span>
+					<img
+						class="photo-left"
+						alt="photo objet"
+						src="images/ecommerce-navigation.png">
+
+				</div>
+				<div class="col-6">
+					<div
+						class="descriptionVente"
+						class=>
+						<div>
+
+							<p id="libelleArticle">${requestScope.articleEnVente.nomArticle }</p>
+						</div>
+						<div class="container">
+	<div class="row">
+						  <div class="col-6">
+							<p>Description :</p>
+							</div>
+							  <div class="col-6">
+							<span id="descriptionArticle">${requestScope.articleEnVente.description}</span>
+						</div>
+						</div>
+						</div>
+						<div>
+							<p>
+								Categorie : <span id="CategorieArticle">${requestScope.articleEnVente.categorie.libelle}</span>
+							</p>
+						</div>
+						<div>
+							<p>
+								Meilleur offre : <span id="nbPointsMeilleur">${requestScope.articleEnVente.enchereMax.montantEnchere}</span>
+								pts par <span id="pseudoMeilleur">${requestScope.articleEnVente.enchereMax.utilisateur.pseudo}</span>
+							</p>
+						</div>
+						<div>
+							<p>
+								Mise à prix : <span id="prix">${requestScope.articleEnVente.prixInitial}</span>
+								points
+							</p>
+						</div>
+						<div>
+							<p>
+								Fin de l'enchere <span id="dateFin">${requestScope.articleEnVente.dateFinEncheres}</span>
+							</p>
+						</div>
+						<div>
+							<span>Retrait : </span>
+							<div id="Adresse">
+								<span>${requestScope.articleEnVente.retrait.rue}</span><br>
+								<span id="codePostal">${requestScope.articleEnVente.retrait.codePostal}</span>
+								<span id="ville">${requestScope.articleEnVente.retrait.ville}</span>
+							</div>
+						</div>
+						<div>
+							<p>
+								Vendeur : <span id="vendeur">${requestScope.articleEnVente.vendeur.pseudo}</span>
+							</p>
+						</div>
+
+						<c:choose>
+							<c:when test="${empty requestScope.venteTerminee}">
+								<form
+									method="post"
+									action="<c:url value="/ServletEnchere"/>">
+									<input
+										type="hidden"
+										name="noArticle"
+										value="${param.noArticle}">
+									<div class="ProblemeProposition">
+										<label for="proposition"> Ma proposition : </label> <input
+											type="number"
+											name="proposition"
+											id="proposition"
+											value=${requestScope.meilleureEnchere }
+											style="width: 43px;"> <input
+											type="submit"
+											value="Enchérir">
+									</div>
+								</form>
+							</c:when>
+							<c:when test="${!empty requestScope.vendeur}">
+								<form
+									method="post"
+									action="<c:url value="/ServletEnchere"/>">
+									<input
+										type="hidden"
+										name="retraitEffectue"
+										value="true" /> <input
+										type="hidden"
+										name="noArticle"
+										value="${param.noArticle}"> <input
+										type="submit"
+										value="Retrait Effectué">
+								</form>
+							</c:when>
+							<c:when test="${!empty requestScope.vainqueur}">
+								<div>
+									<p>
+										Tel : <span id="vendeurTelephone">${requestScope.articleEnVente.vendeur.telephone}</span>
+									</p>
+								</div>
+								<div>
+									<p>
+										Mail : <span id="vendeurEmail">${requestScope.articleEnVente.vendeur.email}</span>
+									</p>
+								</div>
+								<a href="/accueil"><input
+									type="button"
+									value="Back"></a>
+							</c:when>
+							<c:otherwise>
+								<a href="/accueil"><input
+									type="button"
+									value="Back"></a>
+							</c:otherwise>
+						</c:choose>
+					</div>
 				</div>
 			</div>
-			<div>
-				<p>
-					Vendeur : <span id="vendeur">${requestScope.articleEnVente.vendeur.pseudo}</span>
-				</p>
-			</div>
-
-			<c:choose>
-				<c:when test="${empty requestScope.venteTerminee}">
-					<form
-						method="post"
-						action="<c:url value="/ServletEnchere"/>">
-						<input
-							type="hidden"
-							name="noArticle"
-							value="${param.noArticle}">
-						<div class="ProblemeProposition">
-							<label for="proposition"> Ma proposition : </label>
-							<input
-								type="number"
-								name="proposition"
-								id="proposition"
-								value=${requestScope.meilleureEnchere }
-								style="width: 43px;"> <input
-								type="submit"
-								value="Enchérir">
-						</div>
-					</form>
-				</c:when>
-				<c:when test="${!empty requestScope.vendeur}">
-					<form
-						method="post"
-						action="<c:url value="/ServletEnchere"/>">
-						<input type="hidden" name="retraitEffectue" value="true" />
-						<input
-							type="hidden"
-							name="noArticle"
-							value="${param.noArticle}">
-						<input type="submit" value="Retrait Effectué">
-					</form>
-				</c:when>
-				<c:when test="${!empty requestScope.vainqueur}">
-					<div>
-						<p>
-							Tel : <span id="vendeurTelephone">${requestScope.articleEnVente.vendeur.telephone}</span>
-						</p>
-					</div>
-					<div>
-						<p>
-							Mail : <span id="vendeurEmail">${requestScope.articleEnVente.vendeur.email}</span>
-						</p>
-					</div>
-					<a href="/accueil"><input type="button" value="Back"></a>
-				</c:when>
-				<c:otherwise>
-					<a href="/accueil"><input type="button" value="Back"></a>
-				</c:otherwise>
-			</c:choose>
-
 		</div>
-	</div>
+		<script
+			src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script
+			src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>

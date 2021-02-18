@@ -14,7 +14,7 @@
 
 <link rel="preconnect" href="https://fonts.gstatic.com">
 
-    <link href="https://fonts.googleapis.com/css2?family=Crete+Round&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Crete+Round&display=swap" rel="stylesheet">
 <meta
 	http-equiv="Content-Type"
 	content="text/html; charset=UTF-8">
@@ -187,15 +187,19 @@
 			<button class="btn btn-primary btn-lg"
 				type="submit"
 				value="Rechercher" />Rechercher</button>
+		
 		</div>
+	
 </div>
-
-</div>	</div>
-				</div>	
-	</form>
-	<br>
+				<br>
 	<hr>
-		<br>
+	<br>
+
+</div>	
+</div>
+</div>	
+	</form>
+
 	<!-- Liste des enchères  -->
 	
 	<section id="encheres">

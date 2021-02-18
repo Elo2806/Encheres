@@ -55,48 +55,14 @@
                 <div class="col-md-4"> <span id="ville" class="form-control">${utilisateurAffiche.ville}</span></div>
             </div>
             
-<div class="container" style="margin-top: 50px; text-align:center">
+	<div class="container" style="margin-top: 50px; text-align:center">
             
             <a href="${pageContext.request.contextPath}/ServletCompte?modification=true"><input type="button" value="Modifier" /></a>
             <a href="${pageContext.request.contextPath}/ServletAccueil"><input type="button" value="Accueil" /></a>
             </div>
         </form>
-    </div>
-
-<%-- <div class="content">
-  <form action="" method="get">
   
-        <div>    <label for="pseudo">Pseudo:</label>
-        <span id="pseudo">${utilisateurAffiche.pseudo}</span></div>
-        
-        <div>    <label for="nom">Nom:</label>
-        <span id="nom" >${utilisateurAffiche.nom}</span></div>
-        
-           <div>    <label for="prenom">Prénom:</label>
-        <span id="prenom">${utilisateurAffiche.prenom}</span></div>
-        
-           <div>    <label for="email">Email:</label>
-        <span id="email">${utilisateurAffiche.email}</span></div>
-        
-           <div>    <label for="telephone">Téléphone:</label>
-        <span id="telephone">${utilisateurAffiche.telephone}</span></div>
-        
-           <div>    <label for="rue">Rue:</label>
-        <span id="rue">${utilisateurAffiche.rue}</span></div>
-        
-         <div>    <label for="codePostal">Code Postal:</label>
-        <span id="codePostal">${utilisateurAffiche.codePostal}</span></div>
-        
-         <div>    <label for="ville">Ville:</label>
-        <span id="ville">${utilisateurAffiche.ville}</span></div>
-        
- <a href="${pageContext.request.contextPath}/ServletCompte?modification=true"><input type="button" value="Modifier"/></a>
-         <a href="${pageContext.request.contextPath}/ServletAccueil"><input type="button" value="Accueil"/></a>
-        
-        </form>
-        
-       
-</div> --%>
+    </div>
 
 </body>
 </html>

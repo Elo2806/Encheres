@@ -21,9 +21,7 @@
 	justify-content:space-between;
 	width: 40%;
 	}
-	.intitule{
-	color:${ColorIdentifiant}
-	}
+
 	.champ{
 	display:flex;
 	flex-direction:column;
@@ -52,8 +50,6 @@
 	align-items: center;
 	padding:20px 50px 20px 50px;
 	margin: 20px;
-	background: linear-gradient(indigo, darkred, burlywood);
-	background-color:green;
     border-radius: 10px;
 	}
 	#connexion{
@@ -70,4 +66,6 @@
 	}
 	#btn_connexion,#creer_compte{
 	border-radius: 10px;
+
+ 
 	}

@@ -92,6 +92,7 @@
 
 <!-- Corp de la JSP -->
 <body>
+<div class="container">
 	<%@include file="EnTeteEni.jspf"%>
 	<br>
 	<br>
@@ -148,22 +149,6 @@
 							</c:otherwise>
 						</c:choose>
 
-						<!--<c:if test="${!param.creation || param.modifMdp}">
-							<span
-								name="nomFige"
-								id="nomFige">${utilisateurAffiche.nom }</span>
-
-						</c:if>
-						<c:if test="${param.creation}">
-							<input
-								type="text"
-								name="nom"
-								id="nom"
-								placeholder="Entrer votre nom"
-								value="${utilisateurAffiche.nom }"
-								required
-								pattern="[A-Za-z]{2,30}">
-						</c:if>-->
 					</div>
 				</th>
 			</tr>
@@ -191,7 +176,8 @@
 							</c:otherwise>
 						</c:choose>
 
-						<!--<c:if test="${!param.creation && param.modifMdp}">
+						<!--Même méthode avec if:
+						<c:if test="${!param.creation && param.modifMdp}">
 							<span
 								name="prenomFige"
 								id="prenomFige">${utilisateurAffiche.prenom }</span>
@@ -329,7 +315,7 @@
 								type="password"
 								name="confirmation"
 								id="confirmation"
-								placeholder="Confirmer votre nouveau mot de passe"
+								placeholder="Confirmer ce mdp"
 								required>
 						</div>
 					</th>
@@ -404,7 +390,7 @@
 									type="password"
 									name="confirmation"
 									id="confirmation"
-									placeholder="Confirmer votre nouveau mot de passe"
+									placeholder="Confirmer ce mdp"
 									required>
 							</div>
 						</th>
@@ -443,6 +429,6 @@
 			</c:if>
 		</table>
 	</form>
-
+</div>
 </body>
 </html>
