@@ -50,8 +50,16 @@
 				<c:choose>
 					<c:when test="${!empty sessionScope.utilisateur}">
 
-						<li><a href="<c:url value="/ServletVente"/>">Vendre
-									un article</a></li>
+						<li>
+							<c:choose>
+								<c:when test="${sessionScope.utilisateur.actif eq 'true' }">
+									<a href="<c:url value="/ServletVente"/>">Vendre un article</a>
+								</c:when>
+								<c:otherwise>
+									Vendre un article
+								</c:otherwise>
+							</c:choose>
+							</li>
 						<li><a href="<c:url value="/ServletCompte"/>">Mon
 									profil</a></li>
 						<li><a href="<c:url value="/ServletConnexion"/>">Déconnexion</a></li>
