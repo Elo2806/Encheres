@@ -103,24 +103,26 @@
 
 </head>
 <body>
-<div class="container" style="margin-top: 30px;">
+	<div
+		class="container"
+		style="margin-top: 30px;">
 		<%@include file="EnTeteEni.jspf"%>
 		<div>
-		<div class="container">
-			<c:choose>
-				<c:when test="${empty requestScope.venteTerminee}">
-					<h1>Détail vente</h1>
-				</c:when>
-				<c:when test="${empty requestScope.vainqueur}">
-					<h2>Vous avez remporté la vente</h2>
-				</c:when>
-				<c:otherwise>
-					<h2>${requestScope.articleEnVente.enchereMax.utilisateur.pseudo}
-						a remporté l'enchere</h2>
-				</c:otherwise>
-			</c:choose>
-		</div>
-		
+			<div class="container">
+				<c:choose>
+					<c:when test="${empty requestScope.venteTerminee}">
+						<h1 class="titre">Détail vente</h1>
+					</c:when>
+					<c:when test="${empty requestScope.vainqueur}">
+						<h2 class = "titre">Vous avez remporté la vente</h2>
+					</c:when>
+					<c:otherwise>
+						<h2 class = "titre">${requestScope.articleEnVente.enchereMax.utilisateur.pseudo}
+							a remporté l'enchere</h2>
+					</c:otherwise>
+				</c:choose>
+			</div>
+
 			<div class="row">
 				<div class="col-6">
 
@@ -128,62 +130,116 @@
 						class="photo-left"
 						alt="photo objet"
 						src="images/ecommerce-navigation.png">
-
 				</div>
+				
 				<div class="col-6">
-					<div
-						class="descriptionVente"
-						class=>
-						<div>
-
-							<p id="libelleArticle">${requestScope.articleEnVente.nomArticle }</p>
+					<div class="descriptionVente">
+					
+						<div class="container">
+							<div class="row">
+								<div class="col-12">
+									<p id="libelleArticle">${requestScope.articleEnVente.nomArticle }</p>
+								</div>
+							</div>
 						</div>
 						<div class="container">
-	<div class="row">
-						  <div class="col-6">
-							<p>Description :</p>
+							<div class="row">
+								<div class="col-4">
+									<p>Description :</p>
+								</div>
+								<div class="col-8">
+									<span id="descriptionArticle">${requestScope.articleEnVente.description}</span>
+								</div>
 							</div>
-							  <div class="col-6">
-							<span id="descriptionArticle">${requestScope.articleEnVente.description}</span>
-						</div>
-						</div>
-						</div>
-						<div>
-							<p>
-								Categorie : <span id="CategorieArticle">${requestScope.articleEnVente.categorie.libelle}</span>
-							</p>
-						</div>
-						<div>
-							<p>
-								Meilleur offre : <span id="nbPointsMeilleur">${requestScope.articleEnVente.enchereMax.montantEnchere}</span>
-								pts par <span id="pseudoMeilleur">${requestScope.articleEnVente.enchereMax.utilisateur.pseudo}</span>
-							</p>
-						</div>
-						<div>
-							<p>
-								Mise à prix : <span id="prix">${requestScope.articleEnVente.prixInitial}</span>
-								points
-							</p>
-						</div>
-						<div>
-							<p>
-								Fin de l'enchere <span id="dateFin">${requestScope.articleEnVente.dateFinEncheres}</span>
-							</p>
-						</div>
-						<div>
-							<span>Retrait : </span>
-							<div id="Adresse">
-								<span>${requestScope.articleEnVente.retrait.rue}</span><br>
-								<span id="codePostal">${requestScope.articleEnVente.retrait.codePostal}</span>
-								<span id="ville">${requestScope.articleEnVente.retrait.ville}</span>
-							</div>
-						</div>
-						<div>
-							<p>
-								Vendeur : <span id="vendeur">${requestScope.articleEnVente.vendeur.pseudo}</span>
-							</p>
 						</div>
 
+
+						<div class="container">
+							<div class="row">
+								<div class="col-4">
+									<p>Categorie :</p>
+								</div>
+
+								<div class="col-8">
+									<span id="CategorieArticle">${requestScope.articleEnVente.categorie.libelle}</span>
+								</div>
+							</div>
+						</div>
+
+
+
+						<div class="container">
+							<div class="row">
+								<div class="col-4">
+									<p>Meilleur offre :</p>
+								</div>
+								<div class="col-8">
+									<span id="nbPointsMeilleur">${requestScope.articleEnVente.enchereMax.montantEnchere}</span>
+									pts par <span id="pseudoMeilleur">${requestScope.articleEnVente.enchereMax.utilisateur.pseudo}</span>
+								</div>
+							</div>
+						</div>
+
+
+
+						<div class="container">
+							<div class="row">
+								<div class="col-4">
+
+									<p>Mise à prix :</p>
+								</div>
+								<div class="col-8">
+									<span id="prix">${requestScope.articleEnVente.prixInitial}</span>
+									points
+								</div>
+							</div>
+						</div>
+
+
+						<div class="container">
+							<div class="row">
+								<div class="col-8">
+									<p>Fin de l'enchere</p>
+								</div>
+								<div class="col-8">
+									<span id="dateFin">${requestScope.articleEnVente.dateFinEncheres}</span>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="container">
+							<div class="row">
+								<div class="col-4">
+									<span>Retrait : </span>
+								</div>
+								<div class="col-8">
+									<div id="Adresse">
+										<span>${requestScope.articleEnVente.retrait.rue}</span><br>
+										<span id="codePostal">${requestScope.articleEnVente.retrait.codePostal}</span>
+										<span id="ville">${requestScope.articleEnVente.retrait.ville}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="container">
+							<div class="row">
+								<div class="col-4">
+									<p>Vendeur :</p>
+								</div>
+								<div class="col-8">
+									<span id="vendeur">${requestScope.articleEnVente.vendeur.pseudo}</span>
+								</div>
+							</div>
+						</div>
+
+
+<div class="container">
+							<div class="row">
+							
+								<div class="col-12">
 						<c:choose>
 							<c:when test="${empty requestScope.venteTerminee}">
 								<form
@@ -241,6 +297,11 @@
 									value="Back"></a>
 							</c:otherwise>
 						</c:choose>
+						</div>
+						</div>
+						</div>
+						
+						
 					</div>
 				</div>
 			</div>
