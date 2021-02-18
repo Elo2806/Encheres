@@ -262,7 +262,6 @@ public class ServletAccueil extends HttpServlet {
 		Map<Integer, ArticleVendu> articles = (Map<Integer, ArticleVendu>) getServletContext()
 				.getAttribute(APP_ATTR_MAP_ARTICLES);
 		
-		
 		for (ArticleVendu article : articles.values()) {
 			//test filtre categorie 
 			if (categorieFiltre.getNoCategorie() == article.getCategorie().getNoCategorie()) {
