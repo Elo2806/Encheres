@@ -59,34 +59,37 @@ public class EnchereManager {
 	}
 	/**
 	 * 
-	 * Méthode permettant de vérifier l'etat de l'enchere d'un article et modifier l'article en fonction du resultat
-	 * @param articleAVerifier
-	 * @return article article mis-à-jour
-	 * @throws BLLException si un probleme survient lors de la modification de l'article dans ArticleManager
+	 * Méthode permettant de vérifier l'etat de l'enchere d'un article et modifier l'article en fonction du résultat
+	 * @param articleAVerifier article à modifié
+	 * @return article mis-à-jour ou NULL si la vente n'est pas terminée
 	 */
-	public ArticleVendu DeterminerVainqueurEnchere(ArticleVendu articleAVerifier) throws BLLException {
-		ArticleManager manager;
+	public ArticleVendu ajouterAcheteurToArticle(ArticleVendu articleAVerifier) {
 		ArticleVendu updatedArticle = articleAVerifier;
 		
 		if(LocalDateTime.now().isAfter(articleAVerifier.getDateFinEncheres())) {
-			manager = ArticleManager.getInstance();
-			if(!updatedArticle.getEnchereMax().getMontantEnchere().equals(0)) {
-				updatedArticle.setPrixVente(updatedArticle.getEnchereMax().getMontantEnchere());
-				updatedArticle.setAcheteur(updatedArticle.getEnchereMax().getUtilisateur());
-				manager.modifierArticle(updatedArticle);
-			}
-			
+			updatedArticle.setAcheteur(updatedArticle.getEnchereMax().getUtilisateur());
+		}else {
+			updatedArticle.setAcheteur(null);
 		}
 		
 		return updatedArticle;
 	}
-
-	public ArticleVendu retirerArticle(ArticleVendu articleARetire) {
+	
+	/**
+	 * 
+	 * Méthode permettant de clôturer une vente en modifiant dans le systeme de persistance le prix de vente
+	 * @param articleRetire article retiré
+	 * @return article mis-à-jour
+	 * @throws BLLException si un probleme survient lors de la modification de l'article dans ArticleManager
+	 */
+	public ArticleVendu retirerArticle(ArticleVendu articleRetire) throws BLLException {
 		ArticleManager manager;
 		
+		manager = ArticleManager.getInstance();
+		articleRetire.setPrixVente(articleRetire.getEnchereMax().getMontantEnchere());
+		manager.modifierArticle(articleRetire);
 		
-		
-		ArticleVendu updatedArticle = articleARetire;
+		ArticleVendu updatedArticle = articleRetire;
 		return updatedArticle;
 	}
 	

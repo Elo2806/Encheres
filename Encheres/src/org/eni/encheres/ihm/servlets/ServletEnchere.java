@@ -36,10 +36,12 @@ public class ServletEnchere extends HttpServlet {
 	private static final String ATTR_MEILLEURE_ENCHERE = "meilleureEnchere";
 	private static final String ATTR_ARTICLE_EN_VENTE = "articleEnVente";
 	private static final String ATTR_BRAVO = "bravo";
-	private static final String ATTR_ENCHERE_INSUFFISANTE = "enchereInsuffisante";
-	private static final String ATTR_NON_AUTORISE = "nonAutorise";
-	private static final String ATTR_ERREUR_INSERTION = "erreurInsertion";
 	private static final String ATTR_VENDEUR = "vendeur";
+	
+	private static final String ATTR_NON_AUTORISE = "nonAutorise";
+	private static final String ATTR_ENCHERE_INSUFFISANTE = "enchereInsuffisante";
+	private static final String ATTR_ERREUR_INSERTION = "erreurInsertion";
+	private static final String ATTR_ERREUR_RETRAIT_ARTICLE = "erreurRetraitArticle";
 	
 	private static final String PARAM_PROPOSITION = "proposition";
 	private static final String PARAM_NO_ARTICLE = "noArticle";
@@ -71,15 +73,14 @@ public class ServletEnchere extends HttpServlet {
 		
 		//Test si la vente est terminée
 		if(LocalDateTime.now().isAfter(articleEnVente.getDateFinEncheres())) {
-			try {
-				articleEnVente = manager.DeterminerVainqueurEnchere(articleEnVente);
-			} catch (BLLException blle) {
-				blle.printStackTrace();//TODO voir comment gerer cette erreur (problème lors de la modification de l'article)
-			}
+			articleEnVente = manager.ajouterAcheteurToArticle(articleEnVente);
 			request.setAttribute(ATTR_VENTE_TERMINEE, true);
-			if(articleEnVente.getEnchereMax().getUtilisateur().getNoUtilisateur().equals(encherisseur.getNoUtilisateur())) {
+			
+			//Test si l'utilisateur est le vainqueur
+			if(articleEnVente.getAcheteur().getNoUtilisateur().equals(encherisseur.getNoUtilisateur())) {
 				request.setAttribute(ATTR_VAINQUEUR, true);
 			}
+			//Test si l'utilisateur est le vendeur
 			if(articleEnVente.getVendeur().getNoUtilisateur().equals(encherisseur.getNoUtilisateur())) {
 				request.setAttribute(ATTR_VENDEUR, true);
 			}
@@ -129,12 +130,25 @@ public class ServletEnchere extends HttpServlet {
 		
 		getServletContext().getRequestDispatcher(pageSuivante).forward(request, response);
 	}
-
+	
+	/**
+	 * 
+	 * Méthode permettant de gérer le retrait de l'article
+	 * @param articleARetire article retiré
+	 * @param request la requette http
+	 * @return l'article mis à jour
+	 */
 	private String gererRetraitArticle(ArticleVendu articleARetire,HttpServletRequest request) {
 		EnchereManager manager;
 		
 		manager = EnchereManager.getInstance();
-		manager.retirerArticle(articleARetire);
+		try {
+			manager.retirerArticle(articleARetire);
+		} catch (BLLException blle) {
+			blle.printStackTrace();
+			request.setAttribute(ATTR_ERREUR_RETRAIT_ARTICLE, true);
+			return JSP_ENCHERE;
+		}
 		
 		return JSP_ACCUEIL;
 				
@@ -196,8 +210,8 @@ public class ServletEnchere extends HttpServlet {
 	}
 
 	/**
-	 * Méthode permettant de 
-	 * @return
+	 * Méthode permettant de déterminer le montant minimum à enchérir
+	 * @return le montant minimum à enchérir
 	 */
 	private int determinerMontantEnchereADepasser(HttpServletRequest request) {
 		ArticleVendu articleEnVente = null;
