@@ -67,9 +67,8 @@
 					name="rue" 
 					id="rue" 
 					required 
-					value="<c:if test="${empty param.rue}">${requestScope.rue}</c:if>
-				           <c:if test="${param.rue}">${param.rue}</c:if>"
-				>
+					<c:if test="${empty param.rue}">value="${requestScope.rue}"</c:if>
+				   	<c:if test="${param.rue}">value="${param.rue}"</c:if>>
 			</div>
 			<div>
 				<label for="codepostal">Code postal : </label>
@@ -79,8 +78,8 @@
 					id="codepostal" 
 					required 
 					pattern="[0-9]{5}" 
-					value="<c:if test="${empty param.codepostal}">${requestScope.cp}</c:if>
-				           <c:if test="${param.codepostal}">${param.codepostal}</c:if>">
+					<c:if test="${empty param.codepostal}"> value="${requestScope.cp}"</c:if>
+				    <c:if test="${param.codepostal}"> value="${param.codepostal}"</c:if>>
 			</div>
 			<div>
 				<label for="ville">Ville : </label>
@@ -89,8 +88,8 @@
 					name="ville" 
 					id="ville" 
 					required 
-					value="<c:if test="${empty param.ville}">${requestScope.ville}</c:if>
-				                                                           <c:if test="${param.ville}">${param.ville}</c:if>">
+					<c:if test="${empty param.ville}">value="${requestScope.ville}"</c:if>
+				    <c:if test="${param.ville}">value="${param.ville}"</c:if>>
 			</div>
 		</div>
 		<div>
