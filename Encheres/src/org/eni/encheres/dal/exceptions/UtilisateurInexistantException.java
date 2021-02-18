@@ -5,11 +5,14 @@ package org.eni.encheres.dal.exceptions;
 
 /**
  * Classe représentant l'erreur d'inexistance d'un utilisateur en systeme de persistance
+ * 
  * @author Elodie
  * Créé le: 11 févr. 2021
  * Modifié le: 11 févr. 2021
  */
 public class UtilisateurInexistantException extends DALException {
+
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructeur

@@ -3,13 +3,6 @@
  */
 package org.eni.encheres.dal;
 
-import java.time.LocalDateTime;
-
-import org.eni.encheres.bo.ArticleVendu;
-import org.eni.encheres.bo.Categorie;
-import org.eni.encheres.bo.Enchere;
-import org.eni.encheres.bo.Retrait;
-import org.eni.encheres.bo.Utilisateur;
 import org.eni.encheres.dal.articles.ArticleDAO;
 import org.eni.encheres.dal.articles.ArticleDAOImpl;
 import org.eni.encheres.dal.categories.CategorieDAOimpl;
@@ -20,9 +13,11 @@ import org.eni.encheres.dal.utilisateurs.UtilisateurDAO;
 import org.eni.encheres.dal.utilisateurs.UtilisateurDAOimpl;
 
 /**
+ * Classe Utilitaire centralisant les methodes de création des objets DAO.
+ *
  * @author Elodie
  * Créé le: 11 févr. 2021
- * Modifié le: 11 févr. 2021
+ *
  */
 public abstract class DAOFactory {
 

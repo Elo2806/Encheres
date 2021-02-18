@@ -31,11 +31,6 @@ import org.eni.encheres.dal.jdbc.ConnectionProvider;
 public class UtilisateurDAOimpl implements UtilisateurDAO {
 
 	private static final String COLL_ART_NO_ARTICLE = "no_article";
-	private static final String ERREUR_SQL_INSERT = "Erreur lors de l'insertion en base";
-	private static final String ERREUR_SQL_SELECT = "Erreur lors des selections en base";
-	private static final String ERREUR_UTILISATEUR_INEXISTANT = "L'utilisateur n'existe pas";
-	private static final String ERREUR_CONNECTION = "Problème de connection";
-
 	private static final String COL_ENC_MONTANT_ENCHERE = "montant_enchere";
 	private static final String COL_ENC_DATE_ENCHERE = "date_enchere";
 	
@@ -47,19 +42,19 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 	
 	private static final String COL_CAT_LIBELLE = "libelle";
 	
-	private static final String COL_ACTIF = "actif";
-	private static final String COL_ADMINISTRATEUR = "administrateur";
-	private static final String COL_CREDIT = "credit";
-	private static final String COL_MOT_DE_PASSE = "mot_de_passe";
-	private static final String COL_VILLE = "ville";
-	private static final String COL_CODE_POSTAL = "code_postal";
-	private static final String COL_RUE = "rue";
-	private static final String COL_TELEPHONE = "telephone";
-	private static final String COL_EMAIL = "email";
-	private static final String COL_PRENOM = "prenom";
-	private static final String COL_NOM = "nom";
-	private static final String COL_PSEUDO = "pseudo";
-	private static final String COL_NO_UTILISATEUR = "no_utilisateur";
+	private static final String COL_UTI_ACTIF = "actif";
+	private static final String COL_UTI_ADMINISTRATEUR = "administrateur";
+	private static final String COL_UTI_CREDIT = "credit";
+	private static final String COL_UTI_MOT_DE_PASSE = "mot_de_passe";
+	private static final String COL_UTI_VILLE = "ville";
+	private static final String COL_UTI_CODE_POSTAL = "code_postal";
+	private static final String COL_UTI_RUE = "rue";
+	private static final String COL_UTI_TELEPHONE = "telephone";
+	private static final String COL_UTI_EMAIL = "email";
+	private static final String COL_UTI_PRENOM = "prenom";
+	private static final String COL_UTI_NOM = "nom";
+	private static final String COL_UTI_PSEUDO = "pseudo";
+	private static final String COL_UTI_NO_UTILISATEUR = "no_utilisateur";
 
 	private static final String SQL_SELECT_BY_MOT_DE_PASSE = "SELECT no_utilisateur,pseudo,nom,prenom,email,telephone,rue,code_postal,ville,mot_de_passe,credit,administrateur,actif FROM UTILISATEURS WHERE mot_de_passe=? AND supprime=0";
 	private static final String SQL_SELECT_BY_EMAIL = "SELECT no_utilisateur FROM Utilisateurs WHERE email=?";
@@ -71,6 +66,11 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
             + "FROM ENCHERES as enc INNER JOIN ARTICLES_VENDUS as art ON art.no_article =  enc.no_article "
             + 					  "INNER JOIN CATEGORIES as cat ON cat.no_categorie = art.no_categorie "
             + "WHERE enc.no_utilisateur=? AND art.date_fin_encheres > ?";
+	
+	private static final String ERREUR_SQL_INSERT = "Erreur lors de l'insertion en base";
+	private static final String ERREUR_SQL_SELECT = "Erreur lors des selections en base";
+	private static final String ERREUR_UTILISATEUR_INEXISTANT = "L'utilisateur n'existe pas";
+	private static final String ERREUR_CONNECTION = "Problème de connection";
 	
 	@Override
 	public Utilisateur create(Utilisateur newUtilisateur) throws DALException {
@@ -208,19 +208,19 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 
 				// Récupération de l'ID
 				while (rs.next()) {
-					int noUtilisateur = rs.getInt(COL_NO_UTILISATEUR);
-					String pseudo = rs.getString(COL_PSEUDO);
-					String nom = rs.getString(COL_NOM);
-					String prenom = rs.getString(COL_PRENOM);
-					String email = rs.getString(COL_EMAIL);
-					String telephone = rs.getString(COL_TELEPHONE);
-					String rue = rs.getString(COL_RUE);
-					String codePostal = rs.getString(COL_CODE_POSTAL);
-					String ville = rs.getString(COL_VILLE);
-					String motDePasse = rs.getString(COL_MOT_DE_PASSE);
-					int credit = rs.getInt(COL_CREDIT);
-					boolean administrateur = rs.getBoolean(COL_ADMINISTRATEUR);
-					boolean actif = rs.getBoolean(COL_ACTIF);
+					int noUtilisateur = rs.getInt(COL_UTI_NO_UTILISATEUR);
+					String pseudo = rs.getString(COL_UTI_PSEUDO);
+					String nom = rs.getString(COL_UTI_NOM);
+					String prenom = rs.getString(COL_UTI_PRENOM);
+					String email = rs.getString(COL_UTI_EMAIL);
+					String telephone = rs.getString(COL_UTI_TELEPHONE);
+					String rue = rs.getString(COL_UTI_RUE);
+					String codePostal = rs.getString(COL_UTI_CODE_POSTAL);
+					String ville = rs.getString(COL_UTI_VILLE);
+					String motDePasse = rs.getString(COL_UTI_MOT_DE_PASSE);
+					int credit = rs.getInt(COL_UTI_CREDIT);
+					boolean administrateur = rs.getBoolean(COL_UTI_ADMINISTRATEUR);
+					boolean actif = rs.getBoolean(COL_UTI_ACTIF);
 
 					if ((pIdentifiant.equals(pseudo)) || (pIdentifiant.equals(email))) {
 						utilisateur = new Utilisateur(pseudo, nom, prenom, email, telephone, rue, codePostal, ville,
