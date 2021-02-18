@@ -1,5 +1,10 @@
 @charset "UTF-8";
 
+.titre
+{
+	text-align: center;
+}
+
 /* -------ACCUEIL------- */
 
 /* GENERAL */
@@ -35,7 +40,6 @@ footer{
 ul {
     list-style: none;
 }
-
 
 
 img.picture-left {
@@ -109,4 +113,15 @@ border-style:solid;
 	color: #ff7a00;
     font-weight: bold;
 	
+}
+
+/* -------ENCHERES------- */
+
+#libelleArticle{
+	text-align:center;
+}
+
+.button{
+	justify-content:center;
+	text-align:center
 }

@@ -22,7 +22,7 @@
 		<div>
 			<label for="article">Article : </label>
 			<input type="text"
-				name="article" id="article" required>
+				name="article" id="article" required pattern="[A-Za-z0-9]{1,30}">
 		</div>
 		<div>
 			<label for="description">Description : </label>
