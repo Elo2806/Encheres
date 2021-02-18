@@ -31,15 +31,15 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 	private static final String COLL_ART_NO_ARTICLE = "no_article";
 	private static final String COL_ENC_MONTANT_ENCHERE = "montant_enchere";
 	private static final String COL_ENC_DATE_ENCHERE = "date_enchere";
-	
+
 	private static final String COL_ART_DATE_FIN_ENCHERES = "date_fin_encheres";
 	private static final String COL_ART_DATE_DEBUT_ENCHERES = "date_debut_encheres";
 	private static final String COL_ART_DESCRIPTION = "description";
 	private static final String COL_ART_NOM_ARTICLE = "nom_article";
 	private static final String COL_ART_NO_CATEGORIE = "no_categorie";
-	
+
 	private static final String COL_CAT_LIBELLE = "libelle";
-	
+
 	private static final String COL_UTI_ACTIF = "actif";
 	private static final String COL_UTI_ADMINISTRATEUR = "administrateur";
 	private static final String COL_UTI_CREDIT = "credit";
@@ -61,15 +61,15 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 	private static final String SQL_UPDATE = "UPDATE Utilisateurs SET pseudo=?,nom=?,prenom=?,email=?,telephone=?,rue=?,code_postal=?,ville=?,mot_de_passe=?,credit=?,administrateur=?,actif=? WHERE no_utilisateur=?";
 	private static final String SQL_UPDATE_SUPPRIME = "UPDATE Utilisateurs SET supprime=? WHERE no_utilisateur=?";
 	private static final String SQL_SELECT_ENCHERES_BY_USER = "SELECT enc.no_utilisateur, enc.no_article, enc.date_enchere, enc.montant_enchere, art.nom_article,art.description,art.date_debut_encheres,art.date_fin_encheres,art.prix_initial,art.prix_vente,art.no_categorie,cat.libelle "
-            + "FROM ENCHERES as enc INNER JOIN ARTICLES_VENDUS as art ON art.no_article =  enc.no_article "
-            + 					  "INNER JOIN CATEGORIES as cat ON cat.no_categorie = art.no_categorie "
-            + "WHERE enc.no_utilisateur=? AND art.date_fin_encheres > ?";
-	
+			+ "FROM ENCHERES as enc INNER JOIN ARTICLES_VENDUS as art ON art.no_article =  enc.no_article "
+			+ "INNER JOIN CATEGORIES as cat ON cat.no_categorie = art.no_categorie "
+			+ "WHERE enc.no_utilisateur=? AND art.date_fin_encheres > ?";
+
 	private static final String ERREUR_SQL_INSERT = "Erreur lors de l'insertion en base";
 	private static final String ERREUR_SQL_SELECT = "Erreur lors des selections en base";
 	private static final String ERREUR_UTILISATEUR_INEXISTANT = "L'utilisateur n'existe pas";
 	private static final String ERREUR_CONNECTION = "Problème de connection";
-	
+
 	@Override
 	public Utilisateur create(Utilisateur newUtilisateur) throws DALException {
 		Utilisateur updatedUtilisateur;
@@ -187,7 +187,7 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 	public Utilisateur controleIdentifiantsExistants(String pIdentifiant, String pMotDePasse) throws DALException {
 		Utilisateur utilisateur = null;
 		Map<Integer, Enchere> mapEnchere;
-		
+
 		// Connection en base
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 
@@ -226,41 +226,47 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 						break;
 					}
 				}
-				
-				if(utilisateur != null) 
-				
-				{mapEnchere = utilisateur.getMapEncheres();
-						
-				pstmt = cnx.prepareStatement(SQL_SELECT_ENCHERES_BY_USER);
-				
-				// Valorisation des paramètres du PreparedStatement
-				pstmt.setInt(1, utilisateur.getNoUtilisateur());
-				pstmt.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
-				
-				// Execution de la requete
-				rs = pstmt.executeQuery();
-				
-				// Récupération des encheres de l'utilisateur en cours
-				while (rs.next()) {
-					Categorie categorie = new Categorie(rs.getString(COL_CAT_LIBELLE),rs.getInt(COL_ART_NO_CATEGORIE));
-					ArticleVendu article = new ArticleVendu(rs.getString(COL_ART_NOM_ARTICLE), rs.getString(COL_ART_DESCRIPTION), rs.getTimestamp(COL_ART_DATE_DEBUT_ENCHERES).toLocalDateTime(), rs.getTimestamp(COL_ART_DATE_FIN_ENCHERES).toLocalDateTime(),null, categorie,rs.getInt(COLL_ART_NO_ARTICLE));//vendeur a null pour limiter la taille de l'objet
-					Enchere enchere = new Enchere(rs.getTimestamp(COL_ENC_DATE_ENCHERE).toLocalDateTime(), rs.getInt(COL_ENC_MONTANT_ENCHERE), utilisateur, article);
-					mapEnchere.put(article.getNoArticle(), enchere);
+
+				if (utilisateur != null) {
+
+					mapEnchere = utilisateur.getMapEncheres();
+
+					pstmt = cnx.prepareStatement(SQL_SELECT_ENCHERES_BY_USER);
+
+					// Valorisation des paramètres du PreparedStatement
+					pstmt.setInt(1, utilisateur.getNoUtilisateur());
+					pstmt.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+
+					// Execution de la requete
+					rs = pstmt.executeQuery();
+
+					// Récupération des encheres de l'utilisateur en cours
+					while (rs.next()) {
+						Categorie categorie = new Categorie(rs.getString(COL_CAT_LIBELLE),
+								rs.getInt(COL_ART_NO_CATEGORIE));
+						ArticleVendu article = new ArticleVendu(rs.getString(COL_ART_NOM_ARTICLE),
+								rs.getString(COL_ART_DESCRIPTION),
+								rs.getTimestamp(COL_ART_DATE_DEBUT_ENCHERES).toLocalDateTime(),
+								rs.getTimestamp(COL_ART_DATE_FIN_ENCHERES).toLocalDateTime(), null, categorie,
+								rs.getInt(COLL_ART_NO_ARTICLE));// vendeur a null pour limiter la taille de l'objet
+						Enchere enchere = new Enchere(rs.getTimestamp(COL_ENC_DATE_ENCHERE).toLocalDateTime(),
+								rs.getInt(COL_ENC_MONTANT_ENCHERE), utilisateur, article);
+						mapEnchere.put(article.getNoArticle(), enchere);
+					}
+
+					// Validation de la transaction
+					cnx.commit();
 				}
-				
-				//Validation de la transaction
-				cnx.commit();
-				}
-				
+
 				rs.close();
 				pstmt.close();
 
 			} catch (SQLException sqle) {
-				//Annulation de la correction
+				// Annulation de la correction
 				cnx.rollback();
 				throw new RequeteSQLException(ERREUR_SQL_SELECT, sqle);
-			}finally {
-				//fin de la transaction
+			} finally {
+				// fin de la transaction
 				cnx.setAutoCommit(true);
 			}
 
