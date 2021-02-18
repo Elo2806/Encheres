@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<link href="css/styleVente.css" rel="stylesheet"/>
+<link href="css/styleAccueil.css" rel="stylesheet"/>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Enchère</title>
 </head>
@@ -16,9 +16,18 @@
 <div class="container">
 	<%@include file="EnTeteEni.jspf"%>
 <!-- image à insérer dynamiquement -->
-	<img alt="photo article" src="">
+<div class="container">
+<div class="row photo">
+				<img
+						class="photo-left"
+						alt="photo objet"
+						src="images/ecommerce-navigation.png">
+	</div>
+	<div class="col-6" id="encadre">
 	<h1>Nouvelle vente</h1>
 	<form method="post" action="<c:url value="/ServletVente"/>">
+	
+	
 		<div>
 			<label for="article">Article : </label>
 			<input type="text"
@@ -101,7 +110,7 @@
 		</c:if>
 		</div>
 	</form>
-
+</div>
 </div>
 </body>
 </html>

@@ -113,7 +113,7 @@
 					<c:when test="${empty requestScope.venteTerminee}">
 						<h2 class="titre">Détail vente</h2>
 					</c:when>
-					<c:when test="${empty requestScope.vainqueur}">
+					<c:when test="${!empty requestScope.vainqueur}">
 						<h2 class = "titre">Vous avez remporté la vente</h2>
 					</c:when>
 					<c:otherwise>
