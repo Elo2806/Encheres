@@ -37,7 +37,22 @@ public class UtilisateurManager {
 		} catch (DALException dale) {
 			throw new BLLException("Erreur lors de l'acces à la DAL", dale);
 		}
+		
+		offrirCreditAuxCentPremiers(nouvelUtilisateur);
 
+	}
+	
+	
+
+	private void offrirCreditAuxCentPremiers(Utilisateur nouvelUtilisateur) throws BLLException {
+		if (nouvelUtilisateur.getNoUtilisateur()<=100) {
+			nouvelUtilisateur.setCredit(100);
+			try {
+				utilisateurdao.update(nouvelUtilisateur);
+			} catch (DALException dale) {
+				throw new BLLException("Erreur lors de l'ajout du crédit", dale);
+			}
+		}
 	}
 
 	/**

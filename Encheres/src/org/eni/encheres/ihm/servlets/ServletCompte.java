@@ -104,8 +104,6 @@ public class ServletCompte extends HttpServlet {
 		String newMdp = request.getParameter(PARAM_NEW_MDP);
 		String confirmation = request.getParameter(PARAM_CONFIRMATION);
 		UtilisateurManager manager = UtilisateurManager.getInstance();
-		System.out.println(request.getParameter(PARAM_SUPPRIMER));
-		System.out.println(request.getParameter("enregistrer"));
 		if (!(Boolean.parseBoolean(request.getParameter(PARAM_MODIFICATION_COMPTE)))) {
 			creerCompte(request, response, ErreurSaisie, pseudo, nom, prenom, email, telephone, rue, codePostal, ville,
 					mdp, confirmation, manager);
