@@ -361,9 +361,10 @@
 					</th>
 				</tr>
 				<tr>
-					<th colspan="2"><div class="lienMdp"><a
-						href="<c:url value="/ServletCompte?modifMdp=true&modification=true"/>">Modifier
-							mon mot de passe</a></div></th>
+					<th><div>
+					<a class="lienMdp" href="<c:url value="/ServletCompte?modifMdp=true&modification=true"/>">Modifier mon mot de passe</a>
+					</div>
+					</th>
 				</tr>
 
 				<c:if test="${param.modifMdp}">
