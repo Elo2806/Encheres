@@ -28,6 +28,7 @@ public class ServletVente extends HttpServlet {
 	
 	private static final String APP_ATTR_MAP_ARTICLES = "mapArticles";
 	private static final String APP_MAP_CATEGORIES = "mapCategories";
+	private static final String APP_ENCODAGE = "UTF-8";
 	
 	private static final String SERVLET_ACCUEIL = "/ServletAccueil";
 	private static final String JSP_VENTE = "/vente";
@@ -52,7 +53,6 @@ public class ServletVente extends HttpServlet {
 	private static final String PARAM_ARTICLE = "article";
 	
 	private static final long serialVersionUID = 1L;
-	private static final String APP_ENCODAGE = "UTF-8";
 	private static final String FORMAT_DATE = "yyyy-MM-dd";
 	private static final String FORMAT_HEURE = "HH:mm";
 
@@ -62,7 +62,7 @@ public class ServletVente extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Utilisateur vendeur = (Utilisateur) request.getSession().getAttribute("utilisateur");
+		Utilisateur vendeur = (Utilisateur) request.getSession().getAttribute(SESSION_ATTR_UTILISATEUR);
 		// Si l'utilisateur est autorisé (compte actif ou non)
 		if (vendeur.isActif()) {
 			// Entrez l'adresse du vendeur par défaut
@@ -74,7 +74,6 @@ public class ServletVente extends HttpServlet {
 			request.setAttribute(ATTR_RUE, rue);
 			request.setAttribute(ATTR_CODE_POSTAL, codePostal);
 			request.setAttribute(ATTR_VILLE, ville);
-
 			getServletContext().getRequestDispatcher(JSP_VENTE).forward(request, response);
 		}
 		// TODO cas si vendeur inactif

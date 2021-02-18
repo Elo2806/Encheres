@@ -25,15 +25,28 @@ import org.eni.encheres.ihm.exceptions.MotDePasseException;
  */
 @WebServlet("/ServletEnchere")
 public class ServletEnchere extends HttpServlet {
+
+	private static final String APP_ENCODAGE = "UTF-8";
+	private static final String APP_ATTR_MAP_ARTICLES = "mapArticles";
+	
+	private static final String SESSION_ATTR_UTILISATEUR = "utilisateur";
+	
+	private static final String ATTR_VAINQUEUR = "vainqueur";
+	private static final String ATTR_VENTE_TERMINEE = "venteTerminee";
 	private static final String ATTR_MEILLEURE_ENCHERE = "meilleureEnchere";
 	private static final String ATTR_ARTICLE_EN_VENTE = "articleEnVente";
 	private static final String ATTR_BRAVO = "bravo";
 	private static final String ATTR_ENCHERE_INSUFFISANTE = "enchereInsuffisante";
-	private static final String PARAM_PROPOSITION = "proposition";
-	private static final String APP_ENCODAGE = "UTF-8";
 	private static final String ATTR_NON_AUTORISE = "nonAutorise";
 	private static final String ATTR_ERREUR_INSERTION = "erreurInsertion";
-	private static final String APP_ATTR_MAP_ARTICLES = "mapArticles";
+	private static final String ATTR_VENDEUR = "vendeur";
+	
+	private static final String PARAM_PROPOSITION = "proposition";
+	private static final String PARAM_NO_ARTICLE = "noArticle";
+	private static final String PARAM_RETRAIT_EFFECTUE = "retraitEffectue";
+	
+	private static final String JSP_ENCHERE = "/enchere";
+	private static final String JSP_ACCUEIL = "/accueil";
 	
 	private static final long serialVersionUID = 1L;
 
@@ -44,25 +57,45 @@ public class ServletEnchere extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		Utilisateur encherisseur = (Utilisateur) request.getSession().getAttribute("utilisateur");
-		int idArticle = Integer.parseInt(request.getParameter("noArticle"));
-		Map<Integer,ArticleVendu> articlesEnBase = (Map<Integer,ArticleVendu>)getServletContext().getAttribute(APP_ATTR_MAP_ARTICLES);
-		ArticleVendu articleEnVente = articlesEnBase.get(idArticle);
-		int meilleureEnchere = determinerMontantEnchereADepasser(request);
+		int meilleureEnchere,idArticle;
+		Utilisateur encherisseur;
+		Map<Integer,ArticleVendu> articlesEnBase;
+		ArticleVendu articleEnVente;
+		EnchereManager manager = EnchereManager.getInstance();
+		
+		articlesEnBase =(Map<Integer,ArticleVendu>)getServletContext().getAttribute(APP_ATTR_MAP_ARTICLES);
+		encherisseur = (Utilisateur) request.getSession().getAttribute(SESSION_ATTR_UTILISATEUR);
+		meilleureEnchere = determinerMontantEnchereADepasser(request)+1;
+		idArticle = Integer.parseInt(request.getParameter(PARAM_NO_ARTICLE));
+		articleEnVente = articlesEnBase.get(idArticle);
+		
+		//Test si la vente est terminée
+		if(LocalDateTime.now().isAfter(articleEnVente.getDateFinEncheres())) {
+			try {
+				articleEnVente = manager.DeterminerVainqueurEnchere(articleEnVente);
+			} catch (BLLException blle) {
+				blle.printStackTrace();//TODO voir comment gerer cette erreur (problème lors de la modification de l'article)
+			}
+			request.setAttribute(ATTR_VENTE_TERMINEE, true);
+			if(articleEnVente.getEnchereMax().getUtilisateur().getNoUtilisateur().equals(encherisseur.getNoUtilisateur())) {
+				request.setAttribute(ATTR_VAINQUEUR, true);
+			}
+			if(articleEnVente.getVendeur().getNoUtilisateur().equals(encherisseur.getNoUtilisateur())) {
+				request.setAttribute(ATTR_VENDEUR, true);
+			}
+		}
+		
 		// Si l'utilisateur est autorisé (compte actif ou non)
 		if (encherisseur.isActif()) {
 			request.setAttribute(ATTR_ARTICLE_EN_VENTE, articleEnVente);
 			request.setAttribute(ATTR_MEILLEURE_ENCHERE, meilleureEnchere);
-			getServletContext().getRequestDispatcher("/enchere").forward(request, response);
+			getServletContext().getRequestDispatcher(JSP_ENCHERE).forward(request, response);
 		} else {
 			request.setAttribute(ATTR_NON_AUTORISE, true);
-			JOptionPane.showMessageDialog(null, "Vous n'êtes pas autorisé");
-			getServletContext().getRequestDispatcher("/accueil").forward(request, response);
+			getServletContext().getRequestDispatcher(JSP_ACCUEIL).forward(request, response);
 		}
 
 	}
-
-	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -70,37 +103,66 @@ public class ServletEnchere extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		boolean retrait;
+		int idArticle;
+		String pageSuivante;
+		Map<Integer,ArticleVendu> articlesEnBase;
+		ArticleVendu articleConcerne;
+		
+		//Récupération de l'article concerné
+		articlesEnBase = (Map<Integer,ArticleVendu>)getServletContext().getAttribute(APP_ATTR_MAP_ARTICLES);
+		idArticle = Integer.parseInt(request.getParameter(PARAM_NO_ARTICLE));
+		articleConcerne =articlesEnBase.get(idArticle);
+		
 		request.setCharacterEncoding(APP_ENCODAGE);
+		
+		retrait = Boolean.parseBoolean(request.getParameter(PARAM_RETRAIT_EFFECTUE));
+		
+		//test si le retrait est réalisé
+		if(retrait) {
+			//gestion du retrait d'article
+			pageSuivante = gererRetraitArticle(articleConcerne,request);
+		}else {
+			//gestion de l'enchere
+			pageSuivante = gererPropositionEnchere(articleConcerne,request);
+		}
+		
+		getServletContext().getRequestDispatcher(pageSuivante).forward(request, response);
+	}
+
+	private String gererRetraitArticle(ArticleVendu articleARetire,HttpServletRequest request) {
+		EnchereManager manager;
+		
+		manager = EnchereManager.getInstance();
+		manager.retirerArticle(articleARetire);
+		
+		return JSP_ACCUEIL;
+				
+	}
+
+	/**
+	 * Méthode permettant de gérée la proposition d'enchère faites par l'utilisateur
+	 * @param request
+	 * @param response
+	 * @throws ServletException
+	 * @throws IOException
+	 */
+	private String gererPropositionEnchere(ArticleVendu articleEnVente, HttpServletRequest request) {
 		EnchereManager manager = EnchereManager.getInstance();
-		int idArticle = Integer.parseInt(request.getParameter("noArticle"));
+		int idArticle;
 		int meilleureEnchere = determinerMontantEnchereADepasser(request);
 		Enchere enchereRetournee = null;
 		Boolean erreur = false;
-//		int idArticle = Integer.parseInt(request.getParameter("noArticle"));
-//		ArticleVendu articleEnVente = null;
-		Map<Integer,ArticleVendu> articlesEnBase = (Map<Integer,ArticleVendu>)getServletContext().getAttribute(APP_ATTR_MAP_ARTICLES);
-		ArticleVendu articleEnVente = articlesEnBase.get(idArticle);
-		System.out.println("articl en vente : " + articleEnVente);//TODO
-//		int meilleureOffre = articleEnVente.getEnchereMax().getMontantEnchere();
-//		int miseAPrix = articleEnVente.getPrixInitial();
-//		int prixVente = 0;
-//		 
-//		
-//		if(meilleureOffre > 0) {
-//			prixVente = meilleureOffre;
-//		} else {
-//			prixVente = miseAPrix;
-//		}
 		Integer propositionEnchere = Integer.parseInt(request.getParameter(PARAM_PROPOSITION));
-		Map<Integer, Enchere> encheres = (Map<Integer, Enchere>)((Utilisateur)request.getSession().getAttribute("utilisateur")).getMapEncheres();
-		System.out.println(encheres+ "enchere1"); // TODO
+		Map<Integer, Enchere> encheres = (Map<Integer, Enchere>)((Utilisateur)request.getSession().getAttribute(SESSION_ATTR_UTILISATEUR)).getMapEncheres();
+		
+		idArticle = articleEnVente.getNoArticle();
+		
 		if(propositionEnchere > meilleureEnchere) {
-			
-			System.out.println(encheres.get(idArticle) + " : dans liste encheres"); // TODO
 			// Si une enchère a déjà été faite par l'utilisateur :
 			if (encheres.get(idArticle) != null) {
 				try {
-					enchereRetournee = manager.modifierEnchere(LocalDateTime.now(), propositionEnchere, (Utilisateur)request.getSession().getAttribute("utilisateur"), articleEnVente);
+					enchereRetournee = manager.modifierEnchere(LocalDateTime.now(), propositionEnchere, (Utilisateur)request.getSession().getAttribute(SESSION_ATTR_UTILISATEUR), articleEnVente);
 				} catch (BLLException blle) {
 					request.setAttribute(ATTR_ERREUR_INSERTION, true);
 					erreur = true;
@@ -108,17 +170,17 @@ public class ServletEnchere extends HttpServlet {
 				}
 			}else {
 				try {
-					enchereRetournee = manager.creerEnchere(LocalDateTime.now(), propositionEnchere, (Utilisateur)request.getSession().getAttribute("utilisateur"), articleEnVente);
+					enchereRetournee = manager.creerEnchere(LocalDateTime.now(), propositionEnchere, (Utilisateur)request.getSession().getAttribute(SESSION_ATTR_UTILISATEUR), articleEnVente);
 				} catch (BLLException blle) {
 					request.setAttribute(ATTR_ERREUR_INSERTION, true);
 					erreur = true;
 					blle.printStackTrace();
 				}
 			}
+			
 			if(!erreur) {
 				meilleureEnchere = propositionEnchere;
 				encheres.put(idArticle, enchereRetournee);
-				System.out.println(encheres+ "enchere2");
 				request.setAttribute(ATTR_BRAVO, true);
 				request.setAttribute(ATTR_ARTICLE_EN_VENTE, articleEnVente);
 				request.setAttribute(ATTR_MEILLEURE_ENCHERE, meilleureEnchere);
@@ -130,7 +192,7 @@ public class ServletEnchere extends HttpServlet {
 			request.setAttribute(ATTR_ENCHERE_INSUFFISANTE, true);
 		}
 		
-		getServletContext().getRequestDispatcher("/enchere").forward(request, response);
+		return JSP_ENCHERE;
 	}
 
 	/**
@@ -140,12 +202,13 @@ public class ServletEnchere extends HttpServlet {
 	private int determinerMontantEnchereADepasser(HttpServletRequest request) {
 		ArticleVendu articleEnVente = null;
 		Map<Integer,ArticleVendu> articlesEnBase = (Map<Integer,ArticleVendu>)getServletContext().getAttribute(APP_ATTR_MAP_ARTICLES);
-		int idArticle = Integer.parseInt(request.getParameter("noArticle"));
+		int idArticle = Integer.parseInt(request.getParameter(PARAM_NO_ARTICLE));
 		articleEnVente = articlesEnBase.get(idArticle);
 		
 		int meilleureOffre = articleEnVente.getEnchereMax().getMontantEnchere();
 		int miseAPrix = articleEnVente.getPrixInitial();
 		int meilleureEnchere = 0;
+		
 		if(meilleureOffre > 0) {
 			meilleureEnchere = meilleureOffre;
 		} else {
