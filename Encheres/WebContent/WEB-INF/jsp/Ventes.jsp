@@ -45,7 +45,7 @@
 		<div>
 			<label for="prixdepart">Mise à prix : </label>
 			<input type="number"
-				name="prixdepart" id="prixdepart" required value="${param.prixdepart}">
+				name="prixdepart" id="prixdepart" value="${param.prixdepart}">
 		</div>
 		<div>
 			<label for="datedebut">Début de l'enchère : </label>
@@ -62,18 +62,34 @@
 	
 			<div>
 				<label for="rue">Rue : </label>
-				<input type="text" name="rue" id="rue" required value="<c:if test="${!empty param.rue}">${requestScope.rue}</c:if>
-				                                              <c:if test="${param.rue}">${param.rue}</c:if>"
+				<input 
+					type="text" 
+					name="rue" 
+					id="rue" 
+					required 
+					value="<c:if test="${empty param.rue}">${requestScope.rue}</c:if>
+				           <c:if test="${param.rue}">${param.rue}</c:if>"
 				>
 			</div>
 			<div>
 				<label for="codepostal">Code postal : </label>
-				<input type="text" name="codepostal" id="codepostal" required pattern="[0-9]{5}" value="<c:if test="${!empty param.codepostal}">${requestScope.cp}</c:if>
-				                                                            <c:if test="${param.codepostal}">${param.codepostal}</c:if>">
+				<input 
+					type="text" 
+					name="codepostal" 
+					id="codepostal" 
+					required 
+					pattern="[0-9]{5}" 
+					value="<c:if test="${empty param.codepostal}">${requestScope.cp}</c:if>
+				           <c:if test="${param.codepostal}">${param.codepostal}</c:if>">
 			</div>
 			<div>
 				<label for="ville">Ville : </label>
-				<input type="text" name="ville" id="ville" required value="<c:if test="${!empty param.ville}">${requestScope.ville}</c:if>
+				<input 
+					type="text" 
+					name="ville" 
+					id="ville" 
+					required 
+					value="<c:if test="${empty param.ville}">${requestScope.ville}</c:if>
 				                                                           <c:if test="${param.ville}">${param.ville}</c:if>">
 			</div>
 		</div>
