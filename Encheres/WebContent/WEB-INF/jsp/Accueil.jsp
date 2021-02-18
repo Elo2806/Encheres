@@ -10,10 +10,10 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <link href="css/styleAccueil.css" rel="stylesheet"/>
+
 <link rel="preconnect" href="https://fonts.gstatic.com">
+
     <link href="https://fonts.googleapis.com/css2?family=Crete+Round&display=swap" rel="stylesheet">
 <meta
 	http-equiv="Content-Type"
@@ -48,7 +48,7 @@
 		</c:when>
 		<c:otherwise>
 			<div>
-				<span class="connexion"><li><a href="<c:url value="/ServletConnexion"/>">Se connecter - S'inscrire </a></li></span>
+				<span><li id="connexion"><a href="<c:url value="/ServletConnexion"/>">Se connecter - S'inscrire </a></li></span>
 			</div>
 		</c:otherwise>
 	</c:choose>
@@ -291,6 +291,7 @@
         </div>
         </div>
     </footer>
- 
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>

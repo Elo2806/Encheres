@@ -76,7 +76,9 @@ main nav ul li a:hover {
     background: ghostwhite;
 }
 
-
+#connexion{
+width: 500px;	
+}
 .articles{
 border-style:solid;
 	background-color: rgba(255, 250, 240, 0.9);

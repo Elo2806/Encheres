@@ -5,6 +5,7 @@
 	width: 30%;
 	margin-right:35%;
 	margin-left:35%;
+
 	}
 	.element{
 	display:flex;
@@ -44,12 +45,16 @@
 	#case{
 	margin: 10px;
 	}
+	
 	#btn_connexion{
 	display: flex;
 	justify-content:center;
 	align-items: center;
 	padding:20px 50px 20px 50px;
 	margin: 20px;
+	background: linear-gradient(indigo, darkred, burlywood);
+	background-color:green;
+    border-radius: 10px;
 	}
 	#connexion{
 	margin-bottom: 20px;
