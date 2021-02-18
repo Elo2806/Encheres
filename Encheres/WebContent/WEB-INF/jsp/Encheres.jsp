@@ -263,7 +263,7 @@
 									</div>
 								</form>
 							</c:when>
-							<c:when test="${!empty requestScope.vendeur}">
+							<c:when test="${!empty requestScope.vendeur && requestScope.articleEnVente.prixVente ==0}">
 								<form
 									method="post"
 									action="<c:url value="/ServletEnchere"/>">
@@ -275,6 +275,7 @@
 										name="noArticle"
 										value="${param.noArticle}"> <input
 										type="submit"
+										class="btn btn-primary btn-lg"
 										value="Retrait Effectué">
 								</form>
 								<br>
@@ -303,6 +304,7 @@
 									</div>
 								</div>
 								<br>
+								
 								<a href="<c:url value="/accueil"/>"><input
 									type="button"
 									class="btn btn-primary btn-lg"
@@ -315,8 +317,11 @@
 									value="Back"></a>
 							</c:otherwise>
 						</c:choose>
+						
+						
 						</div>
 						</div>
+						<br>
 						
 						
 						

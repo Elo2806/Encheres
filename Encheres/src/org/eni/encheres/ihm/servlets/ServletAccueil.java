@@ -263,7 +263,6 @@ public class ServletAccueil extends HttpServlet {
 		Map<Integer, ArticleVendu> articles = (Map<Integer, ArticleVendu>) getServletContext()
 				.getAttribute(APP_ATTR_MAP_ARTICLES);
 		
-		System.out.println("filtres" + listFiltres);// TODO Suprimer
 		
 		for (ArticleVendu article : articles.values()) {
 			//test filtre categorie 

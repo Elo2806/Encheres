@@ -70,7 +70,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static final String SQL_FINDALL_ARTICLES = "SELECT art.prix_initial,art.no_article,nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, art.no_utilisateur, art.no_categorie,uti.pseudo,uti.nom,uti.prenom,uti.email,uti.telephone,uti.rue,uti.code_postal,uti.ville,uti.mot_de_passe,uti.credit,uti.administrateur,uti.actif,cat.libelle,ret.rue as retraitRue, ret.code_postal as retraitCodePostal, ret.ville as retraitVille FROM ARTICLES_VENDUS as art INNER JOIN CATEGORIES as cat ON cat.no_categorie = art.no_categorie INNER JOIN UTILISATEURS as uti ON uti.no_utilisateur = art.no_utilisateur INNER JOIN RETRAITS as ret ON ret.no_article = art.no_article";
 	private static final String SQL_INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, no_utilisateur, no_categorie) values (?,?,?,?,?,?,?)";
 	private static final String SQL_INSERT_RETRAIT = "INSERT INTO RETRAITS (no_article,rue,code_postal,ville) VALUES(?,?,?,?)";
-	private static final String SQL_UPDATE = "UPDATE ARTICLES_VENDUS SET nom_article=?, description=?, date_debut_encheres=?, date_fin_encheres=?, prix_initial=?, no_utilisateur=?, no_categorie=? WHERE no_article=?";
+	private static final String SQL_UPDATE = "UPDATE ARTICLES_VENDUS SET nom_article=?, description=?, date_debut_encheres=?, date_fin_encheres=?, prix_initial=?, prix_vente=?, no_utilisateur=?, no_categorie=? WHERE no_article=?";
 
 	private static final String ERREUR_CONNECTION = "Problème de connection";
 	private static final String ERREUR_SQL_RECHERCHE_EN_BASE = "Erreur lors de la recherche en base";
@@ -265,9 +265,10 @@ public class ArticleDAOImpl implements ArticleDAO {
 				pstmt.setTimestamp(3, Timestamp.valueOf(updatedArticle.getDateDebutEncheres()));
 				pstmt.setTimestamp(4, Timestamp.valueOf(updatedArticle.getDateFinEncheres()));
 				pstmt.setInt(5, updatedArticle.getPrixInitial());
-				pstmt.setInt(6, updatedArticle.getVendeur().getNoUtilisateur());
-				pstmt.setInt(7, updatedArticle.getCategorie().getNoCategorie());
-				pstmt.setInt(8, updatedArticle.getNoArticle());
+				pstmt.setInt(6, updatedArticle.getPrixVente());
+				pstmt.setInt(7, updatedArticle.getVendeur().getNoUtilisateur());
+				pstmt.setInt(8, updatedArticle.getCategorie().getNoCategorie());
+				pstmt.setInt(9, updatedArticle.getNoArticle());
 
 				// Execution de la requete
 				pstmt.executeUpdate();
