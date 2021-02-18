@@ -50,18 +50,18 @@
 				<c:choose>
 					<c:when test="${!empty sessionScope.utilisateur}">
 
-						<span><li><a href="<c:url value="/ServletVente"/>">Vendre
-									un article</a></li></span>
-						<span><li><a href="<c:url value="/ServletCompte"/>">Mon
-									profil</a></li></span>
-						<span><li><a href="<c:url value="/ServletConnexion"/>">Déconnexion</a></li></span>
+						<li><a href="<c:url value="/ServletVente"/>">Vendre
+									un article</a></li>
+						<li><a href="<c:url value="/ServletCompte"/>">Mon
+									profil</a></li>
+						<li><a href="<c:url value="/ServletConnexion"/>">Déconnexion</a></li>
 
 					</c:when>
 					<c:otherwise>
 						<div>
-							<span><li id="connexion"><a
+							<li id="connexion"><a
 									href="<c:url value="/ServletConnexion"/>">Se connecter - S'inscrire
-								</a></li></span>
+								</a></li>
 						</div>
 					</c:otherwise>
 				</c:choose>

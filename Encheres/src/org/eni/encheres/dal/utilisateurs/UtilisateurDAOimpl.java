@@ -6,14 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.eni.encheres.bo.ArticleVendu;
 import org.eni.encheres.bo.Categorie;
 import org.eni.encheres.bo.Enchere;
 import org.eni.encheres.bo.Utilisateur;
-import org.eni.encheres.dal.DAOFactory;
 import org.eni.encheres.dal.exceptions.ConnectionException;
 import org.eni.encheres.dal.exceptions.DALException;
 import org.eni.encheres.dal.exceptions.RequeteSQLException;

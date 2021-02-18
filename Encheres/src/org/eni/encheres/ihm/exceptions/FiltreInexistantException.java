@@ -2,6 +2,8 @@ package org.eni.encheres.ihm.exceptions;
 
 public class FiltreInexistantException extends IHMException {
 
+	private static final long serialVersionUID = 1L;
+
 	public FiltreInexistantException() {
 	}
 
