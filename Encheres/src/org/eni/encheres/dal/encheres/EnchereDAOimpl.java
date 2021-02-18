@@ -15,13 +15,20 @@ import org.eni.encheres.dal.exceptions.RequeteSQLException;
 import org.eni.encheres.dal.jdbc.ConnectionProvider;
 
 /**
- * @author Catherine Créé le: 11 févr. 2021 Modifié le: 11 févr. 2021
+ * 
+ * Classe concrète permettant de mettre les méthodes permettant d'interagir avec la base de données SQL sur les objets métiers liés aux Enchères.
+ * 
+ * @author Catherine Créé le: 11 févr.
  */
 public class EnchereDAOimpl implements EnchereDAO {
-
+	
 	private static final String SQL_UPDATE_ENCHERE = "UPDATE Encheres SET date_enchere=?,montant_enchere=? WHERE no_utilisateur=? AND no_article=?";
 	private static final String SQL_INSERT_ENCHERE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere) values (?,?,?,?)";
 
+	private static final String ERREUR_CONNEXION = "Erreur de connexion";
+	private static final String ERREUR_INSERT = "Erreur lors de l'insertion en base";
+	private static final String ERREUR_UPDATE = "Erreur lors de la mise à jour en base";
+	
 	@Override
 	public void create(Enchere newEnchere) throws DALException {
 
@@ -43,7 +50,7 @@ public class EnchereDAOimpl implements EnchereDAO {
 				pstmt.executeUpdate();
 
 			} catch (SQLException sqle) {
-				throw new RequeteSQLException("Erreur lors de l'insertion en base", sqle);
+				throw new RequeteSQLException(ERREUR_INSERT, sqle);
 			} finally {
 				if (pstmt != null) {
 					pstmt.close();
@@ -52,14 +59,13 @@ public class EnchereDAOimpl implements EnchereDAO {
 
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
-			throw new ConnectionException("Problème de connection", sqle);
+			throw new ConnectionException(ERREUR_CONNEXION, sqle);
 		}
 
 	}
 
 	@Override
 	public void update(Enchere enchereAModifier) throws DALException {
-		Enchere modifiedEnchere = null;
 		// Connection en base
 		try (Connection cnx = ConnectionProvider.getConnection()) {
 			PreparedStatement pstmt = null;
@@ -78,7 +84,7 @@ public class EnchereDAOimpl implements EnchereDAO {
 				pstmt.executeUpdate();
 
 			} catch (SQLException sqle) {
-				throw new RequeteSQLException("Erreur lors de l'insertion en base", sqle);
+				throw new RequeteSQLException(ERREUR_UPDATE, sqle);
 			} finally {
 				if (pstmt != null) {
 					pstmt.close();
@@ -87,7 +93,7 @@ public class EnchereDAOimpl implements EnchereDAO {
 
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
-			throw new ConnectionException("Problème de connection", sqle);
+			throw new ConnectionException(ERREUR_CONNEXION, sqle);
 			
 		}
 		

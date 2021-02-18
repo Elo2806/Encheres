@@ -5,11 +5,11 @@ import org.eni.encheres.dal.exceptions.DALException;
 
 /**
  * 
- * Cette classe permet de centraliser les méthodes d'intéraction avec le système de persistance
+ * Interface regroupant les méthodes permettant d'interagir avec le systeme de persistance sur les objets métiers liés aux Utilisateurs.
  * 
  * @author Taharqa
  * Créé le: 11 févr. 2021
- * Mofifié le: 11 févr. 2021
+ * 
  */
 public interface UtilisateurDAO {
 	

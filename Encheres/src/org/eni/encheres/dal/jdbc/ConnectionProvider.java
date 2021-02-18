@@ -8,6 +8,14 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+/**
+ * 
+ * La classe utilitaire permettant d'accèder au pool de connexions.
+ * 
+ * @author Taharqa
+ * Créé le: 09 févr. 2021
+ * 
+ */
 public abstract class ConnectionProvider {
 
 	private static final String POOL_CONNEXION_NAME = "jdbc/poolEncheres";

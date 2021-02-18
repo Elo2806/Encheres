@@ -8,25 +8,31 @@ import org.eni.encheres.dal.exceptions.DALException;
 
 /**
  * 
- * Cette classe permet de centraliser les méthodes d'intéractions avec le
- * système de persistance
+ * Interface regroupant les méthodes permettant d'interagir avec le systeme de
+ * persistance sur les objets métiers liés aux Enchères.
  *
- * @author Catherine Créé le: 11 févr. 2021 Modifié le: 11 févr. 2021
+ * @author Catherine Créé le: 11 févr.
  */
 public interface EnchereDAO {
 
 	/**
 	 * 
-	 * Méthode permettant de créer une nouvelle enchère en base de données et de la
-	 * mettre à jour
+	 * Méthode permettant d'insérer un enchère dans le systeme de persistance.
 	 * 
 	 * @param nouvelleEnchere
 	 *            Enchere à ajouter en base
 	 * @throws DALException
-	 *             si un problème survient lors de l'insertion en base
+	 *             si un problème survient lors de l'insertion en systeme
 	 */
 	void create(Enchere nouvelleEnchere) throws DALException;
 
+	/**
+	 * 
+	 * Méthode permettant de mettre à jour le systeme en fonction de l'objet en parametre
+	 * 
+	 * @param enchereAModifier enchère à modifier en base
+	 * @throws DALException si un problème survient lors de la modification en systeme
+	 */
 	void update(Enchere enchereAModifier) throws DALException;
 
 }

@@ -23,7 +23,7 @@ import org.eni.encheres.dal.jdbc.ConnectionProvider;
 
 /**
  * 
- * Classe concrète permettant de mettre 
+ * Classe concrète permettant de mettre les méthodes permettant d'interagir avec la base de données SQL sur les objets métiers liés aux Articles.
  * 
  * @author Elodie Créé le: 11 févr. 2021
  * 
