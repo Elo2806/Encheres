@@ -32,11 +32,6 @@
 	content="text/html; charset=UTF-8">
 <title>Accueil</title>
 
-<style type="text/css">
-.vente {
-	color: red;
-}
-</style>
 </head>
 <body>
 	<div
