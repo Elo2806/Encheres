@@ -15,6 +15,11 @@ h1 {
     margin-top: 50px; 
 }
 
+h2{
+margin-top: 30px;	
+}
+
+
 h3{
 margin-top: 30px;	
 }
@@ -46,10 +51,13 @@ img.picture-left {
   width : 100%;
 }
 
-img.photo-left {
-  width : 90%;
-  padding:30px 10px;
+
+.photo{
+	display:flex;
+	align-self:center;
+	justify-content:center;
 }
+
 
 main nav ul {
     clear: both;
@@ -124,4 +132,8 @@ border-style:solid;
 .button{
 	justify-content:center;
 	text-align:center
+}
+
+#proposition{
+width: 60px;
 }

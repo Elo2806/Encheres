@@ -111,7 +111,7 @@
 			<div class="container">
 				<c:choose>
 					<c:when test="${empty requestScope.venteTerminee}">
-						<h1 class="titre">Détail vente</h1>
+						<h2 class="titre">Détail vente</h2>
 					</c:when>
 					<c:when test="${empty requestScope.vainqueur}">
 						<h2 class = "titre">Vous avez remporté la vente</h2>
@@ -124,7 +124,7 @@
 			</div>
 
 			<div class="row">
-				<div class="col-6">
+				<div class="col-6 photo">
 
 					<img
 						class="photo-left"
@@ -142,6 +142,7 @@
 								</div>
 							</div>
 						</div>
+						<br>
 						<div class="container">
 							<div class="row">
 								<div class="col-4">
@@ -152,7 +153,7 @@
 								</div>
 							</div>
 						</div>
-
+						<br>
 
 						<div class="container">
 							<div class="row">
@@ -165,7 +166,7 @@
 								</div>
 							</div>
 						</div>
-
+						<br>
 
 
 						<div class="container">
@@ -179,7 +180,7 @@
 								</div>
 							</div>
 						</div>
-
+						<br>
 
 
 						<div class="container">
@@ -194,11 +195,11 @@
 								</div>
 							</div>
 						</div>
-
+						<br>
 
 						<div class="container">
 							<div class="row">
-								<div class="col-8">
+								<div class="col-4">
 									<p>Fin de l'enchere</p>
 								</div>
 								<div class="col-8">
@@ -206,7 +207,7 @@
 								</div>
 							</div>
 						</div>
-
+						<br>
 
 						<div class="container">
 							<div class="row">
@@ -222,7 +223,7 @@
 								</div>
 							</div>
 						</div>
-
+						<br>
 
 						<div class="container">
 							<div class="row">
@@ -234,7 +235,7 @@
 								</div>
 							</div>
 						</div>
-
+						<br>
 
 <div class="container">
 							<div class="row">
@@ -254,8 +255,8 @@
 											type="number"
 											name="proposition"
 											id="proposition"
-											value=${requestScope.meilleureEnchere }
-											style="width: 43px;"> <input
+											value=${requestScope.meilleureEnchere }> 
+											<input
 											type="submit"
 											value="Enchérir">
 									</div>

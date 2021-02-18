@@ -7,40 +7,38 @@
 	Auteur de la dernière modification :
 */
 
-.titre
-{
+.titre{
 	text-align: center;
 }
-form{
+
+form {
     display:flex;  
     justify-content:center;
 }
 
-div{​​
-margin:7px 30px;
-text-align: left;
+div {
+	margin:7px 30px;
+	text-align: left;
+}
+​​
+label {
+	width:120px;
 
 }​​
-label{​​
-width:120px;
-
-}​​
-input{​​
-width:200px;
+input {
+	width:200px;
 }​​
 
-
-
-div.btn_submit{​​
-text-align: center;
-border-radius: 10px;
-padding:20px 50px 20px 50px;
-justify-content: space-between;
+div.btn_submit {
+	border-radius: 10px;
+	padding:20px 50px 20px 50px;
+	justify-content: space-between;
+	text-align: center;
 }​​
 
-.lienMdp{​​
-border-style:solid;
-text-align:center;
+.lienMdp{
+	text-align:center;
+	border-style:solid;
 }​​
 
 
