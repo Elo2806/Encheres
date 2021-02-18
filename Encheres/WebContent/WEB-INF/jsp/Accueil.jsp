@@ -19,6 +19,7 @@
 	http-equiv="Content-Type"
 	content="text/html; charset=UTF-8">
 <title>Accueil</title>
+
 <style type="text/css">
 .vente {
 	color: red;
