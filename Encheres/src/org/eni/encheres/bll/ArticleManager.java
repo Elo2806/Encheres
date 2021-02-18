@@ -40,7 +40,6 @@ public class ArticleManager {
 	}
 
 	/**
-	 * 
 	 * Méthode permettant d'ajouter un article dans le systeme de persistance
 	 * 
 	 * @param nomArticle
@@ -71,7 +70,6 @@ public class ArticleManager {
 	}
 
 	/**
-	 * 
 	 * Méthode permettant de récupérer la map des articles en fonction de leur
 	 * numero d'article
 	 * 
@@ -91,8 +89,8 @@ public class ArticleManager {
 	}
 	
 	/**
-	 * 
 	 * Méthode permettant de modifier un article dans le systeme de persistance
+	 * 
 	 * @param updatedArticle
 	 * @throws BLLException si probleme lors du passage en DAL
 	 */

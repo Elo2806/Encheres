@@ -6,14 +6,14 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * @author ElCaTar
- *
+ * Classe modélisant un article
+ * @author Elodie
+ * Créé le: 18 févr. 2021
+ * Modifié le: 18 févr. 2021
  */
 public class ArticleVendu implements Serializable{
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private Integer noArticle;
 	private String nomArticle;
@@ -39,6 +39,7 @@ public class ArticleVendu implements Serializable{
 	
 	/**
 	 *Construteur
+	 *
 	 * @param nomArticle
 	 * @param description
 	 * @param dateDebutEncheres
@@ -59,7 +60,6 @@ public class ArticleVendu implements Serializable{
 	}
 	
 	/**
-	 * 
 	 * Constructeur l'objet sans le noArticle
 	 * 
 	 * @param nomArticle
@@ -70,7 +70,7 @@ public class ArticleVendu implements Serializable{
 	 * @param categorie
 	 * @param retrait
 	 * @param noArticle
-	 * @param Integer TODO
+	 * @param Integer
 	 */
 	public ArticleVendu (String nomArticle, String description, LocalDateTime dateDebutEncheres,
 			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie,Retrait retrait, Integer prixInitial ) {
@@ -84,7 +84,6 @@ public class ArticleVendu implements Serializable{
 	}
 	
 	/**
-	 * 
 	 * Constructeur complet de l'objet
 	 * 
 	 * @param nomArticle
@@ -95,7 +94,7 @@ public class ArticleVendu implements Serializable{
 	 * @param categorie
 	 * @param retrait
 	 * @param noArticle
-	 * @param Integer TODO
+	 * @param Integer
 	 */
 	public ArticleVendu (String nomArticle, String description, LocalDateTime dateDebutEncheres,
 			LocalDateTime dateFinEncheres, Utilisateur vendeur, Categorie categorie,Retrait retrait, int noArticle, Integer prixInitial ) {
@@ -111,8 +110,8 @@ public class ArticleVendu implements Serializable{
 	
 
 	/**
-	 * 
 	 * Constructeur pour créer un article léger 
+	 * 
 	 * @param nomArticle
 	 * @param description
 	 * @param dateDebutEncheres
@@ -127,7 +126,7 @@ public class ArticleVendu implements Serializable{
 		setNoArticle(noArticle);
 	}
 
-
+	// Getters et Setters
 	/**
 	 * Méthode permettant de récupérer noArticle
 	 * @return le noArticle

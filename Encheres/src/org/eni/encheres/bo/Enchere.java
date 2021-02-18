@@ -10,9 +10,7 @@ import java.time.LocalDateTime;
  */
 public class Enchere implements Serializable{
 
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private LocalDateTime dateEnchere;
 	private Integer montantEnchere;
@@ -20,7 +18,6 @@ public class Enchere implements Serializable{
 	private ArticleVendu article;
 	
 	
-	// Constructeurs
 	/**
 	 * Constructeur
 	 */
@@ -29,6 +26,7 @@ public class Enchere implements Serializable{
 	
 	/**
 	 * Constructeur
+	 * 
 	 * @param dateEnchere
 	 * @param montantEnchere
 	 * @param utilisateur
@@ -41,6 +39,7 @@ public class Enchere implements Serializable{
 		setUtilsateur(utilisateur);
 		setArticle(article);
 	}
+	
 	// Getters et Setters
 	/**
 	 * Méthode permettant de modifier dateEnchere

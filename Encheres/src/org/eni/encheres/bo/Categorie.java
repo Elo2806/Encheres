@@ -9,11 +9,14 @@ import java.io.Serializable;
  */
 public class Categorie implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Integer noCategorie;
 	private String libelle;
 	
 	
-	// Constructeur
 	/**
 	 * Constructeur
 	 */
@@ -21,7 +24,8 @@ public class Categorie implements Serializable {
 	}
 	
 	/**
-	 * Constructeur
+	 * Constructeur avec libelle (avant de créer en base)
+	 * 
 	 * @param libelle
 	 */
 	public Categorie(String libelle) {
@@ -29,6 +33,13 @@ public class Categorie implements Serializable {
 		setLibelle(libelle);
 	}
 	
+	/**
+	 * 
+	 * Constructeur complet
+	 * 
+	 * @param libelle
+	 * @param noCategorie
+	 */
 	public Categorie(String libelle,Integer noCategorie) {
 		this(libelle);
 		setNoCategorie(noCategorie);

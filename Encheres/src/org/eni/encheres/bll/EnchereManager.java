@@ -36,6 +36,16 @@ public class EnchereManager {
 		return instance;
 	}
 
+	/**
+	 * 
+	 * Méthode permettant de creer une enchère dans le système de persistance
+	 * @param dateEnchere
+	 * @param montantEnchere
+	 * @param utilisateur
+	 * @param article
+	 * @return l'enchère crée
+	 * @throws BLLException
+	 */
 	public Enchere creerEnchere(LocalDateTime dateEnchere, Integer montantEnchere, Utilisateur utilisateur, ArticleVendu article) throws BLLException {
 		Enchere nouvelleEnchere = new Enchere(dateEnchere, montantEnchere, utilisateur, article);
 		try {
@@ -46,6 +56,16 @@ public class EnchereManager {
 		return nouvelleEnchere;
 	}
 
+	/**
+	 * 
+	 * Méthode permettant de modifier une enchère dans le système de persistance
+	 * @param now
+	 * @param propositionEnchere
+	 * @param encherisseur
+	 * @param articleEnVente
+	 * @return
+	 * @throws BLLException
+	 */
 	public Enchere modifierEnchere(LocalDateTime now, Integer propositionEnchere, Utilisateur encherisseur,
 			ArticleVendu articleEnVente) throws BLLException {
 		Enchere enchereAModifier = new Enchere(now, propositionEnchere, encherisseur, articleEnVente);

@@ -11,6 +11,8 @@ import java.util.Map;
  */
 public class Utilisateur implements Serializable {
 
+	
+	private static final long serialVersionUID = 1L;
 	private Integer noUtilisateur;
 	private String pseudo;
 	private String nom;
@@ -27,7 +29,7 @@ public class Utilisateur implements Serializable {
 	private Boolean supprime;
 	private Map<Integer,Enchere> mapEncheres;
 	
-	// Constructeurs
+
 	/**
 	 * Constructeur vide par défaut
 	 */
@@ -40,8 +42,8 @@ public class Utilisateur implements Serializable {
 	}
 	
 	/**
-	 * 
 	 * Constructeur pour la saisie utilisateur (création)
+	 * 
 	 * @param pseudo
 	 * @param nom
 	 * @param prenom
@@ -67,8 +69,8 @@ public class Utilisateur implements Serializable {
 	}
 	
 	/**
-	 * 
 	 * Constructeur pour la saisie utilisateur (modification)
+	 * 
 	 * @param pseudo
 	 * @param nom
 	 * @param prenom
@@ -87,6 +89,7 @@ public class Utilisateur implements Serializable {
 	
 	/**
 	 * Constructeur initial
+	 * 
 	 * @param pseudo
 	 * @param nom
 	 * @param prenom
@@ -107,8 +110,8 @@ public class Utilisateur implements Serializable {
 	}
 	
 	/**
-	 * 
 	 * Constructeur de l'utilisateur a la sortie du systeme de persistance
+	 * 
 	 * @param pseudo
 	 * @param nom
 	 * @param prenom

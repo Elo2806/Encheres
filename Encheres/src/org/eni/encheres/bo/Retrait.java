@@ -6,21 +6,21 @@ package org.eni.encheres.bo;
 import java.io.Serializable;
 
 /**
- * 
+ * Classe modélisant un retrait
  * @author Taharqa
  * Créé le: 9 févr. 2021
  * Mofifié le: 9 févr. 2021
  */
 public class Retrait implements Serializable {
 
+	
+	private static final long serialVersionUID = 1L;
 	private String rue;
 	private String codePostal;
 	private String ville;
 	private ArticleVendu article;
 	
-	//Constructeurs
 	/**
-	 * 
 	 * Constructeur
 	 */
 	public Retrait() {
@@ -28,8 +28,8 @@ public class Retrait implements Serializable {
 	}
 	
 	/**
+	 * Constructeur complet
 	 * 
-	 * Constructeur
 	 * @param rue
 	 * @param codePostal
 	 * @param ville
@@ -42,8 +42,8 @@ public class Retrait implements Serializable {
 		setVille(ville);
 		setArticle(article);
 	}
+	
 	//Setters et getters
-
 	/**
 	 * Méthode permettant de récupérer rue
 	 * @return le rue
