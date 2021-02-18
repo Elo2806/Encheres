@@ -62,6 +62,7 @@ public class ServletConnexion extends HttpServlet {
 			try {
 				utilisateur = manager.rechercherUtilisateur(identifiants, motDePasse);
 			} catch (BLLException blle) {
+				blle.printStackTrace();
 				// Si les identifiant/mot de passe pas existants :
 				request.setAttribute("erreurIdentifiant", true);
 				getServletContext().getRequestDispatcher("/connexion").forward(request, response);
