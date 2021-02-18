@@ -1,6 +1,7 @@
 package org.eni.encheres.bll.exceptions;
 
 /**
+ * Classe d'exception générée au niveau BLL
  * @author AlCaTar
  * Créé le: 18 févr. 2021
  * Modifié le: 18 févr. 2021
