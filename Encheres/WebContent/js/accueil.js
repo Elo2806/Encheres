@@ -3,13 +3,14 @@ function changeType(type) {
 	var text = elements.length;
 	
 	for (var i = 0; i < elements.length; i++) {
-		if(!elements[i].disabled){
-			elements[i].checked = false;
-		}
+//		if(!elements[i].disabled){
+//			elements[i].checked = false;
+//		}else{
+//			elements[i].checked = true;
+//		}
 		elements[i].disabled = !elements[i].disabled;
-		//elements[i].checked = !elements[i].checked;
-		elements[i].checked = true;
-		console.log(elements[i].checked);
+		elements[i].checked = !elements[i].disabled;
+
 	}
 }
 
