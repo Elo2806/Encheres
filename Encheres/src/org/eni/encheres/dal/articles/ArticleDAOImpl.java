@@ -22,6 +22,9 @@ import org.eni.encheres.dal.exceptions.RequeteSQLException;
 import org.eni.encheres.dal.jdbc.ConnectionProvider;
 
 /**
+ * 
+ * Classe concrète permettant de mettre 
+ * 
  * @author Elodie Créé le: 11 févr. 2021
  * 
  *         Modifié le: 17 févr. 2021 par Taharqa
@@ -69,9 +72,9 @@ public class ArticleDAOImpl implements ArticleDAO {
 	private static final String SQL_INSERT_RETRAIT = "INSERT INTO RETRAITS (no_article,rue,code_postal,ville) VALUES(?,?,?,?)";
 	private static final String SQL_UPDATE = "UPDATE ARTICLES_VENDUS SET nom_article=?, description=?, date_debut_encheres=?, date_fin_encheres=?, prix_initial=?, no_utilisateur=?, no_categorie=? WHERE no_article=?";
 
+	private static final String ERREUR_CONNECTION = "Problème de connection";
 	private static final String ERREUR_SQL_RECHERCHE_EN_BASE = "Erreur lors de la recherche en base";
 	private static final String ERREUR_SQL_INSERTION = "Erreur lors de l'insertion en base";
-	private static final String ERREUR_CONNECTION = "Problème de connection";
 	private static final String ERREUR_SQL_UPDATE = "Erreur lors de la modification en base";
 	
 	@Override
@@ -227,9 +230,8 @@ public class ArticleDAOImpl implements ArticleDAO {
 							rs.getBoolean(COL_UTIL_ACTIF));
 
 					enchereMax = new Enchere(rs.getTimestamp(COL_ENCH_DATE_ENCHERE).toLocalDateTime(),
-							rs.getInt(COL_ENCH_MONTANT_ENCHERE), utilisateur, article);// FIXME tester la convertion
+							rs.getInt(COL_ENCH_MONTANT_ENCHERE), utilisateur, article);
 					article.setEnchereMax(enchereMax);
-
 				}
 
 				rs.close();

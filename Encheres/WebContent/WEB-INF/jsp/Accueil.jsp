@@ -126,7 +126,7 @@
 											type="radio"
 											name="typeFiltre"
 											value="achat"
-											onclick="selectType(false)"
+											onchange="selectType(false)"
 											<c:if test="${param.typeFiltre == 'achat'}">checked="checked"</c:if>
 											<c:if test="${ empty param.recherche}">checked="checked"</c:if>>
 										<label>Achats</label>
@@ -168,7 +168,7 @@
 											type="radio"
 											name="typeFiltre"
 											value="vente"
-											onclick="selectType(false)"
+											onchange="selectType(false)"
 											<c:if test="${param.typeFiltre == 'vente'}">checked="checked"</c:if>>
 										<label>Ventes</label>
 									</div>
