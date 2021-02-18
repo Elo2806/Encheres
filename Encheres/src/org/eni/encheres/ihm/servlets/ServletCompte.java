@@ -7,7 +7,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.eni.encheres.bll.UtilisateurManager;
 import org.eni.encheres.bll.exceptions.BLLException;
@@ -28,11 +27,6 @@ public class ServletCompte extends HttpServlet {
 	private static final String ATTR_ERREUR_IDENTIFIANT = "erreurIdentifiant";
 	private static final String ATTR_ERREUR_MDP = "erreurMdp";
 
-	private static final String ERREUR_GENERIQUE = "generique";
-	private static final String ERREUR_IDENTIFIANT = "identifiant";
-	private static final String ERREUR_MDP = "mdp";
-
-	private static final String ATTR_ERREUR_MESSAGE = "ErreurMessage";
 
 	private static final String SERVLET_CONNEXION = "/ServletConnexion";
 
