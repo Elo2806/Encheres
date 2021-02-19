@@ -16,6 +16,7 @@ import org.eni.encheres.dal.exceptions.DALException;
  */
 public class CategorieManager {
 	
+	private static final String ERREUR_DAL = "Erreur lors du traitement en DAL";
 	private static CategorieManager single;
 	private static CategorieDao categorieDao;
 	
@@ -47,7 +48,7 @@ public class CategorieManager {
 		try {
 			categories = categorieDao.findAll();
 		} catch (DALException dale) {
-			throw new BLLException("Erreur lors du traitement en DAL",dale);
+			throw new BLLException(ERREUR_DAL,dale);
 		}
 		
 		return categories;

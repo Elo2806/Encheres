@@ -181,7 +181,8 @@ public class ArticleDAOImpl implements ArticleDAO {
 							rs.getTimestamp(COL_ART_DATE_DEBUT_ENCHERES).toLocalDateTime(),
 							rs.getTimestamp(COL_ART_DATE_FIN_ENCHERES).toLocalDateTime(), utilisateur, categorie,
 							retrait, rs.getInt(COL_ART_NO_ARTICLE), rs.getInt(COL_ART_PRIX_INITIAL));
-
+					
+					article.setPrixVente(rs.getInt("prix_vente"));
 					// Ajout de l'article à la map
 					mapArticles.put(article.getNoArticle(), article);
 				}

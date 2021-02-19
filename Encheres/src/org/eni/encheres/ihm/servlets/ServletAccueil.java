@@ -111,12 +111,10 @@ public class ServletAccueil extends HttpServlet {
 	 * application en fonction du systeme de persistance
 	 */
 	private void updateCategories() {
-		List<Categorie> categories = new ArrayList<>();
 		Map<Integer, Categorie> mapCategories = new ConcurrentHashMap<>();
 		CategorieManager manager = CategorieManager.getInstance();
 		try {
 			mapCategories = manager.getCategories();
-			categories.addAll(mapCategories.values());
 		} catch (BLLException blle) {
 			blle.printStackTrace();
 		}
