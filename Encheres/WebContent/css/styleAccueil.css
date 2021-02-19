@@ -169,6 +169,9 @@ width: 300px;
 	text-align:center;
 }
 
+.btn-encherir{
+	margin-left:30px;
+}
 .button{
 	justify-content:center;
 	text-align:center
@@ -190,6 +193,7 @@ width: 60px;
 padding: 50px 0 70px 0;
 }
 
+.text-info{font-weight: bold }
 
 legend {
     background-color: #986E51;

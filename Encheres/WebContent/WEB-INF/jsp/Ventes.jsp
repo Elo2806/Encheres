@@ -56,8 +56,9 @@
 						<div class="container ventes">
 							<div class="row">
 								<div class="col-md-4">
-
-									<label for="article">Article : </label>
+									<div class="text-info">
+										<label for="article"> Article : </label>
+									</div>
 								</div>
 								<div class="col-md-8">
 									<input
@@ -75,8 +76,9 @@
 						<div class="container ventes">
 							<div class="row">
 								<div class="col-md-4">
-
-									<label for="description">Description : </label>
+									<div class="text-info">
+										<label for="description">Description : </label>
+									</div>
 								</div>
 								<div class="col-md-8">
 									<textarea
@@ -93,8 +95,9 @@
 						<div class="container ventes">
 							<div class="row">
 								<div class="col-md-4">
-
-									<label for="categorie">Categorie : </label>
+									<div class="text-info">
+										<label for="categorie">Categorie : </label>
+									</div>
 								</div>
 								<div class="col-md-8">
 
@@ -117,9 +120,10 @@
 						<div class="container ventes">
 							<div class="row">
 								<div class="col-md-4">
+									<div class="text-info">
 
-
-									<label for="photo">Photo de l'article : </label>
+										<label for="photo">Photo de l'article </label>
+									</div>
 								</div>
 								<div class="col-md-8">
 									<input
@@ -136,7 +140,9 @@
 						<div class="container ventes">
 							<div class="row">
 								<div class="col-md-4">
-									<label for="prixdepart">Mise à prix : </label>
+									<div class="text-info">
+										<label for="prixdepart">Mise à prix : </label>
+									</div>
 								</div>
 								<div class="col-md-8">
 									<input
@@ -152,7 +158,9 @@
 						<div class="container ventes">
 							<div class="row">
 								<div class="col-md-4">
-									<label for="datedebut">Début de l'enchère : </label>
+									<div class="text-info">
+										<label for="datedebut">Début de l'enchère </label>
+									</div>
 								</div>
 								<div class="col-md-8">
 									<input
@@ -173,7 +181,9 @@
 						<div class="container ventes">
 							<div class="row">
 								<div class="col-md-4">
-									<label for="datefin">Fin de l'enchère : </label>
+									<div class="text-info">
+										<label for="datefin">Fin de l'enchère </label>
+									</div>
 								</div>
 								<div class="col-md-8">
 									<input
@@ -197,7 +207,9 @@
 							<div class="container">
 								<div class="row">
 									<div class="col-md-4">
-										<label for="rue">Rue : </label>
+										<div class="text-info">
+											<label for="rue">Rue : </label>
+										</div>
 									</div>
 									<div class="col-md-8">
 										<input
@@ -214,7 +226,9 @@
 							<div class="container">
 								<div class="row">
 									<div class="col-md-4">
-										<label for="codepostal">Code postal : </label>
+										<div class="text-info">
+											<label for="codepostal">Code postal : </label>
+										</div>
 									</div>
 									<div class="col-md-8">
 										<input
@@ -232,7 +246,9 @@
 							<div class="container ventes">
 								<div class="row">
 									<div class="col-md-4">
-										<label for="ville">Ville : </label>
+										<div class="text-info">
+											<label for="ville">Ville : </label>
+										</div>
 									</div>
 									<div class="col-md-8">
 										<input
