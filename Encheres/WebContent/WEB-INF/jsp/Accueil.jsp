@@ -96,7 +96,7 @@
 					<c:forEach
 						var="categorie"
 						items="${mapCategories}">
-						<option value="${categorie.key}">${categorie.value.libelle}</option>
+						<option value="${categorie.key}" <c:if test="${!empty param.categorieFiltre && param.categorieFiltre == categorie.key }">selected</c:if> >${categorie.value.libelle}</option>
 					</c:forEach>
 				</select>
 			</div>
