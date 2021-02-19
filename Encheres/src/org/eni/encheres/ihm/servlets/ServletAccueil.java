@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -111,7 +112,7 @@ public class ServletAccueil extends HttpServlet {
 	 */
 	private void updateCategories() {
 		List<Categorie> categories = new ArrayList<>();
-		Map<Integer, Categorie> mapCategories = new HashMap<>();
+		Map<Integer, Categorie> mapCategories = new ConcurrentHashMap<>();
 		CategorieManager manager = CategorieManager.getInstance();
 		try {
 			mapCategories = manager.getCategories();
@@ -128,7 +129,7 @@ public class ServletAccueil extends HttpServlet {
 	 * application en fonction du systeme de persistance
 	 */
 	private void updateArticles() {
-		Map<Integer, ArticleVendu> articles = new HashMap<>();
+		Map<Integer, ArticleVendu> articles = new ConcurrentHashMap<>();
 		ArticleManager articleManager = ArticleManager.getInstance();
 		EnchereManager enchereManager = EnchereManager.getInstance();
 		
