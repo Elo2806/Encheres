@@ -103,12 +103,11 @@
 
 </head>
 <body>
-	<div
-		class="container"
-		style="margin-top: 30px;">
+	<div class="container" style="margin-top: 30px;">
+		
+
 		<%@include file="EnTeteEni.jspf"%>
-		<div>
-			<div class="container">
+		
 				<c:choose>
 					<c:when test="${empty requestScope.venteTerminee}">
 						<h2 class="titre">Détail vente</h2>
@@ -122,9 +121,9 @@
 					</c:otherwise>
 				</c:choose>
 			</div>
-
+<div class="container">
 			<div class="row">
-				<div class="col-6 photo">
+				<div class="col-6 photoEncheres">
 
 					<img
 						class="photo-left"
@@ -135,33 +134,33 @@
 				<div class="col-6" id="encadre">
 					<div class="descriptionVente">
 					
-						<div class="container">
+						<div class="container encheres">
 							<div class="row">
-								<div class="col-12">
+								<div class="col-md-12">
 									<p id="libelleArticle">${requestScope.articleEnVente.nomArticle }</p>
 								</div>
 							</div>
 						</div>
 						<br>
-						<div class="container">
+						<div class="container encheres">
 							<div class="row">
-								<div class="col-4">
+								<div class="col-md-4">
 									<p>Description :</p>
 								</div>
-								<div class="col-8">
+								<div class="col-md-8">
 									<span id="descriptionArticle">${requestScope.articleEnVente.description}</span>
 								</div>
 							</div>
 						</div>
 						<br>
 
-						<div class="container">
+						<div class="container encheres">
 							<div class="row">
-								<div class="col-4">
+								<div class="col-md-4">
 									<p>Categorie :</p>
 								</div>
 
-								<div class="col-8">
+								<div class="col-md-8">
 									<span id="CategorieArticle">${requestScope.articleEnVente.categorie.libelle}</span>
 								</div>
 							</div>
@@ -169,12 +168,12 @@
 						<br>
 
 
-						<div class="container">
+						<div class="container encheres">
 							<div class="row">
-								<div class="col-4">
+								<div class="col-md-4">
 									<p>Meilleur offre :</p>
 								</div>
-								<div class="col-8">
+								<div class="col-md-8">
 									<span id="nbPointsMeilleur">${requestScope.articleEnVente.enchereMax.montantEnchere}</span>
 									pts par <span id="pseudoMeilleur">${requestScope.articleEnVente.enchereMax.utilisateur.pseudo}</span>
 								</div>
@@ -183,13 +182,13 @@
 						<br>
 
 
-						<div class="container">
+						<div class="container encheres">
 							<div class="row">
-								<div class="col-4">
+								<div class="col-md-4">
 
 									<p>Mise à prix :</p>
 								</div>
-								<div class="col-8">
+								<div class="col-md-8">
 									<span id="prix">${requestScope.articleEnVente.prixInitial}</span>
 									points
 								</div>
@@ -197,24 +196,24 @@
 						</div>
 						<br>
 
-						<div class="container">
+						<div class="container encheres">
 							<div class="row">
-								<div class="col-4">
+								<div class="col-md-4">
 									<p>Fin de l'enchere</p>
 								</div>
-								<div class="col-8">
+								<div class="col-md-8">
 									<span id="dateFin">${requestScope.articleEnVente.dateFinEncheres}</span>
 								</div>
 							</div>
 						</div>
 						<br>
 
-						<div class="container">
+						<div class="container encheres">
 							<div class="row">
-								<div class="col-4">
+								<div class="col-md-4">
 									<span>Retrait : </span>
 								</div>
-								<div class="col-8">
+								<div class="col-md-8">
 									<div id="Adresse">
 										<span>${requestScope.articleEnVente.retrait.rue}</span><br>
 										<span id="codePostal">${requestScope.articleEnVente.retrait.codePostal}</span><br>
@@ -225,19 +224,19 @@
 						</div>
 						<br>
 
-						<div class="container">
+						<div class="container encheres">
 							<div class="row">
-								<div class="col-4">
+								<div class="col-md-4">
 									<p>Vendeur :</p>
 								</div>
-								<div class="col-8">
+								<div class="col-md-8">
 									<span id="vendeur">${requestScope.articleEnVente.vendeur.pseudo}</span>
 								</div>
 							</div>
 						</div>
 						<br>
 
-						<div class="container">
+						<div class="container encheres">
 							<div class="row">
 							
 								
@@ -282,23 +281,23 @@
 							</c:when>
 							<c:when test="${!empty requestScope.vainqueur}">
 							
-								<div class="container">
+								<div class="container encheres">
 								<div class="row">
-								<div class="col-4">
+								<div class="col-md-4">
 									<p>Tel :</p> 
 								</div> 
-								<div class="col-8">
+								<div class="col-md-8">
 								<span id="vendeurTelephone">${requestScope.articleEnVente.vendeur.telephone}</span>
 								</div>
 								</div>
 								</div>
 								<br>
 								
-								<div class="container">
+								<div class="container encheres">
 								<div class="row">
-								<div class="col-4">
+								<div class="col-md-4">
 									<p>Mail : </p>
-									</div><div class="col-8">
+									</div><div class="col-md-8">
 								<span id="vendeurEmail">${requestScope.articleEnVente.vendeur.email}</span>
 									</div>
 									</div>
@@ -307,13 +306,13 @@
 								
 								<a href="<c:url value="/accueil"/>"><input
 									type="button"
-									class="btn btn-primary btn-lg"
+									class="btn btn-primary btn-lg btn-encheres"
 									value="Back"></a>
 							</c:when>
 							<c:otherwise>
 								<a href="<c:url value="/accueil"/>"><input
 									type="button"
-									class="btn btn-primary btn-lg"
+									class="btn btn-primary btn-lg btn-encheres"
 									value="Back"></a>
 							</c:otherwise>
 						</c:choose>
@@ -328,7 +327,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+			</div>
 		<script
 			src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<script

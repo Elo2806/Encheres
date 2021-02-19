@@ -5,8 +5,10 @@
 <%@ taglib
 	prefix="c"
 	uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ taglib
+	prefix="fmt"
+	uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ page import="java.time.format.DateTimeFormatter"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,13 +22,6 @@
 	href="css/styleAccueil.css"
 	rel="stylesheet" />
 
-<link
-	rel="preconnect"
-	href="https://fonts.gstatic.com">
-
-<link
-	href="https://fonts.googleapis.com/css2?family=Crete+Round&display=swap"
-	rel="stylesheet">
 <meta
 	http-equiv="Content-Type"
 	content="text/html; charset=UTF-8">
@@ -50,26 +45,23 @@
 				<c:choose>
 					<c:when test="${!empty sessionScope.utilisateur}">
 
-						<li>
-							<c:choose>
+						<li><c:choose>
 								<c:when test="${sessionScope.utilisateur.actif eq 'true' }">
 									<a href="<c:url value="/ServletVente"/>">Vendre un article</a>
 								</c:when>
 								<c:otherwise>
 									Vendre un article
 								</c:otherwise>
-							</c:choose>
-							</li>
-						<li><a href="<c:url value="/ServletCompte"/>">Mon
-									profil</a></li>
+							</c:choose></li>
+						<li><a href="<c:url value="/ServletCompte"/>">Mon profil</a></li>
 						<li><a href="<c:url value="/ServletConnexion"/>">Déconnexion</a></li>
 
 					</c:when>
 					<c:otherwise>
 						<div>
 							<li id="connexion"><a
-									href="<c:url value="/ServletConnexion"/>">Se connecter - S'inscrire
-								</a></li>
+								href="<c:url value="/ServletConnexion"/>">Se connecter -
+									S'inscrire </a></li>
 						</div>
 					</c:otherwise>
 				</c:choose>
@@ -97,8 +89,7 @@
 			</div>
 			<br>
 			<div>
-				<label for="categorieFiltre">Categorie : </label>
-				<select
+				<label for="categorieFiltre">Categorie : </label> <select
 					name="categorieFiltre"
 					size="1"
 					id="categorieFiltre">
@@ -115,93 +106,92 @@
 			<!-- Attribut en plus lors de la connection -->
 			<c:if test="${!empty sessionScope.utilisateur}">
 				<div id="Filtres">
-					<div>
 
+					<div class="container">
+						<div class="row">
 
-						<div class="container">
-							<div class="row">
-								<div
-									id="radio1"
-									class="col-md-6 col-lg-4">
+							<div
+								id="radio1"
+								class="col-md-6 col-lg-4">
 
+								<div>
+									<input
+										type="radio"
+										name="typeFiltre"
+										value="achat"
+										onchange="selectType(false)"
+										<c:if test="${param.typeFiltre == 'achat'}">checked="checked"</c:if>
+										<c:if test="${ empty param.recherche}">checked="checked"</c:if>>
+									<label>Achats</label>
+								</div>
+								<div id="venteid">
 									<div>
 										<input
-											type="radio"
-											name="typeFiltre"
-											value="achat"
-											onchange="selectType(false)"
-											<c:if test="${param.typeFiltre == 'achat'}">checked="checked"</c:if>
-											<c:if test="${ empty param.recherche}">checked="checked"</c:if>>
-										<label>Achats</label>
+											class="achat"
+											id="chktest"
+											type="checkbox"
+											name="chkEncheresOuvertes"
+											<c:if test="${param.chkEncheresOuvertes == 'on'}">checked="checked"</c:if>>
+										<label for="chkEncheresOuvertes">enchères ouvertes</label>
 									</div>
-									<div id="venteid">
-										<div>
-											<input
-												class="achat"
-												id="chktest"
-												type="checkbox"
-												name="chkEncheresOuvertes"
-												<c:if test="${param.chkEncheresOuvertes == 'on'}">checked="checked"</c:if>>
-											<label for="chkEncheresOuvertes">enchères ouvertes</label>
-										</div>
-										<div>
-											<input
-												class="achat"
-												type="checkbox"
-												name="chkMesEnchereEnCours"
-												<c:if test="${param.chkMesEnchereEnCours== 'on'}">checked="checked"</c:if>>
-											<label>mes enchères en cours</label>
-										</div>
-										<div>
-											<input
-												class="achat"
-												type="checkbox"
-												name="chkMesEncheresRemportes"
-												<c:if test="${param.chkMesEncheresRemportes == 'on'}">checked="checked"</c:if>>
-											<label>mes enchères remportées</label>
-										</div>
-									</div>
-								</div>
-
-								<div
-									id="radio2"
-									class="col-md-6 col-lg-4">
 									<div>
 										<input
-											type="radio"
-											name="typeFiltre"
-											value="vente"
-											onchange="selectType(false)"
-											<c:if test="${param.typeFiltre == 'vente'}">checked="checked"</c:if>>
-										<label>Ventes</label>
+											class="achat"
+											type="checkbox"
+											name="chkMesEnchereEnCours"
+											<c:if test="${param.chkMesEnchereEnCours== 'on'}">checked="checked"</c:if>>
+										<label>mes enchères en cours</label>
 									</div>
 									<div>
-										<div>
-											<input
-												class="vente"
-												type="checkbox"
-												name="chkVentesEnCours"
-												<c:if test="${param.chkVentesEnCours == 'on'}">checked="checked"</c:if>>
-											<label>mes ventes en cours</label>
-										</div>
-										<div>
-											<input
-												class="vente"
-												type="checkbox"
-												name="chkVentesNonDebutes"
-												<c:if test="${param.chkVentesNonDebutes == 'on'}">checked="checked"</c:if>>
-											<label>ventes non débutées</label>
-										</div>
-										<div>
-											<input
-												class="vente"
-												type="checkbox"
-												name="chkVentesTerminees"
-												<c:if test="${param.chkVentesTerminees == 'on'}">checked="checked"</c:if>>
-											<label>ventes terminées</label>
-										</div>
+										<input
+											class="achat"
+											type="checkbox"
+											name="chkMesEncheresRemportes"
+											<c:if test="${param.chkMesEncheresRemportes == 'on'}">checked="checked"</c:if>>
+										<label>mes enchères remportées</label>
 									</div>
 								</div>
+							</div>
+
+							<div
+								id="radio2"
+								class="col-md-6 col-lg-4">
+								<div>
+									<input
+										type="radio"
+										name="typeFiltre"
+										value="vente"
+										onchange="selectType(false)"
+										<c:if test="${param.typeFiltre == 'vente'}">checked="checked"</c:if>>
+									<label>Ventes</label>
+								</div>
+								<div>
+									<div>
+										<input
+											class="vente"
+											type="checkbox"
+											name="chkVentesEnCours"
+											<c:if test="${param.chkVentesEnCours == 'on'}">checked="checked"</c:if>>
+										<label>mes ventes en cours</label>
+									</div>
+									<div>
+										<input
+											class="vente"
+											type="checkbox"
+											name="chkVentesNonDebutes"
+											<c:if test="${param.chkVentesNonDebutes == 'on'}">checked="checked"</c:if>>
+										<label>ventes non débutées</label>
+									</div>
+									<div>
+										<input
+											class="vente"
+											type="checkbox"
+											name="chkVentesTerminees"
+											<c:if test="${param.chkVentesTerminees == 'on'}">checked="checked"</c:if>>
+										<label>ventes terminées</label>
+									</div>
+								</div>
+							</div>
 			</c:if>
 			<div
 				id="submit"
@@ -217,18 +207,22 @@
 				</div>
 
 			</div>
-			<br>
-			<hr>
-			<br>
+			
 	</div>
 	</div>
 	</div>
+	</div>
+
 	</form>
+
+
+
 
 	<!-- Liste des enchères  -->
 
 	<section id="encheres">
 		<div class="container">
+		<hr>
 			<div class="row">
 
 				<c:forEach
@@ -265,8 +259,9 @@
 												</c:choose>
 											</div>
 											<div>
-												Prix : <span id="nbPoints"> <c:choose>
-														<c:when test="${article.value.enchereMax.montantEnchere > 0}">
+												Prix : <span class="nbPoints"> <c:choose>
+														<c:when
+															test="${article.value.enchereMax.montantEnchere > 0}">
 									${article.value.enchereMax.montantEnchere}
 								</c:when>
 														<c:otherwise>
@@ -276,7 +271,7 @@
 												</span> points
 											</div>
 											<div>
-			
+
 												Fin de l'enchère : <span id="dateFinEnchere">${article.value.dateFinEncheres}</span>
 											</div>
 											<div>
@@ -339,7 +334,8 @@
 			</div>
 		</div>
 	</footer>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>

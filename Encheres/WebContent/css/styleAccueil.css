@@ -17,26 +17,17 @@ width: 25%;
 
 /* -------ACCUEIL------- */
 
-/* GENERAL */
 
-h1{
-    font-family: 'Crete Round', serif;
-    text-align:center;
-    margin-top: 50px; 
+h1, h2, h3 {
+	margin: 30px 0px;	
+ 
 }
 
-h2{
-margin: 30px 0px;	
-}
-
-
-h3{
-margin-top: 30px;	
-}
+h1{ text-align:center;}
 
 body {
-    background-image: -moz-radial-gradient(white, gainsboro);
-    background-image: radial-gradient(white, gainsboro);
+    background-image: -moz-radial-gradient(white,ghostwhite,gainsboro );
+    background-image: radial-gradient(white,ghostwhite,gainsboro );
     font-family: Arial, sans-serif;
 }
 
@@ -77,7 +68,7 @@ main nav ul {
 }
 
 main nav ul :hover {
-    background: linear-gradient(#B4A483, black);
+    background: linear-gradient( #FBFBFF, #B4A483, black);
     border-radius: 10px;
 }
 
@@ -107,6 +98,7 @@ main nav ul li a:hover {
 #connexion{
 width: 300px;	
 }
+
 .articles{
 	background-color: rgba(255, 250, 240, 0.9);
 	border-style:solid;
@@ -126,13 +118,40 @@ width: 300px;
 #photo{
 	width:10 px;
 }
-#nbPoints{
+
+.nbPoints{
 	color: #ff7a00;
     font-weight: bold;
 	
 }
 
+
+/* -------CONNEXION------- */
+
+.blockConnection{
+	background-color: rgba(255, 250, 240, 0.9);
+	border-style:solid;
+	margin-top: 50px;
+	padding: 40px;
+    border-radius: 10px;
+    border-style: solid;
+    border-color: indigo; 
+}
+.pageConnection{
+	display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
 /* -------ENCHERES------- */
+
+.photoEncheres{
+	display:flex;
+	flex-direction: column;
+	justify-content:center;
+	padding: 0 20px;
+}
+
 
 #encadre{
 	border-style:solid;
@@ -159,6 +178,77 @@ width: 300px;
 width: 60px;
 }
 
+
 /*-------VENTE-------*/
 
+.photoVentes{
+	display:flex;
+	flex-direction: column;
+}
 
+#titreVente{
+padding: 50px 0 70px 0;
+}
+
+
+legend {
+    background-color: #986E51;
+    color: #fff;
+    padding: 3px 6px;
+    margin-bottom: 20px;
+}
+.output {
+    font: 1rem 'Fira Sans', sans-serif;
+}
+
+
+.btn-centre{
+display:flex;
+justify-content:center	
+}
+
+.ventes{
+	margin-bottom: 20px;
+}
+
+/*-------COMPTE-------*/
+.labelCompte {
+	width:180px;
+}
+
+.inputCompte {
+	width:200px;
+}
+
+div.btn_submit {
+	border-radius: 10px;
+	pading-top:20px;
+	justify-content: space-between;
+	text-align: center;
+}
+
+.lienMdp{
+	text-align:center;
+	margin-top:30px;
+}
+
+.form {
+    display:flex;  
+    justify-content:center;
+}
+
+div.divCompte {
+	margin:10px 20px;
+	text-align: left;
+}
+
+/*-------PROFIL-------*/
+.profil{
+margin: 50px auto;
+
+
+
+}
+.profil2{
+text-align:center	
+}
