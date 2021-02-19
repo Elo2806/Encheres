@@ -60,8 +60,7 @@
 					<c:otherwise>
 						<div>
 							<li id="connexion"><a
-								href="<c:url value="/ServletConnexion"/>">Se connecter -
-									S'inscrire </a></li>
+								href="<c:url value="/ServletConnexion"/>">S'inscrire - Se connecter</a></li>
 						</div>
 					</c:otherwise>
 				</c:choose>
