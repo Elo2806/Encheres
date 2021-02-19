@@ -404,7 +404,7 @@
 							<th colspan="2">
 							<div class="divCompte">
 									<div class="lienMdp">
-										<a class="btn btn-outline-info btn-sm" href="<c:url value="/ServletCompte?modifMdp=true&modification=true"/>">Modifier
+										<a class="btn btn-info btn-sm" href="<c:url value="/ServletCompte?modifMdp=true&modification=true"/>">Modifier
 											mon mot de passe</a>
 									</div>
 								</div></th>
