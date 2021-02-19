@@ -18,6 +18,13 @@ import org.eni.encheres.bo.Utilisateur;
  */
 @WebServlet("/ServletConnexion")
 public class ServletConnexion extends HttpServlet {
+	private static final String JSP_ACCUEIL = "/accueil";
+	private static final String SERVLET_ACCUEIL = "/ServletAccueil";
+	private static final String ATTR_UTILISATEUR = "utilisateur";
+	private static final String JSP_CONNEXION = "/connexion";
+	private static final String ERREUR_IDENTIFIANT = "erreurIdentifiant";
+	private static final String PARAM_MOTDEPASSE = "motdepasse";
+	private static final String PARAM_IDENTIFIANT = "identifiant";
 	private static final String APP_ENCODAGE = "UTF-8";
 	private static final long serialVersionUID = 1L;
 
@@ -37,11 +44,11 @@ public class ServletConnexion extends HttpServlet {
 		// }
 		request.setCharacterEncoding(APP_ENCODAGE);
 		HttpSession session = request.getSession();
-		if (session.getAttribute("utilisateur") == null) {
-			getServletContext().getRequestDispatcher("/connexion").forward(request, response);
+		if (session.getAttribute(ATTR_UTILISATEUR) == null) {
+			getServletContext().getRequestDispatcher(JSP_CONNEXION).forward(request, response);
 		} else {
-			session.setAttribute("utilisateur", null);
-			getServletContext().getRequestDispatcher("/accueil").forward(request, response);
+			session.setAttribute(ATTR_UTILISATEUR, null);
+			getServletContext().getRequestDispatcher(JSP_ACCUEIL).forward(request, response);
 		}
 	}
 
@@ -53,8 +60,8 @@ public class ServletConnexion extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding(APP_ENCODAGE);
 	
-			String identifiants = request.getParameter("identifiant");
-			String motDePasse = request.getParameter("motdepasse");
+			String identifiants = request.getParameter(PARAM_IDENTIFIANT);
+			String motDePasse = request.getParameter(PARAM_MOTDEPASSE);
 	
 			// Vérifier identifiant et mots de passe
 			UtilisateurManager manager = UtilisateurManager.getInstance();
@@ -64,15 +71,15 @@ public class ServletConnexion extends HttpServlet {
 			} catch (BLLException blle) {
 				blle.printStackTrace();
 				// Si les identifiant/mot de passe pas existants :
-				request.setAttribute("erreurIdentifiant", true);
-				getServletContext().getRequestDispatcher("/connexion").forward(request, response);
+				request.setAttribute(ERREUR_IDENTIFIANT, true);
+				getServletContext().getRequestDispatcher(JSP_CONNEXION).forward(request, response);
 			}
 			
 			HttpSession session = request.getSession();
-			session.setAttribute("utilisateur", utilisateur);
+			session.setAttribute(ATTR_UTILISATEUR, utilisateur);
 	
 			// Si les identifiant/mot de passe ok et si attribut 'supprime"=false :
-			getServletContext().getRequestDispatcher("/ServletAccueil").forward(request, response);
+			getServletContext().getRequestDispatcher(SERVLET_ACCUEIL).forward(request, response);
 			
 	}
 
