@@ -235,7 +235,6 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 
 					// Valorisation des paramètres du PreparedStatement
 					pstmt.setInt(1, utilisateur.getNoUtilisateur());
-					pstmt.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
 
 					// Execution de la requete
 					rs = pstmt.executeQuery();
