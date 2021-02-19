@@ -63,7 +63,7 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 	private static final String SQL_SELECT_ENCHERES_BY_USER = "SELECT enc.no_utilisateur, enc.no_article, enc.date_enchere, enc.montant_enchere, art.nom_article,art.description,art.date_debut_encheres,art.date_fin_encheres,art.prix_initial,art.prix_vente,art.no_categorie,cat.libelle "
 			+ "FROM ENCHERES as enc INNER JOIN ARTICLES_VENDUS as art ON art.no_article =  enc.no_article "
 			+ "INNER JOIN CATEGORIES as cat ON cat.no_categorie = art.no_categorie "
-			+ "WHERE enc.no_utilisateur=? AND art.date_fin_encheres > ?";
+			+ "WHERE enc.no_utilisateur=?";
 
 	private static final String ERREUR_SQL_INSERT = "Erreur lors de l'insertion en base";
 	private static final String ERREUR_SQL_SELECT = "Erreur lors des selections en base";
@@ -309,11 +309,11 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 
 				pstmt.close();
 			} catch (SQLException sqle) {
-				throw new RequeteSQLException("Erreur lors de la mise à jour en base", sqle);
+				throw new RequeteSQLException(ERREUR_SQL_SELECT, sqle);
 			}
 
 		} catch (SQLException sqle) {
-			throw new ConnectionException("Erreur connection", sqle);
+			throw new ConnectionException(ERREUR_CONNECTION, sqle);
 		}
 
 		// Mise à jour de l'utilisateur
@@ -339,11 +339,11 @@ public class UtilisateurDAOimpl implements UtilisateurDAO {
 
 				pstmt.close();
 			} catch (SQLException sqle) {
-				throw new RequeteSQLException("Erreur lors de la mise à jour en base", sqle);
+				throw new RequeteSQLException(ERREUR_SQL_SELECT, sqle);
 			}
 
 		} catch (SQLException sqle) {
-			throw new ConnectionException("Erreur connection", sqle);
+			throw new ConnectionException(ERREUR_CONNECTION, sqle);
 		}
 
 		// Mise à jour de l'utilisateur

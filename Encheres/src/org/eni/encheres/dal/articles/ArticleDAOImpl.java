@@ -31,6 +31,7 @@ import org.eni.encheres.dal.jdbc.ConnectionProvider;
  */
 public class ArticleDAOImpl implements ArticleDAO {
 	
+	private static final String COL_ART_PRIX_VENTE = "prix_vente";
 	private static final String COLL_RET_VILLE = "retraitVille";
 	private static final String COLL_RET_CODE_POSTAL = "retraitCodePostal";
 	private static final String COLL_RET_RUE = "retraitRue";
@@ -67,7 +68,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 			+ " FROM ENCHERES GROUP BY no_article) as selectMontantMax ON e.no_article = selectMontantMax.no_article "
 			+ " INNER JOIN UTILISATEURS as u ON u.no_utilisateur = e.no_utilisateur "
 			+ " WHERE e.montant_enchere = selectMontantMax.montant_max;";
-	private static final String SQL_FINDALL_ARTICLES = "SELECT art.prix_initial,art.no_article,nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, art.no_utilisateur, art.no_categorie,uti.pseudo,uti.nom,uti.prenom,uti.email,uti.telephone,uti.rue,uti.code_postal,uti.ville,uti.mot_de_passe,uti.credit,uti.administrateur,uti.actif,cat.libelle,ret.rue as retraitRue, ret.code_postal as retraitCodePostal, ret.ville as retraitVille FROM ARTICLES_VENDUS as art INNER JOIN CATEGORIES as cat ON cat.no_categorie = art.no_categorie INNER JOIN UTILISATEURS as uti ON uti.no_utilisateur = art.no_utilisateur INNER JOIN RETRAITS as ret ON ret.no_article = art.no_article";
+	private static final String SQL_FINDALL_ARTICLES = "SELECT art.prix_initial,art.no_article,nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, art.prix_vente, art.no_utilisateur, art.no_categorie,uti.pseudo,uti.nom,uti.prenom,uti.email,uti.telephone,uti.rue,uti.code_postal,uti.ville,uti.mot_de_passe,uti.credit,uti.administrateur,uti.actif,cat.libelle,ret.rue as retraitRue, ret.code_postal as retraitCodePostal, ret.ville as retraitVille FROM ARTICLES_VENDUS as art INNER JOIN CATEGORIES as cat ON cat.no_categorie = art.no_categorie INNER JOIN UTILISATEURS as uti ON uti.no_utilisateur = art.no_utilisateur INNER JOIN RETRAITS as ret ON ret.no_article = art.no_article";
 	private static final String SQL_INSERT_ARTICLE = "INSERT INTO ARTICLES_VENDUS (nom_article, description, date_debut_encheres, date_fin_encheres, prix_initial, no_utilisateur, no_categorie) values (?,?,?,?,?,?,?)";
 	private static final String SQL_INSERT_RETRAIT = "INSERT INTO RETRAITS (no_article,rue,code_postal,ville) VALUES(?,?,?,?)";
 	private static final String SQL_UPDATE = "UPDATE ARTICLES_VENDUS SET nom_article=?, description=?, date_debut_encheres=?, date_fin_encheres=?, prix_initial=?, prix_vente=?, no_utilisateur=?, no_categorie=? WHERE no_article=?";
@@ -182,7 +183,7 @@ public class ArticleDAOImpl implements ArticleDAO {
 							rs.getTimestamp(COL_ART_DATE_FIN_ENCHERES).toLocalDateTime(), utilisateur, categorie,
 							retrait, rs.getInt(COL_ART_NO_ARTICLE), rs.getInt(COL_ART_PRIX_INITIAL));
 					
-					article.setPrixVente(rs.getInt("prix_vente"));
+					article.setPrixVente(rs.getInt(COL_ART_PRIX_VENTE));
 					// Ajout de l'article à la map
 					mapArticles.put(article.getNoArticle(), article);
 				}
